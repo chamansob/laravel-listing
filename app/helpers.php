@@ -37,7 +37,12 @@ $url='Home';
   {
       $url = ucfirst($n[2]) ." " . ucfirst(Str::headline(ucfirst($n[1])));
   }else{
-      $url = ucfirst($n[3]) . " " . ucfirst(Str::headline(ucfirst($n[1])));
+     if($n[2]==='admin')
+    {
+        $url = ucfirst($n[1]) . " " . ucfirst(Str::headline(ucfirst($n[2])));
+    }else{
+        $url = ucfirst($n[3]) . " " . ucfirst(Str::headline(ucfirst($n[1])));
+    }     
   }
   
   }

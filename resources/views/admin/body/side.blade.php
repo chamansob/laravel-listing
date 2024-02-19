@@ -140,12 +140,12 @@
 
                      <ul class="collapse submenu list-unstyled {{ show_class('admin/image_preset') }}" id="image"
                          data-bs-parent="#accordionExample">
-                         @if (Auth::user()->can('image_preset.index'))
+                         @if (Auth::user()->can('image_preset.create'))
                              <li class="{{ active_class('admin/image_preset/create') }}">
                                  <a href="{{ route('image_preset.create') }}"> {{ __('Add Image Preset') }} </a>
                              </li>
                          @endif
-                         @if (Auth::user()->can('image_preset.create'))
+                         @if (Auth::user()->can('image_preset.index'))
                              <li class="{{ active_class('admin/image_preset') }}">
                                  <a href="{{ route('image_preset.index') }}"> {{ __('Show Image Preset') }} </a>
                              </li>
@@ -167,12 +167,12 @@
                      </a>
                      <ul class="collapse submenu list-unstyled {{ show_class('admin/module') }}" id="module"
                          data-bs-parent="#accordionExample">
-                         @if (Auth::user()->can('module.index'))
+                         @if (Auth::user()->can('module.create'))
                              <li class="{{ active_class('admin/modules/create') }}">
                                  <a href="{{ route('modules.create') }}"> {{ __('Add Module') }} </a>
                              </li>
                          @endif
-                         @if (Auth::user()->can('module.create'))
+                         @if (Auth::user()->can('module.index'))
                              <li class="{{ active_class('admin/module') }}">
                                  <a href="{{ route('modules.index') }}"> {{ __('Show Module') }} </a>
                              </li>
@@ -194,14 +194,68 @@
                      </a>
                      <ul class="collapse submenu list-unstyled {{ show_class('admin/sliders') }}" id="sliders"
                          data-bs-parent="#accordionExample">
-                         @if (Auth::user()->can('sliders.index'))
+                         @if (Auth::user()->can('sliders.create'))
                              <li class="{{ active_class('admin/sliders/create') }}">
                                  <a href="{{ route('sliders.create') }}"> {{ __('Add Slider') }} </a>
                              </li>
                          @endif
-                         @if (Auth::user()->can('sliders.create'))
+                         @if (Auth::user()->can('sliders.index'))
                              <li class="{{ active_class('admin/sliders') }}">
                                  <a href="{{ route('sliders.index') }}"> {{ __('Show Slider') }} </a>
+                             </li>
+                         @endif
+                     </ul>
+                 </li>
+             @endif
+             @if (Auth::user()->can('social.menu'))
+                 <li class="menu">
+                     <a href="#social" data-bs-toggle="collapse"
+                         aria-expanded="{{ is_active_route('admin/social') }}" aria-controls="social"
+                         class="dropdown-toggle">
+                         <div class="">
+                             <i data-feather="menu"></i> <span>{{ __('Social') }}</span>
+                         </div>
+                         <div>
+                             <i data-feather="chevron-right"></i>
+                         </div>
+                     </a>
+                     <ul class="collapse submenu list-unstyled {{ show_class('admin/social') }}" id="social"
+                         data-bs-parent="#accordionExample">
+                         @if (Auth::user()->can('social.create'))
+                             <li class="{{ active_class('admin/social/create') }}">
+                                 <a href="{{ route('social.create') }}"> {{ __('Add Social') }} </a>
+                             </li>
+                         @endif
+                         @if (Auth::user()->can('social.index'))
+                             <li class="{{ active_class('admin/social') }}">
+                                 <a href="{{ route('social.index') }}"> {{ __('Show Social') }} </a>
+                             </li>
+                         @endif
+                     </ul>
+                 </li>
+             @endif
+              @if (Auth::user()->can('testimonials.menu'))
+                 <li class="menu">
+                     <a href="#testimonials" data-bs-toggle="collapse"
+                         aria-expanded="{{ is_active_route('admin/testimonials') }}" aria-controls="testimonials"
+                         class="dropdown-toggle">
+                         <div class="">
+                             <i data-feather="menu"></i> <span>{{ __('Testimonials') }}</span>
+                         </div>
+                         <div>
+                             <i data-feather="chevron-right"></i>
+                         </div>
+                     </a>
+                     <ul class="collapse submenu list-unstyled {{ show_class('admin/testimonials') }}" id="testimonials"
+                         data-bs-parent="#accordionExample">
+                         @if (Auth::user()->can('testimonials.create'))
+                             <li class="{{ active_class('admin/testimonials/create') }}">
+                                 <a href="{{ route('testimonials.create') }}"> {{ __('Add Testimonials') }} </a>
+                             </li>
+                         @endif
+                         @if (Auth::user()->can('testimonials.index'))
+                             <li class="{{ active_class('admin/testimonials') }}">
+                                 <a href="{{ route('testimonials.index') }}"> {{ __('Show Testimonials') }} </a>
                              </li>
                          @endif
                      </ul>

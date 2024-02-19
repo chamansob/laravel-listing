@@ -141,6 +141,6 @@ class SliderController extends Controller
             'status' => ($slider->status == 1) ? 0 : 1,
         ]);
 
-        return ($slider->status == 1) ? 'active' : 'deactive';
+        return ($slider->status == 0) ? 'active' : 'deactive';
     }
 }

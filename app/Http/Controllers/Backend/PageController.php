@@ -102,8 +102,9 @@ class PageController extends Controller
             if ($page->state_image != '') {
                 $save_url = $page->image;
             } else {
+                $save_url = '';
             }
-            $save_url = '';
+           
         }
         $page->update([
             'menu_id' => $request->menu_id,

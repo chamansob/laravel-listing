@@ -12,6 +12,8 @@ use App\Http\Controllers\Backend\ModuleController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\backend\SocialController;
+use App\Http\Controllers\backend\TestimonialController;
 use App\Http\Controllers\Backend\UserRoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +53,16 @@ Route::middleware(['auth', 'roles:admin'])->prefix('admin')->group(function () {
     Route::resource('sliders', SliderController::class)->middleware('can:sliders.index, sliders.create, sliders.update');
     Route::post('/sliders/status', [SliderController::class, 'StatusUpdate'])->middleware('can:sliders.status')->name('sliders.status');
     Route::post('/sliders/delete', [SliderController::class, 'Delete'])->middleware('can:sliders.delete')->name('sliders.delete');
+    
+    // Testimonials All Routes
+    Route::resource('testimonials', TestimonialController::class)->middleware('can:testimonials.index, testimonials.create, testimonials.update');
+    Route::post('/testimonials/status', [TestimonialController::class, 'StatusUpdate'])->middleware('can:testimonials.status')->name('testimonials.status');
+    Route::post('/testimonials/delete', [TestimonialController::class, 'Delete'])->middleware('can:testimonials.delete')->name('testimonials.delete');
+    
+    // Social All Routes
+    Route::resource('social', SocialController::class)->middleware('can:social.index, social.create, social.update');
+    Route::post('/social/status', [SocialController::class, 'StatusUpdate'])->middleware('can:social.status')->name('social.status');
+    Route::post('/social/delete', [SocialController::class, 'Delete'])->middleware('can:social.delete')->name('social.delete');
 
     // Blog All Routes
     Route::resource('blog', BlogController::class)->middleware('can:blog.index, blog.create, blog.update');

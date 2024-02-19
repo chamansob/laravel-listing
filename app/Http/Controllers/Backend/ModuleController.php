@@ -101,8 +101,9 @@ class ModuleController extends Controller
             if ($module->state_image != '') {
                 $save_url = $module->image;
             } else {
+                $save_url = '';
             }
-            $save_url = '';
+           
         }
         $module->update([
             'name' => $request->name,
@@ -145,6 +146,6 @@ class ModuleController extends Controller
             'status' => ($module->status == 1) ? 0 : 1,
         ]);
 
-        return ($module->status == 1) ? 'active' : 'deactive';
+        return ($module->status == 0) ? 'active' : 'deactive';
     }
 }

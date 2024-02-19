@@ -19,8 +19,7 @@
                         {{ Form::open(['route' => 'store.admin', 'class' => 'forms-sample needs-validation',
                             'novalidate' => 'novalidate', 'method' => 'post']) }}
                         <div class="row">
-
-                            <div class="mb-3">
+<div class="col-sm-6">  <div class="mb-3">
 
                                 {!! Form::label('username', 'User Name', ['class' => 'form-label']) !!}
 
@@ -31,20 +30,21 @@
 
 
 
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="mb-3">
+                            </div></div>
+<div class="col-sm-6"><div class="mb-3">
                                 {!! Form::label('name', 'Full Name', ['class' => 'form-label']) !!}
 
                                 {!! Form::text('name', $value = null, ['class' => 'form-control','required' => 'required', 'placeholder' => 'Full Name']) !!}
                                 @error('name')
                                     <span class="text-danger pt-3">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div></div>
+                          
+
                         </div>
+                       
                         <div class="row">
+                            <div class="col-sm-6">
                             <div class="mb-3">
                                 {!! Form::label('email', 'Email', ['class' => 'form-label']) !!}
 
@@ -54,7 +54,8 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="row">
+                         
+                        <div class="col-sm-6">
                             <div class="mb-3">
                                 {!! Form::label('phone', 'Phone', ['class' => 'form-label']) !!}
 
@@ -64,9 +65,11 @@
                                 @enderror
                             </div>
                         </div>
+                    </div>
 
 
                         <div class="row">
+                             <div class="col-sm-6">
                             <div class="mb-3">
                                 {!! Form::label('address', 'Address', ['class' => 'form-label']) !!}
 
@@ -78,7 +81,7 @@
                         </div>
 
 
-                        <div class="row">
+                        <div class="col-sm-6">
                             <div class="mb-3">
                                 {!! Form::label('password', 'Password', ['class' => 'form-label']) !!}
 
@@ -88,6 +91,7 @@
                                 @enderror
                             </div>
                         </div>
+                         </div>
 
                         <div class="row">
                             <div class="mb-3">

@@ -32,7 +32,7 @@
 
                                     {!! Form::file('logo', [
                                         'class' => 'form-control',
-                                        'placeholder' => 'Main Thumbnail',                                        
+                                        'placeholder' => 'Main Thumbnail',
                                         'onchange' => 'mainThamUrl(this)',
                                     ]) !!}
                                     @error('logo')
@@ -69,7 +69,7 @@
 
                                     {!! Form::file('favicon', [
                                         'class' => 'form-control',
-                                        'placeholder' => 'Main Thumbnail',                                       
+                                        'placeholder' => 'Main Thumbnail',
                                         'onchange' => 'mainThamUrl(this)',
                                     ]) !!}
                                     @error('favicon')
@@ -166,7 +166,7 @@
                             {!! Form::label('company_address', 'Company Address', ['class' => 'form-label']) !!}
 
                             {!! Form::text('company_address', $value = $sitesetting->company_address, [
-                                'class' => 'form-control',                            
+                                'class' => 'form-control',
                                 'placeholder' => 'Company Address',
                             ]) !!}
 
@@ -198,6 +198,18 @@
 
                     </div>
                 </div>
+                <div class="row">
+                     @php
+                        $stylelist = ['main','alabama', 'imperial-blue', 'university', 'cerulean', 'bronze', 'viridian-green', 'amaranth', 'yellow', 'coquelicot', 'viridian-green', 'dark-cyan', 'azure', 'blue-green', 'crimson', 'cerulean', 'blueberry', 'burnt-orange', 'lilac', 'amber', 'cg-blue', 'ball-blue', 'american-rose', 'alizarin', 'dark-pink', 'lime-green', 'cyan-cornflower', 'blue-munsell', 'violet', 'orange-pantone', 'magenta-violet', 'forest-green', 'debian-red', 'go-green', 'rich-carmine', 'university', 'charcoal', 'cadmium', 'fuchsia', 'green-pantone', 'amaranth'];
+                    @endphp
+                    <div class="col-sm-1"><div class="mbox {{ $stylelist[$sitesetting->style] }}  rounded-2 "></div></div>
+                     <div class="col-sm-11">  {!! Form::label('style', 'Color Style', ['class' => 'form-label']) !!}
+                    {!! Form::select('style', $stylelist, $sitesetting->style, [
+                        'class' => 'form-select mb-3',
+                        'placeholder' => 'Color Style',
+                    ]) !!}</div>
+                </div>
+                
                 <div class="mb-3">
 
                     {!! Form::label('facebook', 'Facebook', ['class' => 'form-label']) !!}

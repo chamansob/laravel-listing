@@ -94,7 +94,8 @@ class SettingController extends Controller
                 'twitter' => $request->twitter,
                 'pinterest' => $request->pinterest,
                 'google' => $request->google,
-                'vimeo' => $request->vimeo,                
+                'vimeo' => $request->vimeo,
+                'style' => $request->style,                 
                 'logo' => $save_url,
                 'favicon' => $save_url2,
             ]);

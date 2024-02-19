@@ -38,7 +38,7 @@
                         <div class="row">
 
                             <div class="mb-3">
-                                {!! Form::label('plan_heading', 'Plan Heading', ['class' => 'form-label']) !!}
+                                {!! Form::label('plan_heading', 'Permission Heading', ['class' => 'form-label']) !!}
                                 <select name="group_name" class="form-select" id="exampleFormControlSelect1">
                                     <option selected="" disabled="">Select Group</option>
                                      <option value="pages" {{ $permission->group_name == 'pages' ? 'selected' : '' }}>
@@ -49,6 +49,12 @@
                                         Menu Group </option>
                                     <option value="module" {{ $permission->group_name == 'module' ? 'selected' : '' }}>
                                         Module </option>
+                                         <option value="slider" {{ $permission->group_name == 'slider' ? 'selected' : '' }}>
+                                        Slider </option>
+                                         <option value="social" {{ $permission->group_name == 'social' ? 'selected' : '' }}>
+                                        Social </option>
+                                         <option value="testimonial" {{ $permission->group_name == 'testimonial' ? 'selected' : '' }}>
+                                        Testimonials </option>
                                     <option value="category"
                                         {{ $permission->group_name == 'category' ? 'selected' : '' }}>
                                         Blog Category</option>
