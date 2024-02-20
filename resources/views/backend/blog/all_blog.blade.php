@@ -1,4 +1,4 @@
-<x-main-layout>
+<x-dashboard-layout>
  <div class="seperator-header layout-top-spacing">
         <a href="{{ route('blog.create') }}">
             <h4 class="">Add Blog</h4>
@@ -131,4 +131,4 @@
             }
         </script>
     @endif
-</x-main-layout>
+</x-dashboard-layout>

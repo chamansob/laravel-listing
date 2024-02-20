@@ -1,4 +1,4 @@
-<x-main-layout>
+<x-dashboard-layout>
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('pages.index') }}">
             <h4 class="">Show page</h4>
@@ -96,7 +96,7 @@
 
                             {!! Form::label('text', 'Text', ['class' => 'form-label']) !!}
 
-                            {!! Form::textarea('text', $page->text, ['class' => 'form-control', 'placeholder' => 'Text']) !!}
+                            {!! Form::textarea('text', $page->text, ['class' => 'form-control', 'placeholder' => 'Text' ,'id'=>'editor']) !!}
 
                         </div>
 
@@ -138,4 +138,4 @@
             }
         }
     </script>
-</x-main-layout>
+</x-dashboard-layout>

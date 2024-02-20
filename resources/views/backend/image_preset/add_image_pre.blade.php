@@ -1,4 +1,4 @@
-<x-main-layout>
+<x-dashboard-layout>
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('image_preset.index') }}">
             <h4 class="">Show All Image Preset</h4>
@@ -67,4 +67,4 @@
         </div>
 
     </div>
-</x-main-layout>
+</x-dashboard-layout>

@@ -4,6 +4,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\BlogcategoryController;
 use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\BlogtagController;
+use App\Http\Controllers\Backend\CategoriesController;
+use App\Http\Controllers\Backend\CoachingMethodController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\ImagePresetsController;
 use App\Http\Controllers\Backend\MenuController;
@@ -11,10 +13,13 @@ use App\Http\Controllers\Backend\MenugroupController;
 use App\Http\Controllers\Backend\ModuleController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\RoleController;
+use App\Http\Controllers\Backend\ServicesController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\backend\SocialController;
 use App\Http\Controllers\backend\TestimonialController;
 use App\Http\Controllers\Backend\UserRoleController;
+use App\Http\Controllers\Backend\CanProvideController;
+use App\Http\Controllers\Backend\CoachThemeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RedirectIfAuthenticated;
@@ -77,6 +82,31 @@ Route::middleware(['auth', 'roles:admin'])->prefix('admin')->group(function () {
     Route::resource('image_preset', ImagePresetsController::class)->middleware('can:image_preset.index, image_preset.create, image_preset.update');
     Route::post('/image_preset/status', [ImagePresetsController::class, 'StatusUpdate'])->middleware('can:image_preset.status')->name('image_preset.status');
     Route::post('/image_preset/delete', [ImagePresetsController::class, 'Delete'])->middleware('can:image_preset.delete')->name('image_preset.delete');
+
+    // Categories All Routes
+    Route::resource('categories', CategoriesController::class)->middleware('can:categories.index, categories.create, categories.update');
+    Route::post('/categories/status', [CategoriesController::class, 'StatusUpdate'])->middleware('can:categories.status')->name('categories.status');
+    Route::post('/categories/delete', [CategoriesController::class, 'Delete'])->middleware('can:categories.delete')->name('categories.delete');
+
+    // Services All Routes
+    Route::resource('services', ServicesController::class)->middleware('can:services.index, services.create, services.update');
+    Route::post('/services/status', [ServicesController::class, 'StatusUpdate'])->middleware('can:services.status')->name('services.status');
+    Route::post('/services/delete', [ServicesController::class, 'Delete'])->middleware('can:services.delete')->name('services.delete');
+    
+    // Coaching Methods All Routes
+    Route::resource('coaching_methods', CoachingMethodController::class)->middleware('can:coaching_methods.index, coaching_methods.create, coaching_methods.update');
+    Route::post('/coaching_methods/status', [CoachingMethodController::class, 'StatusUpdate'])->middleware('can:coaching_methods.status')->name('coaching_methods.status');
+    Route::post('/coaching_methods/delete', [CoachingMethodController::class, 'Delete'])->middleware('can:coaching_methods.delete')->name('coaching_methods.delete');
+
+    // Can Provide All Routes
+    Route::resource('can_provides', CanProvideController::class)->middleware('can:can_provides.index, can_provides.create, can_provides.update');
+    Route::post('/can_provides/status', [CanProvideController::class, 'StatusUpdate'])->middleware('can:can_provides.status')->name('can_provides.status');
+    Route::post('/can_provides/delete', [CanProvideController::class, 'Delete'])->middleware('can:can_provides.delete')->name('can_provides.delete');
+
+    // Coach Theme All Routes
+    Route::resource('coach_themes', CoachThemeController::class)->middleware('can:coach_themes.index, coach_themes.create, coach_themes.update');
+    Route::post('/coach_themes/status', [CoachThemeController::class, 'StatusUpdate'])->middleware('can:coach_themes.status')->name('coach_themes.status');
+    Route::post('/coach_themes/delete', [CoachThemeController::class, 'Delete'])->middleware('can:coach_themes.delete')->name('coach_themes.delete');
 
     // SMTP and Site Setting  All Route 
     Route::controller(SettingController::class)->group(function () {

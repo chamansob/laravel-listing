@@ -1,4 +1,4 @@
-<x-main-layout>
+<x-dashboard-layout>
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('sliders.index') }}">
             <h4 class="">Show Slider</h4>
@@ -78,4 +78,15 @@
         </div>
 
     </div>
-</x-main-layout>
+     <script type="text/javascript">
+        function mainThamUrl(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#mainThmb').attr('src', e.target.result).width(80).height(80);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+</x-dashboard-layout>

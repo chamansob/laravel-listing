@@ -1,4 +1,4 @@
-<x-main-layout>
+<x-dashboard-layout>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('category.create') }}">
@@ -64,7 +64,7 @@
         </div>
 
     </div>
-</x-main-layout>
+</x-dashboard-layout>
   @if ($category->count() != 0)
         <script type="text/javascript">
            

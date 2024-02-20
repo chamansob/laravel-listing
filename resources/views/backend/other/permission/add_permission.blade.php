@@ -1,4 +1,4 @@
-<x-main-layout>
+<x-dashboard-layout>
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('permission.index') }}">
             <h4 class="">All Permission</h4>
@@ -97,4 +97,4 @@
             });
         });
     </script>
-</x-main-layout>
+</x-dashboard-layout>

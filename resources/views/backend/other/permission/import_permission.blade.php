@@ -1,4 +1,4 @@
-<x-main-layout>
+<x-dashboard-layout>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <div class="seperator-header layout-top-spacing">
@@ -45,4 +45,4 @@
         </div>
 
     </div>
-</x-main-layout>
+</x-dashboard-layout>

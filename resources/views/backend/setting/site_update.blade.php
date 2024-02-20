@@ -1,4 +1,4 @@
-<x-main-layout>
+<x-dashboard-layout>
 
 
     <div class="col-md-12 grid-margin stretch-card">
@@ -295,4 +295,4 @@
             }
         }
     </script>
-</x-main-layout>
+</x-dashboard-layout>

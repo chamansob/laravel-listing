@@ -75,6 +75,17 @@
   <script src="{{ asset('backend/assets/src/assets/js/forms/bootstrap_validation/bs_validation_script.js')}}"></script>
   <script src="{{ asset('backend/assets/js/authentication/form-1.js')}}"></script>
 
+<script>
+    $(document).ready(function () {
+        $('.loginButton').on('click', function () {
+            // Show loading spinner
+            
+            $('#loginSpinner').removeClass('d-none');
 
+            // You may also want to disable the button to prevent multiple clicks
+            // $('#loginButton').prop('disabled', true);
+        });
+    });
+</script>
 </body>
 </html>

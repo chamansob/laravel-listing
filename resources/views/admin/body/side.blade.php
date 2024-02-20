@@ -310,6 +310,141 @@
                      </ul>
                  </li>
              @endif
+             @if (Auth::user()->can('categories.menu'))
+                 <li class="menu">
+                     <a href="#categories" data-bs-toggle="collapse"
+                         aria-expanded="{{ is_active_route('admin/categories') }}" aria-controls="categories"
+                         class="dropdown-toggle">
+                         <div class="">
+                             <i data-feather="menu"></i> <span>{{ __('Categories') }}</span>
+                         </div>
+                         <div>
+                             <i data-feather="chevron-right"></i>
+                         </div>
+                     </a>
+                     <ul class="collapse submenu list-unstyled {{ show_class('admin/categories') }}" id="categories"
+                         data-bs-parent="#accordionExample">
+                         @if (Auth::user()->can('categories.create'))
+                             <li class="{{ active_class('admin/categories/create') }}">
+                                 <a href="{{ route('categories.create') }}"> {{ __('Add Category') }} </a>
+                             </li>
+                         @endif
+                         @if (Auth::user()->can('categories.index'))
+                             <li class="{{ active_class('admin/categories') }}">
+                                 <a href="{{ route('categories.index') }}"> {{ __('Show Category') }} </a>
+                             </li>
+                         @endif
+                     </ul>
+                 </li>
+             @endif
+             @if (Auth::user()->can('services.menu'))
+                 <li class="menu">
+                     <a href="#services" data-bs-toggle="collapse"
+                         aria-expanded="{{ is_active_route('admin/services') }}" aria-controls="services"
+                         class="dropdown-toggle">
+                         <div class="">
+                             <i data-feather="menu"></i> <span>{{ __('Services') }}</span>
+                         </div>
+                         <div>
+                             <i data-feather="chevron-right"></i>
+                         </div>
+                     </a>
+                     <ul class="collapse submenu list-unstyled {{ show_class('admin/services') }}" id="services"
+                         data-bs-parent="#accordionExample">
+                         @if (Auth::user()->can('services.create'))
+                             <li class="{{ active_class('admin/services/create') }}">
+                                 <a href="{{ route('services.create') }}"> {{ __('Add Service') }} </a>
+                             </li>
+                         @endif
+                         @if (Auth::user()->can('services.index'))
+                             <li class="{{ active_class('admin/services') }}">
+                                 <a href="{{ route('services.index') }}"> {{ __('Show Service') }} </a>
+                             </li>
+                         @endif
+                     </ul>
+                 </li>
+             @endif
+             @if (Auth::user()->can('coaching_methods.menu'))
+                 <li class="menu">
+                     <a href="#coaching_methods" data-bs-toggle="collapse"
+                         aria-expanded="{{ is_active_route('admin/coaching_methods') }}" aria-controls="coaching_methods"
+                         class="dropdown-toggle">
+                         <div class="">
+                             <i data-feather="menu"></i> <span>{{ __('Coaching Methods') }}</span>
+                         </div>
+                         <div>
+                             <i data-feather="chevron-right"></i>
+                         </div>
+                     </a>
+                     <ul class="collapse submenu list-unstyled {{ show_class('admin/coaching_methods') }}" id="coaching_methods"
+                         data-bs-parent="#accordionExample">
+                         @if (Auth::user()->can('coaching_methods.create'))
+                             <li class="{{ active_class('admin/coaching_methods/create') }}">
+                                 <a href="{{ route('coaching_methods.create') }}"> {{ __('Add Coaching Methods') }} </a>
+                             </li>
+                         @endif
+                         @if (Auth::user()->can('coaching_methods.index'))
+                             <li class="{{ active_class('admin/coaching_methods') }}">
+                                 <a href="{{ route('coaching_methods.index') }}"> {{ __('Show Coaching Methods') }} </a>
+                             </li>
+                         @endif
+                     </ul>
+                 </li>
+             @endif
+             @if (Auth::user()->can('can_provides.menu'))
+                 <li class="menu">
+                     <a href="#can_provides" data-bs-toggle="collapse"
+                         aria-expanded="{{ is_active_route('admin/can_provides') }}" aria-controls="can_provides"
+                         class="dropdown-toggle">
+                         <div class="">
+                             <i data-feather="menu"></i> <span>{{ __('Can Provides') }}</span>
+                         </div>
+                         <div>
+                             <i data-feather="chevron-right"></i>
+                         </div>
+                     </a>
+                     <ul class="collapse submenu list-unstyled {{ show_class('admin/can_provides') }}" id="can_provides"
+                         data-bs-parent="#accordionExample">
+                         @if (Auth::user()->can('can_provides.create'))
+                             <li class="{{ active_class('admin/can_provides/create') }}">
+                                 <a href="{{ route('can_provides.create') }}"> {{ __('Add Can Provides') }} </a>
+                             </li>
+                         @endif
+                         @if (Auth::user()->can('can_provides.index'))
+                             <li class="{{ active_class('admin/can_provides') }}">
+                                 <a href="{{ route('can_provides.index') }}"> {{ __('Show Can Provides') }} </a>
+                             </li>
+                         @endif
+                     </ul>
+                 </li>
+             @endif
+             @if (Auth::user()->can('coach_themes.menu'))
+                 <li class="menu">
+                     <a href="#coach_themes" data-bs-toggle="collapse"
+                         aria-expanded="{{ is_active_route('admin/coach_themes') }}" aria-controls="coach_themes"
+                         class="dropdown-toggle">
+                         <div class="">
+                             <i data-feather="menu"></i> <span>{{ __('Coach Themes') }}</span>
+                         </div>
+                         <div>
+                             <i data-feather="chevron-right"></i>
+                         </div>
+                     </a>
+                     <ul class="collapse submenu list-unstyled {{ show_class('admin/coach_themes') }}" id="coach_themes"
+                         data-bs-parent="#accordionExample">
+                         @if (Auth::user()->can('coach_themes.create'))
+                             <li class="{{ active_class('admin/coach_themes/create') }}">
+                                 <a href="{{ route('coach_themes.create') }}"> {{ __('Add Coach Themes') }} </a>
+                             </li>
+                         @endif
+                         @if (Auth::user()->can('coach_themes.index'))
+                             <li class="{{ active_class('admin/coach_themes') }}">
+                                 <a href="{{ route('coach_themes.index') }}"> {{ __('Show Coach Themes') }} </a>
+                             </li>
+                         @endif
+                     </ul>
+                 </li>
+             @endif
              @if (Auth::user()->can('role.menu'))
                  <li class="menu">
                      <a href="#roles" data-bs-toggle="collapse"

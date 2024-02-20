@@ -1,4 +1,4 @@
-<x-main-layout>
+<x-dashboard-layout>
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('modules.index') }}">
             <h4 class="">Show Module</h4>
@@ -88,7 +88,7 @@
 
                             {!! Form::label('text', 'Text', ['class' => 'form-label']) !!}
 
-                            {!! Form::textarea('text', $module->text, ['class' => 'form-control', 'placeholder' => 'Text']) !!}
+                            {!! Form::textarea('text', $module->text, ['class' => 'form-control', 'placeholder' => 'Text','id'=>'editor']) !!}
 
                         </div>
 
@@ -130,4 +130,4 @@
             }
         }
     </script>
-</x-main-layout>
+</x-dashboard-layout>

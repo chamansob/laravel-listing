@@ -1,4 +1,4 @@
-<x-main-layout>
+<x-dashboard-layout>
 
  
  <div class="seperator-header layout-top-spacing">
@@ -124,4 +124,4 @@
     
     
     
-</x-main-layout>
+</x-dashboard-layout>

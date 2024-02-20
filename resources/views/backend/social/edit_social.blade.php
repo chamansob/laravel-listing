@@ -1,4 +1,4 @@
-<x-main-layout>
+<x-dashboard-layout>
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('social.index') }}">
             <h4 class="">Show social</h4>
@@ -91,4 +91,4 @@
 
     </div>
   
-</x-main-layout>
+</x-dashboard-layout>

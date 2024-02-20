@@ -1,4 +1,4 @@
-<x-main-layout>
+<x-dashboard-layout>
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('menugroup.index') }}">
             <h4 class="">Show Menu Group</h4>
@@ -41,4 +41,4 @@
         </div>
 
     </div>
-</x-main-layout>
+</x-dashboard-layout>

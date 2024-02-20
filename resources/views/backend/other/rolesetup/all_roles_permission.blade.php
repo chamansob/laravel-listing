@@ -1,4 +1,4 @@
-<x-main-layout>
+<x-dashboard-layout>
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('roles.create') }}">
             <h4 class="">Add Roles</h4>
@@ -121,4 +121,4 @@
             }
         </script>
     @endif
-</x-main-layout>
+</x-dashboard-layout>

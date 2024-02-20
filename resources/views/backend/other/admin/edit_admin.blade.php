@@ -1,4 +1,4 @@
-<x-main-layout>
+<x-dashboard-layout>
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('add.admin') }}">
             <h4 class="">Add Staff</h4>
@@ -138,4 +138,4 @@
         </div>
 
     </div>
-</x-main-layout>
+</x-dashboard-layout>
