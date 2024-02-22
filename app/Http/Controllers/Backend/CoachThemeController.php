@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Exports\CoachThemeExport;
 use App\Http\Controllers\Controller;
+use App\Imports\CoachThemeImport;
 use App\Models\CoachTheme;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CoachThemeController extends Controller
 {
@@ -41,7 +44,7 @@ class CoachThemeController extends Controller
 
         ]);
         $notification = array(
-            'message' => 'Coach ThemeAdded Successfully',
+            'message' => 'Coach Theme Added Successfully',
             'alert-type' => 'success',
         );
         return redirect()->back()->with($notification);
@@ -77,7 +80,7 @@ class CoachThemeController extends Controller
             'theme_slug' => strtolower(str_replace(' ', '-', $request->name)),
         ]);
         $notification = array(
-            'message' => 'Coach ThemeUpdated Successfully',
+            'message' => 'Coach Theme Updated Successfully',
             'alert-type' => 'success',
         );
         return redirect()->back()->with($notification);
@@ -89,13 +92,13 @@ class CoachThemeController extends Controller
 
         $coach_themes->delete();
         $notification = array(
-            'message' => 'Coach ThemeDeleted successfully',
+            'message' => 'Coach Theme Deleted successfully',
             'alert-type' => 'success',
         );
         return redirect()->back()->with($notification);
     }
     /**
-     * Remove the specified resource from storage.
+     * Update the status resource in storage..
      */
     public function StatusUpdate(Request $request)
     {
@@ -106,4 +109,37 @@ class CoachThemeController extends Controller
 
         return ($coach_themes->status == 0) ? 'active' : 'deactive';
     }
+    /**
+     * Import data from a CSV file into the database
+     */
+    public function ImportCoachingMethod()
+    {
+
+        return view('backend.coach_themes.import_theme');
+    }
+    // End Method 
+    /**
+     * Export data from a CSV file into the database
+     */
+    public function Export()
+    {
+        return Excel::download(new CoachThemeExport, 'coach_themes.xlsx');
+    }
+    // End Method 
+    /**
+     * Upload CSV file for import data into the database
+     */
+    public function Import(Request $request)
+    {
+
+        Excel::import(new CoachThemeImport, $request->file('import_file'));
+
+        $notification = array(
+            'message' => 'Coaching Theme Imported Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    } 
+    // End Method 
 }

@@ -1,7 +1,7 @@
 <x-main-layout>
     <div class="seperator-header layout-top-spacing">
-        <a href="{{ route('services.index') }}">
-            <h4 class="">Show service</h4>
+        <a href="{{ route('categories.index') }}">
+            <h4 class="">Show Category</h4>
         </a>
     </div>
     <div class="page-content">
@@ -9,21 +9,39 @@
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title fw-bold">Edit service</h6>
+                        <h6 class="card-title fw-bold">Edit Category</h6>
                         {!! Form::open([
                             'method' => 'put',
-                            'route' => ['services.update', $service->id],
+                            'route' => ['categories.update', $category->id],
                             'class' => 'forms-sample needs-validation',
                             'novalidate' => 'novalidate',
                             'files' => true,
                         ]) !!}
+                         <div class="row">
+                            <div class="col-sm-12">
+                                <div class="mb-3">
+
+                                    {!! Form::label('type', 'Type', ['class' => 'form-label']) !!}
+
+                                    {!! Form::select('type', [1=>'Category',2=>'Service'],$category->type, [
+                                        'class' => 'form-control',
+                                        'required' => 'required',
+                                        'placeholder' => 'Select Type',
+                                    ]) !!}
+                                    @error('type')
+                                        <span class="text-danger pt-3">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            
+                        </div>
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="mb-3">
 
                                     {!! Form::label('name', 'Name', ['class' => 'form-label']) !!}
 
-                                    {!! Form::text('name', $service->name, [
+                                    {!! Form::text('name', $category->name, [
                                         'class' => 'form-control',
                                         'required' => 'required',
                                         'placeholder' => 'Name',
@@ -58,8 +76,8 @@
                                 </div>
                             </div>
                             @php
-                                if (!empty($service->image)) {
-                                    $img = explode('.', $service->image);
+                                if (!empty($category->image)) {
+                                    $img = explode('.', $category->image);
                                     $small_img = $img[0] . '_thumb.' . $img[1];
                                 } else {
                                     $small_img = '/upload/no_image.jpg'; # code...
@@ -72,7 +90,7 @@
 
                             {!! Form::label('text', 'Text', ['class' => 'form-label']) !!}
 
-                            {!! Form::textarea('text', $service->text, ['class' => 'form-control', 'placeholder' => 'Text','id'=>'editor']) !!}
+                            {!! Form::textarea('text', $category->text, ['class' => 'form-control', 'placeholder' => 'Text','id'=>'editor']) !!}
 
                         </div>
                       

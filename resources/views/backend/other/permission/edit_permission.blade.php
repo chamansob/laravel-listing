@@ -41,26 +41,26 @@
                                 {!! Form::label('plan_heading', 'Permission Heading', ['class' => 'form-label']) !!}
                                 <select name="group_name" class="form-select" id="exampleFormControlSelect1">
                                     <option selected="" disabled="">Select Group</option>
-                                     <option value="pages" {{ $permission->group_name == 'pages' ? 'selected' : '' }}>
+                                    <option value="pages" {{ $permission->group_name == 'pages' ? 'selected' : '' }}>
                                         Pages </option>
-                                         <option value="menu" {{ $permission->group_name == 'menu' ? 'selected' : '' }}>
+                                    <option value="menu" {{ $permission->group_name == 'menu' ? 'selected' : '' }}>
                                         Menu </option>
-                                         <option value="menugroup" {{ $permission->group_name == 'menugroup' ? 'selected' : '' }}>
+                                    <option value="menugroup"
+                                        {{ $permission->group_name == 'menugroup' ? 'selected' : '' }}>
                                         Menu Group </option>
                                     <option value="module" {{ $permission->group_name == 'module' ? 'selected' : '' }}>
                                         Module </option>
-                                         <option value="slider" {{ $permission->group_name == 'slider' ? 'selected' : '' }}>
+                                    <option value="slider" {{ $permission->group_name == 'slider' ? 'selected' : '' }}>
                                         Slider </option>
-                                         <option value="social" {{ $permission->group_name == 'social' ? 'selected' : '' }}>
+                                    <option value="social" {{ $permission->group_name == 'social' ? 'selected' : '' }}>
                                         Social </option>
-                                         <option value="testimonial" {{ $permission->group_name == 'testimonial' ? 'selected' : '' }}>
+                                    <option value="testimonial"
+                                        {{ $permission->group_name == 'testimonial' ? 'selected' : '' }}>
                                         Testimonials </option>
-                                    <option value="category"
-                                        {{ $permission->group_name == 'category' ? 'selected' : '' }}>
-                                        Blog Category</option>
+                                    Blog Category</option>
                                     <option value="post" {{ $permission->group_name == 'blog' ? 'selected' : '' }}>
                                         Blog Post</option>
-                                        <option value="tag" {{ $permission->group_name == 'tag' ? 'selected' : '' }}>
+                                    <option value="tag" {{ $permission->group_name == 'tag' ? 'selected' : '' }}>
                                         Blog Tag</option>
                                     <option value="smtp" {{ $permission->group_name == 'smtp' ? 'selected' : '' }}>
                                         SMTP Setting</option>
@@ -70,8 +70,36 @@
                                         Role & Permission </option>
                                     <option value="role" {{ $permission->group_name == 'admin' ? 'selected' : '' }}>
                                         Admin </option>
-                                    <option value="image_preset" {{ $permission->group_name == 'image_preset' ? 'selected' : '' }}>
+                                    <option value="image_preset"
+                                        {{ $permission->group_name == 'image_preset' ? 'selected' : '' }}>
                                         Image Preset </option>
+                                   
+                                    <option value="categories"
+                                        {{ $permission->group_name == 'categories' ? 'selected' : '' }}>Categories
+                                    </option>
+                                     <option value="coached_organizations"
+                                        {{ $permission->group_name == 'coached_organizations' ? 'selected' : '' }}>Coached Organization
+                                    </option>
+                                     <option value="can_provides"
+                                        {{ $permission->group_name == 'can_provides' ? 'selected' : '' }}>Can Provides
+                                    </option>
+                                    <option value="coach_themes"
+                                        {{ $permission->group_name == 'coach_themes' ? 'selected' : '' }}>Coach Themes
+                                    </option>
+                                    <option value="coaches"
+                                        {{ $permission->group_name == 'coaches' ? 'selected' : '' }}>Coaches </option>
+                                    <option value="coaching_methods"
+                                        {{ $permission->group_name == 'coaching_methods' ? 'selected' : '' }}>Coaching
+                                        Methods</option>
+                                    <option value="held_positions"
+                                        {{ $permission->group_name == 'held_positions' ? 'selected' : '' }}>Held
+                                        Positions</option>
+                                    <option value="languages"
+                                        {{ $permission->group_name == 'languages' ? 'selected' : '' }}>Languages
+                                    </option>
+                                    <option value="locations"
+                                        {{ $permission->group_name == 'locations' ? 'selected' : '' }}>Locations
+                                    </option>
                                 </select>
                                 @error('group_name')
                                     <span class="text-danger pt-3">{{ $message }}</span>

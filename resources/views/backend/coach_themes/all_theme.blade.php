@@ -4,6 +4,15 @@
         <a href="{{ route('coach_themes.create') }}">
             <h4 class="">Add Coach Theme</h4>
         </a>
+          &nbsp;
+        <a href="{{ route('import.coach_themes') }}" class="">
+            <h4 class="bg-success text-white"><i data-feather="share"></i> Import</h4>
+        </a>
+        &nbsp;
+        <a href="{{ route('export.coach_theme') }}" class="">
+            <h4 class="bg-primary text-white"> <i data-feather="download"></i> Export</h4>
+        </a>
+    </div>
     </div>
     <div class="page-content">
         <div class="row">

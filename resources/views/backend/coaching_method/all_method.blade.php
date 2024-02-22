@@ -3,6 +3,14 @@
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('coaching_methods.create') }}">
             <h4 class="">Add Coaching Method</h4>
+        </a> 
+        &nbsp;
+        <a href="{{ route('import.coaching_methods') }}" class="">
+            <h4 class="bg-success text-white"><i data-feather="share"></i> Import</h4>
+        </a>
+        &nbsp;
+        <a href="{{ route('export.coaching_method') }}" class="">
+            <h4 class="bg-primary text-white"> <i data-feather="download"></i> Export</h4>
         </a>
     </div>
     <div class="page-content">

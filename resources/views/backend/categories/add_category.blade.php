@@ -24,6 +24,24 @@
                             <div class="col-sm-12">
                                 <div class="mb-3">
 
+                                    {!! Form::label('type', 'Type', ['class' => 'form-label']) !!}
+
+                                    {!! Form::select('type', [1=>'Category',2=>'Service'],1, [
+                                        'class' => 'form-control',
+                                        'required' => 'required',
+                                        'placeholder' => 'Select Type',
+                                    ]) !!}
+                                    @error('type')
+                                        <span class="text-danger pt-3">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="mb-3">
+
                                     {!! Form::label('name', 'Name', ['class' => 'form-label']) !!}
 
                                     {!! Form::text('name', $value = null, [

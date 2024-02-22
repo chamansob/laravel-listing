@@ -4,6 +4,14 @@
         <a href="{{ route('can_provides.create') }}">
             <h4 class="">Add Can Provides</h4>
         </a>
+          &nbsp;
+        <a href="{{ route('import.can_provides') }}" class="">
+            <h4 class="bg-success text-white"><i data-feather="share"></i> Import</h4>
+        </a>
+        &nbsp;
+        <a href="{{ route('export.can_provide') }}" class="">
+            <h4 class="bg-primary text-white"> <i data-feather="download"></i> Export</h4>
+        </a>
     </div>
     <div class="page-content">
         <div class="row">

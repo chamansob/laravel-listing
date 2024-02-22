@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Exports\CoachingMethodExport;
 use App\Http\Controllers\Controller;
-
+use App\Imports\CoachingMethodImport;
 use App\Models\CoachingMethod;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CoachingMethodController extends Controller
 {
@@ -98,6 +100,9 @@ class CoachingMethodController extends Controller
         );
         return redirect()->back()->with($notification);
     }
+    /**
+     * Update the status resource in storage..
+     */
     public function StatusUpdate(Request $request)
     {
         $coaching_method = CoachingMethod::find($request->id);
@@ -107,4 +112,37 @@ class CoachingMethodController extends Controller
 
         return ($coaching_method->status == 0) ? 'active' : 'deactive';
     }
+    /**
+     * Import data from a CSV file into the database
+     */
+    public function ImportCoachingMethod()
+    {
+
+        return view('backend.coaching_method.import_method');
+    }
+    // End Method 
+    /**
+     * Export data from a CSV file into the database
+     */
+    public function Export()
+    {
+        return Excel::download(new CoachingMethodExport, 'coahing_method.xlsx');
+    }
+    // End Method 
+    /**
+     * Upload CSV file for import data into the database
+     */
+    public function Import(Request $request)
+    {
+
+        Excel::import(new CoachingMethodImport, $request->file('import_file'));
+
+        $notification = array(
+            'message' => 'Coaching Method Imported Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    } 
+    // End Method 
 }

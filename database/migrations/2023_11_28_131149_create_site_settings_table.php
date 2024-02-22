@@ -14,17 +14,20 @@ return new class extends Migration
         Schema::create('site_settings', function (Blueprint $table) {
             $table->id();
             $table->string('logo')->nullable();
-            $table->string('site_title');
+            $table->string('favicon')->nullable();
+            $table->string('site_title');            
             $table->string('app_name')->nullable();  
             $table->mediumText('meta_description')->nullable();
             $table->mediumText('meta_keywords')->nullable();
             $table->string('support_phone')->nullable();
+            $table->string('company_address',50)->nullable();
             $table->string('email')->nullable();                      
             $table->string('facebook')->nullable();
             $table->string('twitter')->nullable();
             $table->string('pinterest')->nullable();
             $table->string('google')->nullable();
-            $table->string('vimeo')->nullable();            
+            $table->string('vimeo')->nullable();
+            $table->string('style')->nullable();             
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });

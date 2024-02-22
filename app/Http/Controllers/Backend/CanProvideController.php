@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Exports\CanProvideExport;
 use App\Http\Controllers\Controller;
+use App\Imports\CanProvideImport;
 use Illuminate\Http\Request;
 use App\Models\CanProvide;
+use Maatwebsite\Excel\Facades\Excel;
 class CanProvideController extends Controller
 {
 
@@ -107,4 +110,37 @@ class CanProvideController extends Controller
 
         return ($can_provides->status == 0) ? 'active' : 'deactive';
     }
+    /**
+     * Import data from a CSV file into the database
+     */
+    public function ImportCanProvide()
+    {
+
+        return view('backend.can_provides.import_provide');
+    }
+    // End Method 
+    /**
+     * Export data from a CSV file into the database
+     */
+    public function Export()
+    {
+        return Excel::download(new CanProvideExport, 'can_provides.xlsx');
+    }
+    // End Method 
+    /**
+     * Upload CSV file for import data into the database
+     */
+    public function Import(Request $request)
+    {
+
+        Excel::import(new CanProvideImport, $request->file('import_file'));
+
+        $notification = array(
+            'message' => 'Can Provide Imported Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    } 
+    // End Method 
 }

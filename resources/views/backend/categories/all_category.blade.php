@@ -4,6 +4,14 @@
         <a href="{{ route('categories.create') }}">
             <h4 class="">Add Category</h4>
         </a>
+         &nbsp;
+        <a href="{{ route('import.categories') }}" class="">
+            <h4 class="bg-success text-white"><i data-feather="share"></i> Import</h4>
+        </a>
+        &nbsp;
+        <a href="{{ route('export.category') }}" class="">
+            <h4 class="bg-primary text-white"> <i data-feather="download"></i> Export</h4>
+        </a>
     </div>
     <div class="page-content">
         <div class="row">
@@ -15,8 +23,9 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Type</th>
                                     <th>Name</th>
-                                    <th>Image</th>                                    
+                                    <th>Image</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -24,10 +33,11 @@
                             <tbody>
                                 @foreach ($categories as $category)
                                     <tr class="social-{{ $category->id }}">
-                                         
+
                                         <td>{{ $category->id }}</td>
-                                         <td>{{ !empty($category->name) ? $category->name : '-' }}</td>
-<td>@php
+                                        <td>{{ ($category->type==1)?'Category':'Services'; }}</td>
+                                        <td>{{ !empty($category->name) ? $category->name : '-' }}</td>
+                                        <td>@php
                                             if (!empty($category->image)) {
                                                 $img = explode('.', $category->image);
                                                 $small_img = $img[0] . '_thumb.' . $img[1];
@@ -38,9 +48,9 @@
                                             <img src="{{ asset($small_img) }}"
                                                 class="rounded-circle profile-img border border-dark w-25">
                                         </td>
-                                      
-                                      
-                                        
+
+
+
                                         <td class="text-center">
                                             <button type="button" onClick="statusFunction({{ $category->id }})"
                                                 class="shadow-none badge badge-light-{{ $category->status == 1 ? 'danger' : 'success' }} warning changestatus{{ $category->id }}  bs-tooltip"
@@ -65,17 +75,8 @@
                                                     data-bs-original-title="Delete">
                                                     <i data-feather="trash-2"></i>
                                                 </a>
-
-
-
                                             </div>
                                         </td>
-
-
-
-
-
-
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -124,7 +125,7 @@
                                     _token: crf,
                                     id: id
                                 }, function(data) {
-                                   
+
                                     var elems = document.querySelector('.warning.changestatus' +
                                         id);
                                     if (data == 'active') {

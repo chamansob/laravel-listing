@@ -1,9 +1,10 @@
 <x-dashboard-layout>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <div class="seperator-header layout-top-spacing">
-        <a href="{{ route('services.create') }}">
-            <h4 class="">Add Services</h4>
+        <a href="{{ route('modules.create') }}">
+            <h4 class="">Add Coach</h4>
         </a>
+        
     </div>
     <div class="page-content">
         <div class="row">
@@ -15,21 +16,19 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Image</th>
                                     <th>Name</th>
-                                    <th>Image</th>                                    
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($services as $service)
-                                    <tr class="social-{{ $service->id }}">
-                                         
-                                        <td>{{ $service->id }}</td>
-                                         <td>{{ !empty($service->name) ? $service->name : '-' }}</td>
-<td>@php
-                                            if (!empty($service->image)) {
-                                                $img = explode('.', $service->image);
+                                @foreach ($modules as $module)
+                                    <tr class="module-{{ $module->id }}">
+                                        <td>{{ $module->id }}</td>
+                                        <td>@php
+                                            if (!empty($module->image)) {
+                                                $img = explode('.', $module->image);
                                                 $small_img = $img[0] . '_thumb.' . $img[1];
                                             } else {
                                                 $small_img = '/upload/no_image.jpg'; # code...
@@ -38,14 +37,13 @@
                                             <img src="{{ asset($small_img) }}"
                                                 class="rounded-circle profile-img border border-dark w-25">
                                         </td>
-                                      
-                                      
-                                        
+                                        <td>{{ !empty($module->name) ? $module->name : '-' }}</td>
+
                                         <td class="text-center">
-                                            <button type="button" onClick="statusFunction({{ $service->id }})"
-                                                class="shadow-none badge badge-light-{{ $service->status == 1 ? 'danger' : 'success' }} warning changestatus{{ $service->id }}  bs-tooltip"
+                                            <button type="button" onClick="statusFunction({{ $module->id }})"
+                                                class="shadow-none badge badge-light-{{ $module->status == 1 ? 'danger' : 'success' }} warning changestatus{{ $module->id }}  bs-tooltip"
                                                 data-toggle="tooltip" data-placement="top" title="Status"
-                                                data-original-title="Status">{{ $service->status == 1 ? 'Deactive' : 'Active' }}</button>
+                                                data-original-title="Status">{{ $module->status == 1 ? 'Deactive' : 'Active' }}</button>
 
                                         </td>
 
@@ -53,20 +51,20 @@
                                             <div class="action-btns">
 
 
-                                                <a href="{{ route('services.edit', $service->id) }}"
+                                                <a href="{{ route('modules.edit', $module->id) }}"
                                                     class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip"
                                                     data-placement="top" title="Edit" data-bs-original-title="Edit">
                                                     <i data-feather="edit"></i>
                                                 </a>
 
-                                                <a href="#" onClick="deleteFunction({{ $service->id }})"
-                                                    class="action-btn btn-edit bs-tooltip me-2 delete{{ $service->id }}"
+                                                <a href="#" onClick="deleteFunction({{ $module->id }})"
+                                                    class="action-btn btn-edit bs-tooltip me-2 delete{{ $module->id }}"
                                                     data-toggle="tooltip" data-placement="top" title="Delete"
                                                     data-bs-original-title="Delete">
                                                     <i data-feather="trash-2"></i>
                                                 </a>
 
-
+                                               
 
                                             </div>
                                         </td>
@@ -89,7 +87,7 @@
 
 
     </div>
-    @if ($services->count() != 0)
+    @if ($modules->count() != 0)
         <script type="text/javascript">
             function statusFunction(id) {
                 // event.preventDefault(); // prevent form submit
@@ -120,14 +118,12 @@
                             )
                             setTimeout(function() {
                                 var crf = '{{ csrf_token() }}';
-                                $.post("{{ route('services.status') }}", {
+                                $.post("{{ route('modules.status') }}", {
                                     _token: crf,
-                                    id: id
+                                      id: id
                                 }, function(data) {
-                                   
-                                    var elems = document.querySelector('.warning.changestatus' +
-                                        id);
-                                    if (data == 'active') {
+                                    var elems = document.querySelector('.warning.changestatus' +id);
+                                    if (data == 'active') {                                        
                                         elems.classList.remove("badge-light-danger");
                                         elems.classList.add("badge-light-success");
                                         elems.innerText = 'Active';
@@ -138,7 +134,7 @@
                                         elems.innerText = 'Deactive';
                                         toastr.warning(" Status Deactived");
                                     }
-
+                                   
                                 });
 
                             }, 1000);
@@ -185,14 +181,14 @@
                                 'Your file has been deleted.',
                                 'success'
                             )
-                            var elems = document.querySelector('.social-' + id);
+                            var elems = document.querySelector('.module-' + id);
                             elems.remove();
                             var crf = '{{ csrf_token() }}';
-                            $.post("{{ route('services.delete') }}", {
+                            $.post("{{ route('modules.delete') }}", {
                                 _token: crf,
                                 id: id
                             }, function(data) {
-                                toastr.success("Entry no " + id + " Deleted");
+                              toastr.success("Entry no " + id + " Deleted");
                             });
 
 

@@ -13,13 +13,17 @@ use App\Http\Controllers\Backend\MenugroupController;
 use App\Http\Controllers\Backend\ModuleController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\RoleController;
-use App\Http\Controllers\Backend\ServicesController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\backend\SocialController;
 use App\Http\Controllers\backend\TestimonialController;
 use App\Http\Controllers\Backend\UserRoleController;
 use App\Http\Controllers\Backend\CanProvideController;
+use App\Http\Controllers\Backend\CoachController;
+use App\Http\Controllers\Backend\CoachedOrganizationController;
 use App\Http\Controllers\Backend\CoachThemeController;
+use App\Http\Controllers\Backend\HeldPositionController;
+use App\Http\Controllers\Backend\LanguagesController;
+use App\Http\Controllers\Backend\LocationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RedirectIfAuthenticated;
@@ -53,17 +57,17 @@ Route::middleware(['auth', 'roles:admin'])->prefix('admin')->group(function () {
     Route::resource('modules', ModuleController::class)->middleware('can:module.index, module.create, module.update');
     Route::post('/modules/status', [ModuleController::class, 'StatusUpdate'])->middleware('can:module.status')->name('modules.status');
     Route::post('/modules/delete', [ModuleController::class, 'Delete'])->middleware('can:module.delete')->name('modules.delete');
-    
+
     // Slider All Routes
     Route::resource('sliders', SliderController::class)->middleware('can:sliders.index, sliders.create, sliders.update');
     Route::post('/sliders/status', [SliderController::class, 'StatusUpdate'])->middleware('can:sliders.status')->name('sliders.status');
     Route::post('/sliders/delete', [SliderController::class, 'Delete'])->middleware('can:sliders.delete')->name('sliders.delete');
-    
+
     // Testimonials All Routes
     Route::resource('testimonials', TestimonialController::class)->middleware('can:testimonials.index, testimonials.create, testimonials.update');
     Route::post('/testimonials/status', [TestimonialController::class, 'StatusUpdate'])->middleware('can:testimonials.status')->name('testimonials.status');
     Route::post('/testimonials/delete', [TestimonialController::class, 'Delete'])->middleware('can:testimonials.delete')->name('testimonials.delete');
-    
+
     // Social All Routes
     Route::resource('social', SocialController::class)->middleware('can:social.index, social.create, social.update');
     Route::post('/social/status', [SocialController::class, 'StatusUpdate'])->middleware('can:social.status')->name('social.status');
@@ -87,26 +91,73 @@ Route::middleware(['auth', 'roles:admin'])->prefix('admin')->group(function () {
     Route::resource('categories', CategoriesController::class)->middleware('can:categories.index, categories.create, categories.update');
     Route::post('/categories/status', [CategoriesController::class, 'StatusUpdate'])->middleware('can:categories.status')->name('categories.status');
     Route::post('/categories/delete', [CategoriesController::class, 'Delete'])->middleware('can:categories.delete')->name('categories.delete');
+    Route::get('/import/categories', [CategoriesController::class, 'ImportCategories'])->name('import.categories');
+    Route::get('/exportcategory', [CategoriesController::class, 'Export'])->name('export.category');
+    Route::post('/importcategory', [CategoriesController::class, 'Import'])->name('import.category');
 
-    // Services All Routes
-    Route::resource('services', ServicesController::class)->middleware('can:services.index, services.create, services.update');
-    Route::post('/services/status', [ServicesController::class, 'StatusUpdate'])->middleware('can:services.status')->name('services.status');
-    Route::post('/services/delete', [ServicesController::class, 'Delete'])->middleware('can:services.delete')->name('services.delete');
-    
+    // Coached Organizations All Routes
+    Route::resource('coached_organizations', CoachedOrganizationController::class)->middleware('can:coached_organizations.index, languages.create, coached_organizations.update');
+    Route::post('/coached_organizations/status', [CoachedOrganizationController::class, 'StatusUpdate'])->middleware('can:coached_organizations.status')->name('coached_organizations.status');
+    Route::post('/coached_organizations/delete', [CoachedOrganizationController::class, 'Delete'])->middleware('can:coached_organizations.delete')->name('coached_organizations.delete');
+    Route::get('/import/coached_organizations', [CoachedOrganizationController::class, 'ImportCoachedOrganization'])->name('import.coached_organizations');
+    Route::get('/exportorganization', [CoachedOrganizationController::class, 'Export'])->name('export.coached_organization');
+    Route::post('/importorganization', [CoachedOrganizationController::class, 'Import'])->name('import.coached_organization');
+
     // Coaching Methods All Routes
     Route::resource('coaching_methods', CoachingMethodController::class)->middleware('can:coaching_methods.index, coaching_methods.create, coaching_methods.update');
     Route::post('/coaching_methods/status', [CoachingMethodController::class, 'StatusUpdate'])->middleware('can:coaching_methods.status')->name('coaching_methods.status');
     Route::post('/coaching_methods/delete', [CoachingMethodController::class, 'Delete'])->middleware('can:coaching_methods.delete')->name('coaching_methods.delete');
-
+    Route::get('/import/coaching_methods', [CoachingMethodController::class, 'ImportCoachingMethod'])->name('import.coaching_methods');
+    Route::get('/exportcoaching_methods', [CoachingMethodController::class, 'Export'])->name('export.coaching_method');
+    Route::post('/importcoaching_methods', [CoachingMethodController::class, 'Import'])->name('import.coaching_method');
+    
     // Can Provide All Routes
     Route::resource('can_provides', CanProvideController::class)->middleware('can:can_provides.index, can_provides.create, can_provides.update');
     Route::post('/can_provides/status', [CanProvideController::class, 'StatusUpdate'])->middleware('can:can_provides.status')->name('can_provides.status');
     Route::post('/can_provides/delete', [CanProvideController::class, 'Delete'])->middleware('can:can_provides.delete')->name('can_provides.delete');
+    Route::get('/import/can_provides', [CanProvideController::class, 'ImportCanProvide'])->name('import.can_provides');
+    Route::get('/exportprovide', [CanProvideController::class, 'Export'])->name('export.can_provide');
+    Route::post('/importprovide', [CanProvideController::class, 'Import'])->name('import.can_provide');
 
     // Coach Theme All Routes
     Route::resource('coach_themes', CoachThemeController::class)->middleware('can:coach_themes.index, coach_themes.create, coach_themes.update');
     Route::post('/coach_themes/status', [CoachThemeController::class, 'StatusUpdate'])->middleware('can:coach_themes.status')->name('coach_themes.status');
     Route::post('/coach_themes/delete', [CoachThemeController::class, 'Delete'])->middleware('can:coach_themes.delete')->name('coach_themes.delete');
+    Route::get('/import/coach_themes', [CoachThemeController::class, 'ImportCoachingMethod'])->name('import.coach_themes');
+    Route::get('/exporttheme', [CoachThemeController::class, 'Export'])->name('export.coach_theme');
+    Route::post('/importtheme', [CoachThemeController::class, 'Import'])->name('import.coach_theme');
+
+    // Held Position All Routes
+    Route::resource('held_positions', HeldPositionController::class)->middleware('can:held_positions.index, coach_themes.create, held_positions.update');
+    Route::post('/held_positions/status', [HeldPositionController::class, 'StatusUpdate'])->middleware('can:held_positions.status')->name('held_positions.status');
+    Route::post('/held_positions/delete', [HeldPositionController::class, 'Delete'])->middleware('can:held_positions.delete')->name('held_positions.delete');
+    Route::get('/import/held_positions', [HeldPositionController::class, 'ImportHeldPosition'])->name('import.held_positions');
+    Route::get('/exportposition', [HeldPositionController::class, 'Export'])->name('export.held_position');
+    Route::post('/importposition', [HeldPositionController::class, 'Import'])->name('import.held_position');
+
+    // Languages All Routes
+    Route::resource('languages', LanguagesController::class)->middleware('can:languages.index, languages.create, languages.update');
+    Route::post('/languages/status', [LanguagesController::class, 'StatusUpdate'])->middleware('can:languages.status')->name('languages.status');
+    Route::post('/languages/delete', [LanguagesController::class, 'Delete'])->middleware('can:languages.delete')->name('languages.delete');
+    Route::get('/import/languages', [LanguagesController::class, 'ImportLanguages'])->name('import.languages');
+    Route::get('/exportlanguage', [LanguagesController::class, 'Export'])->name('export.language');
+    Route::post('/importlanguage', [LanguagesController::class, 'Import'])->name('import.language');
+   
+    // Locations All Routes
+    Route::resource('locations', LocationController::class)->middleware('can:locations.index, locations.create, languages.update');
+    Route::post('/locations/status', [LocationController::class, 'StatusUpdate'])->middleware('can:locations.status')->name('locations.status');
+    Route::post('/locations/delete', [LocationController::class, 'Delete'])->middleware('can:locations.delete')->name('locations.delete');
+    Route::get('/import/locations', [LocationController::class, 'ImportLocations'])->name('import.locations');
+    Route::get('/exportlocation', [LocationController::class, 'Export'])->name('export.location');
+    Route::post('/importlocation', [LocationController::class, 'Import'])->name('import.location');
+
+    // Coaches All Routes
+    Route::resource('coaches', CoachController::class)->middleware('can:coaches.index, coaches.create, coaches.update');
+    Route::post('/coaches/status', [CoachController::class, 'StatusUpdate'])->middleware('can:coaches.status')->name('coaches.status');
+    Route::post('/coaches/delete', [CoachController::class, 'Delete'])->middleware('can:coaches.delete')->name('coaches.delete');
+    Route::get('/import/coachs', [CoachController::class, 'ImportLanguages'])->name('import.coachs');
+    Route::get('/exportcoach', [CoachController::class, 'Export'])->name('export.coach');
+    Route::post('/importcoach', [CoachController::class, 'Import'])->name('import.coach');
 
     // SMTP and Site Setting  All Route 
     Route::controller(SettingController::class)->group(function () {
