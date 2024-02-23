@@ -89,8 +89,13 @@ class HeldPositionController extends Controller
 
     public function delete(Request $request)
     {
-        $heldposition = HeldPosition::find($request->id);
-
+        
+        if (is_array($request->id)) {
+            $heldposition = HeldPosition::whereIn('id', $request->id);
+        } else {
+            $heldposition = HeldPosition::find($request->id);
+        }
+        
         $heldposition->delete();
         $notification = array(
             'message' => 'Held Position Deleted successfully',

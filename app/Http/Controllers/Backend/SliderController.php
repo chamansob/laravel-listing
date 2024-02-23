@@ -120,14 +120,27 @@ class SliderController extends Controller
      */
     public function delete(Request $request)
     {
-        $slider = Slider::find($request->id);
-        if (file_exists($slider->image)) {
-            $img = explode('.', $slider->image);
-            $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
-            unlink($small_img);
-            unlink($slider->image);
+        if (is_array($request->id)) {
+            $sliders = Slider::whereIn('id', $request->id);
+            foreach ($sliders as $slider) {
+                if (file_exists($slider->image)) {
+                    $img = explode('.', $slider->image);
+                    $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
+                    unlink($small_img);
+                    unlink($slider->image);
+                }
+            }
+        } else {
+            $sliders = Slider::find($request->id);
+            if (file_exists($sliders->image)) {
+                $img = explode('.', $sliders->image);
+                $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
+                unlink($small_img);
+                unlink($sliders->image);
+            }
         }
-        $slider->delete();
+
+        $sliders->delete();
         $notification = array(
             'message' => 'Slider Deleted successfully',
             'alert-type' => 'success',

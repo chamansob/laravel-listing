@@ -4,7 +4,7 @@
         <a href="{{ route('categories.create') }}">
             <h4 class="">Add Category</h4>
         </a>
-         &nbsp;
+        &nbsp;
         <a href="{{ route('import.categories') }}" class="">
             <h4 class="bg-success text-white"><i data-feather="share"></i> Import</h4>
         </a>
@@ -33,9 +33,8 @@
                             <tbody>
                                 @foreach ($categories as $category)
                                     <tr class="social-{{ $category->id }}">
-
-                                        <td>{{ $category->id }}</td>
-                                        <td>{{ ($category->type==1)?'Category':'Services'; }}</td>
+                                        <td><span class="form-check form-check-primary"><input class="form-check-input mixed_child " value="{{ $category->id }}" type="checkbox"> &nbsp; {{ $category->id }}</span></td>
+                                        <td>{{ $category->type == 1 ? 'Category' : 'Services' }}</td>
                                         <td>{{ !empty($category->name) ? $category->name : '-' }}</td>
                                         <td>@php
                                             if (!empty($category->image)) {
@@ -81,6 +80,13 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        @if ($categories->count() != 0)
+                            <div class="ms-3">
+                                <button id="deleteall" onClick="deleteAllFunction()" class="btn btn-danger mb-2 me-4">
+                                    <span class="btn-text-inner">Delete Selected</span>
+                                </button>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -92,6 +98,44 @@
     </div>
     @if ($categories->count() != 0)
         <script type="text/javascript">
+            function deleteAllFunction() {
+                // Get all checkboxes with the specified class name
+                var checkboxes = document.querySelectorAll('.mixed_child');
+                // Initialize an array to store checked checkbox values
+                var checkedValues = [];
+                // Iterate through each checkbox
+                checkboxes.forEach(function(checkbox) {
+                    // Check if the checkbox is checked
+                    if (checkbox.checked) {
+                        // Add the value to the array
+                        checkedValues.push(checkbox.value);
+                    }
+                });
+                if (checkedValues.length === 0) {
+                    // Display an alert if none are checked               
+                    toastr.warning("Please check at least one checkbox.");
+                } else {
+                    // Output the array to the console (you can do whatever you want with the array)
+                    checkboxes.forEach(function(checkbox) {
+                        // Check if the checkbox is checked
+                        if (checkbox.checked) {
+                            // Add the value to the array
+                            checkedValues.push(checkbox.value);
+                            var elems = document.querySelector('.social-' + checkbox.value);
+                            elems.remove();
+                        }
+                    });
+                    // console.log("Checked Checkbox Values: ", checkedValues);
+                    var crf = '{{ csrf_token() }}';
+                    $.post("{{ route('categories.delete') }}", {
+                        _token: crf,
+                        id: checkedValues
+                    }, function(data) {
+                        toastr.success("Selected Data Deleted");
+                    });
+                }
+            }
+
             function statusFunction(id) {
                 // event.preventDefault(); // prevent form submit
                 // var form = event.target.form; // storing the form

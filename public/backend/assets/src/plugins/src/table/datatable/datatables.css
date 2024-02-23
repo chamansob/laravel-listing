@@ -37,8 +37,9 @@ div.dataTables_wrapper div.dataTables_length label {
   font-weight: normal;
   text-align: left;
   white-space: nowrap;
-    color: #888ea8;
-    font-weight: 600;
+  color: #888ea8;
+  font-weight: 600;
+  margin-right: 10px;    
 }
 div.dataTables_wrapper div.dataTables_length select {
   width: 75px;
@@ -230,4 +231,7 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:fir
 }
 div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:last-child {
   padding-right: 0;
+}
+.dt-buttons{
+  margin-top: 5px;;
 }

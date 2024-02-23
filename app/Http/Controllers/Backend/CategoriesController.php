@@ -125,7 +125,27 @@ class CategoriesController extends Controller
      */
     public function delete(Request $request)
     {
-        $categories = Categories::find($request->id);
+        if (is_array($request->id)) {
+            $categories = Categories::whereIn('id', $request->id);
+            foreach ($categories as $categorie) {
+                if (file_exists($categorie->image)) {
+                    $img = explode('.', $categorie->image);
+                    $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
+                    unlink($small_img);
+                    unlink($categorie->image);
+                }
+            }
+        } else {
+            $categories = Categories::find($request->id);
+            if (file_exists($categories->image)) {
+                $img = explode('.', $categories->image);
+                $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
+                unlink($small_img);
+                unlink($categories->image);
+            }
+        }
+        
+       
         if (file_exists($categories->image)) {
             $img = explode('.', $categories->image);
             $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];

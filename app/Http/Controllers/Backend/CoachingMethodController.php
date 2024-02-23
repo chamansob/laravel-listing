@@ -91,7 +91,12 @@ class CoachingMethodController extends Controller
      */
     public function delete(Request $request)
     {
-        $coaching_method = CoachingMethod::find($request->id);
+        if (is_array($request->id)) {
+            $coaching_method = CoachingMethod::whereIn('id', $request->id);
+        } else {
+            $coaching_method = CoachingMethod::find($request->id);
+        }
+        
        
         $coaching_method->delete();
         $notification = array(

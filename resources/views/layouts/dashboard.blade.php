@@ -40,7 +40,7 @@
     <link href="{{ asset('backend/assets/src/plugins/css/light/table/datatable/custom_dt_miscellaneous.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ asset('backend/assets/src/plugins/css/dark/table/datatable/dt-global_style.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ asset('backend/assets/src/plugins/css/dark/table/datatable/custom_dt_miscellaneous.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('backend/assets/src/plugins/src/select2/select2.min.css')}}" rel="stylesheet" type="text/css">
+ 
     
    <!-- Scripts -->
      @vite(['resources/js/app.js'])
@@ -149,13 +149,8 @@
     <script src="{{ asset('backend/assets/src/plugins/src/table/datatable/button-ext/buttons.print.min.js')}}"></script>
     <script src="{{ asset('backend/assets/src/plugins/src/table/datatable/custom_miscellaneous.js')}}"></script>
 
-    <script src="{{ asset('backend/assets/src/plugins/src/select2/select2.min.js')}}"></script>
-    <script src="{{ asset('backend/assets/src/plugins/src/select2/custom-select2.js')}}"></script>
-    <script>
-        $(".tagging").select2({
-    tags: true
-});
-</script>
-    <!-- END PAGE LEVEL SCRIPTS -->    
+ 
+    <!-- END PAGE LEVEL SCRIPTS --> 
+
 </body>
 </html>

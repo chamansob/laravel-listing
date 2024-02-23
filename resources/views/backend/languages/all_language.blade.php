@@ -1,10 +1,10 @@
 <x-dashboard-layout>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('languages.create') }}">
             <h4 class="">Add Language</h4>
         </a>
-          &nbsp;
+        &nbsp;
         <a href="{{ route('import.languages') }}" class="">
             <h4 class="bg-success text-white"><i data-feather="share"></i> Import</h4>
         </a>
@@ -22,6 +22,7 @@
                         <table id="html5-extension" class="table dt-table-hover">
                             <thead>
                                 <tr>
+                                    
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th class="text-center">Status</th>
@@ -29,50 +30,44 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($languages as $provide)
-                                    <tr class="social-{{ $provide->id }}">
-
-                                        <td>{{ $provide->id }}</td>
-                                        <td>{{ !empty($provide->name) ? $provide->name : '-' }}</td>
+                                @foreach ($languages as $language)
+                                    <tr class="social-{{ $language->id }}">
+                                        
+                                        <td><span class="form-check form-check-primary"><input class="form-check-input mixed_child " value="{{ $language->id }}" type="checkbox"> &nbsp; {{ $language->id }}</span></td>
+                                        <td>{{ !empty($language->name) ? $language->name : '-' }}</td>
                                         <td class="text-center">
-                                            <button type="button" onClick="statusFunction({{ $provide->id }})"
-                                                class="shadow-none badge badge-light-{{ $provide->status == 1 ? 'danger' : 'success' }} warning changestatus{{ $provide->id }}  bs-tooltip"
+                                            <button type="button" onClick="statusFunction({{ $language->id }})"
+                                                class="shadow-none badge badge-light-{{ $language->status == 1 ? 'danger' : 'success' }} warning changestatus{{ $language->id }}  bs-tooltip"
                                                 data-toggle="tooltip" data-placement="top" title="Status"
-                                                data-original-title="Status">{{ $provide->status == 1 ? 'Deactive' : 'Active' }}</button>
-
+                                                data-original-title="Status">{{ $language->status == 1 ? 'Deactive' : 'Active' }}</button>
                                         </td>
 
                                         <td class="text-center">
                                             <div class="action-btns">
-
-
-                                                <a href="{{ route('languages.edit', $provide->id) }}"
+                                                <a href="{{ route('languages.edit', $language->id) }}"
                                                     class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip"
                                                     data-placement="top" title="Edit" data-bs-original-title="Edit">
                                                     <i data-feather="edit"></i>
                                                 </a>
-
-                                                <a href="#" onClick="deleteFunction({{ $provide->id }})"
-                                                    class="action-btn btn-edit bs-tooltip me-2 delete{{ $provide->id }}"
+                                                <a href="#" onClick="deleteFunction({{ $language->id }})"
+                                                    class="action-btn btn-edit bs-tooltip me-2 delete{{ $language->id }}"
                                                     data-toggle="tooltip" data-placement="top" title="Delete"
                                                     data-bs-original-title="Delete">
                                                     <i data-feather="trash-2"></i>
                                                 </a>
-
-
-
                                             </div>
                                         </td>
-
-
-
-
-
-
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                         @if ($languages->count() != 0)
+                        <div class="ms-3"> 
+                            <button id="deleteall" onClick="deleteAllFunction()" class="btn btn-danger mb-2 me-4">
+                               <span class="btn-text-inner">Delete Selected</span>
+                            </button>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -84,7 +79,44 @@
     </div>
     @if ($languages->count() != 0)
         <script type="text/javascript">
-            function statusFunction(id) {
+        function deleteAllFunction() {
+            // Get all checkboxes with the specified class name
+            var checkboxes = document.querySelectorAll('.mixed_child');
+            // Initialize an array to store checked checkbox values
+            var checkedValues = [];
+            // Iterate through each checkbox
+            checkboxes.forEach(function(checkbox) {
+                // Check if the checkbox is checked
+                if (checkbox.checked) {
+                    // Add the value to the array
+                    checkedValues.push(checkbox.value);
+                }
+            });
+             if (checkedValues.length === 0) {
+                // Display an alert if none are checked               
+                 toastr.warning("Please check at least one checkbox.");
+            } else {
+                // Output the array to the console (you can do whatever you want with the array)
+                checkboxes.forEach(function(checkbox) {
+                // Check if the checkbox is checked
+                if (checkbox.checked) {
+                    // Add the value to the array
+                    checkedValues.push(checkbox.value);
+                    var elems = document.querySelector('.social-' + checkbox.value);
+                            elems.remove();                           
+                }
+            });
+                // console.log("Checked Checkbox Values: ", checkedValues);
+                 var crf = '{{ csrf_token() }}';
+                            $.post("{{ route('languages.delete') }}", {
+                                _token: crf,
+                                id: checkedValues
+                            }, function(data) {
+                                toastr.success("Selected Data Deleted");
+                            });
+            }
+        }
+                     function statusFunction(id) {
                 // event.preventDefault(); // prevent form submit
                 // var form = event.target.form; // storing the form
                 const swalWithBootstrapButtons = Swal.mixin({
@@ -203,8 +235,8 @@
                 })
 
 
-
             }
         </script>
     @endif
+
 </x-dashboard-layout>

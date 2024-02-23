@@ -8,6 +8,7 @@ use App\Imports\CanProvideImport;
 use Illuminate\Http\Request;
 use App\Models\CanProvide;
 use Maatwebsite\Excel\Facades\Excel;
+
 class CanProvideController extends Controller
 {
 
@@ -89,8 +90,11 @@ class CanProvideController extends Controller
 
     public function delete(Request $request)
     {
-        $can_provides = canProvide::find($request->id);
-
+        if (is_array($request->id)) {
+            $can_provides = canProvide::whereIn('id', $request->id);
+        } else {
+            $can_provides = canProvide::find($request->id);
+        }
         $can_provides->delete();
         $notification = array(
             'message' => 'Can Provide Deleted successfully',
@@ -103,7 +107,12 @@ class CanProvideController extends Controller
      */
     public function StatusUpdate(Request $request)
     {
-        $can_provides = canProvide::find($request->id);
+        if (is_array($request->id)) {
+            $can_provides = canProvide::whereIn('id', $request->id);
+        } else {
+            $can_provides = canProvide::find($request->id);
+        }
+        
         $can_provides->update([
             'status' => ($can_provides->status == 1) ? 0 : 1,
         ]);
@@ -141,6 +150,6 @@ class CanProvideController extends Controller
         );
 
         return redirect()->back()->with($notification);
-    } 
+    }
     // End Method 
 }

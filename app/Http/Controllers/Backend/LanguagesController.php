@@ -86,10 +86,17 @@ class LanguagesController extends Controller
         );
         return redirect()->back()->with($notification);
     }
-
+    /**
+     * Delete  the resource in storage..
+     */
     public function delete(Request $request)
     {
-        $languages = Languages::find($request->id);
+        if (is_array($request->id)) {
+            $languages = Languages::whereIn('id', $request->id);
+        } else {
+            $languages = Languages::find($request->id);
+        }
+
 
         $languages->delete();
         $notification = array(
@@ -98,6 +105,7 @@ class LanguagesController extends Controller
         );
         return redirect()->back()->with($notification);
     }
+
     /**
      * Update the status resource in storage..
      */
@@ -141,6 +149,6 @@ class LanguagesController extends Controller
         );
 
         return redirect()->back()->with($notification);
-    } 
+    }
     // End Method 
 }

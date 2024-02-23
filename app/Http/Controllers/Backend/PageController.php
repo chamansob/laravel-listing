@@ -126,14 +126,29 @@ class PageController extends Controller
      */
     public function delete(Request $request)
     {
-        $page = Page::find($request->id);
-        if (file_exists($page->image)) {
-            $img = explode('.', $page->image);
-            $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
-            unlink($small_img);           
-            unlink($page->image);
-        }        
-        $page->delete();
+        
+        if (is_array($request->id)) {
+            $pages = Page::whereIn('id', $request->id);
+            foreach($pages as $page)
+            {
+                if (file_exists($page->image)) {
+                    $img = explode('.', $page->image);
+                    $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
+                    unlink($small_img);
+                    unlink($page->image);
+                } 
+            }
+        } else {
+            $pages = Page::find($request->id);
+            if (file_exists($pages->image)) {
+                $img = explode('.', $pages->image);
+                $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
+                unlink($small_img);
+                unlink($pages->image);
+            } 
+        }
+               
+        $pages->delete();
         $notification = array(
             'message' => 'Page Deleted successfully',
             'alert-type' => 'success',

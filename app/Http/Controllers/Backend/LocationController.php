@@ -90,8 +90,13 @@ class LocationController extends Controller
 
     public function delete(Request $request)
     {
-        $locations = Location::find($request->id);
-
+       
+        if (is_array($request->id)) {
+            $locations = Location::whereIn('id', $request->id);
+        } else {
+            $locations = Location::find($request->id);
+        }
+        
         $locations->delete();
         $notification = array(
             'message' => 'Locations Deleted successfully',

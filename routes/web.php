@@ -1,4 +1,6 @@
 <?php
+
+use App\Models\Languages;
 use Illuminate\Support\Facades\Route;
 
 
@@ -13,7 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::view('/', 'home');
-
+Route::get('/test', function () {
+     $p1 = Languages::whereIn('id',['22','24'])->get();
+    
+    return view('test',compact('p1'));
+});
 require __DIR__ . '/user.php';
 
 require __DIR__ . '/admin.php';

@@ -24,10 +24,13 @@
                             <tbody>
                                 @foreach ($menugroup as $menugroup)
                                     <tr class="menu-{{ $menugroup->id }}">
-                                        <td>{{ $menugroup->id }}</td>                                      
+
+                                        <td><span class="form-check form-check-primary"><input
+                                                    class="form-check-input mixed_child " value="{{ $menugroup->id }}"
+                                                    type="checkbox"> &nbsp; {{ $menugroup->id }}</span></td>
                                         <td>{{ !empty($menugroup->title) ? $menugroup->title : '-' }}</td>
-                                        <td ></td>
-                                        <td ></td>
+                                        <td></td>
+                                        <td></td>
                                         <td class="text-center">
                                             <div class="action-btns">
 
@@ -48,16 +51,17 @@
 
                                             </div>
                                         </td>
-
-
-
-
-
-
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                        @if ($menugroup->count() != 0)
+                            <div class="ms-3">
+                                <button id="deleteall" onClick="deleteAllFunction()" class="btn btn-danger mb-2 me-4">
+                                    <span class="btn-text-inner">Delete Selected</span>
+                                </button>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -69,7 +73,43 @@
     </div>
     @if ($menugroup->count() != 0)
         <script type="text/javascript">
-           
+            function deleteAllFunction() {
+                // Get all checkboxes with the specified class name
+                var checkboxes = document.querySelectorAll('.mixed_child');
+                // Initialize an array to store checked checkbox values
+                var checkedValues = [];
+                // Iterate through each checkbox
+                checkboxes.forEach(function(checkbox) {
+                    // Check if the checkbox is checked
+                    if (checkbox.checked) {
+                        // Add the value to the array
+                        checkedValues.push(checkbox.value);
+                    }
+                });
+                if (checkedValues.length === 0) {
+                    // Display an alert if none are checked               
+                    toastr.warning("Please check at least one checkbox.");
+                } else {
+                    // Output the array to the console (you can do whatever you want with the array)
+                    checkboxes.forEach(function(checkbox) {
+                        // Check if the checkbox is checked
+                        if (checkbox.checked) {
+                            // Add the value to the array
+                            checkedValues.push(checkbox.value);
+                            var elems = document.querySelector('.social-' + checkbox.value);
+                            elems.remove();
+                        }
+                    });
+                    // console.log("Checked Checkbox Values: ", checkedValues);
+                    var crf = '{{ csrf_token() }}';
+                    $.post("{{ route('menugroup.delete') }}", {
+                        _token: crf,
+                        id: checkedValues
+                    }, function(data) {
+                        toastr.success("Selected Data Deleted");
+                    });
+                }
+            }
 
             function deleteFunction(id) {
 
@@ -106,7 +146,7 @@
                                 _token: crf,
                                 id: id
                             }, function(data) {
-                              toastr.success("Entry no " + id + " Deleted");
+                                toastr.success("Entry no " + id + " Deleted");
                             });
 
 
@@ -122,9 +162,6 @@
                         }
                     })
                 })
-
-
-
             }
         </script>
     @endif

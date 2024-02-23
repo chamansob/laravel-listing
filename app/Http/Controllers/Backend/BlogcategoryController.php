@@ -98,7 +98,12 @@ class BlogcategoryController extends Controller
     }
     public function delete(Request $request)
     {
-        $blogcat = Blogcategory::find($request->id);
+        if (is_array($request->id)) {
+            $blogcat = Blogcategory::whereIn('id', $request->id);
+        } else {
+            $blogcat = Blogcategory::find($request->id);
+        }
+       
 
         $blogcat->delete();
         $notification = array(

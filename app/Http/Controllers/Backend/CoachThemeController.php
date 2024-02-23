@@ -88,8 +88,13 @@ class CoachThemeController extends Controller
 
     public function delete(Request $request)
     {
-        $coach_themes = CoachTheme::find($request->id);
-
+       
+        if (is_array($request->id)) {
+            $coach_themes = CoachTheme::whereIn('id', $request->id);
+        } else {
+            $coach_themes = CoachTheme::find($request->id);
+        }
+        
         $coach_themes->delete();
         $notification = array(
             'message' => 'Coach Theme Deleted successfully',

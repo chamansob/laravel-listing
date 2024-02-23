@@ -90,19 +90,15 @@ class BlogtagController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Blogtag $blogtag)
-    {
-
-        $blogtag->delete();
-        $notification = array(
-            'message' => 'Tag Deleted successfully',
-            'alert-type' => 'success',
-        );
-        return redirect()->back()->with($notification);
-    }
+    
     public function delete(Request $request)
     {
-        $blogtag = Blogtag::find($request->id);
+        if (is_array($request->id)) {
+            $blogtag = Blogtag::whereIn('id', $request->id);
+        } else {
+            $blogtag = Blogtag::find($request->id);
+        }
+       
 
         $blogtag->delete();
         $notification = array(

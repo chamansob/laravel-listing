@@ -87,7 +87,12 @@ class CoachedOrganizationController extends Controller
 
     public function delete(Request $request)
     {
-        $coached_organizations = CoachedOrganization::find($request->id);
+        if (is_array($request->id)) {
+            $coached_organizations = CoachedOrganization::whereIn('id', $request->id);
+        } else {
+            $coached_organizations = CoachedOrganization::find($request->id);
+        }
+       
 
         $coached_organizations->delete();
         $notification = array(

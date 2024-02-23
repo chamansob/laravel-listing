@@ -119,14 +119,27 @@ class TestimonialController extends Controller
     }
     public function delete(Request $request)
     {
-        $testimonial = Testimonial::find($request->id);
-        if (file_exists($testimonial->image)) {
-            $img = explode('.', $testimonial->image);
-            $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
-            unlink($small_img);
-            unlink($testimonial->image);
+        if (is_array($request->id)) {
+            $testimonials = Testimonial::whereIn('id', $request->id);
+            foreach ($testimonials as $testimonial) {
+                if (file_exists($testimonial->image)) {
+                    $img = explode('.', $testimonial->image);
+                    $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
+                    unlink($small_img);
+                    unlink($testimonial->image);
+                }
+            }
+        } else {
+            $testimonials = Testimonial::find($request->id);
+            if (file_exists($testimonials->image)) {
+                $img = explode('.', $testimonials->image);
+                $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
+                unlink($small_img);
+                unlink($testimonials->image);
+            }
         }
-        $testimonial->delete();
+
+        $testimonials->delete();
         $notification = array(
             'message' => 'Testimonial Deleted successfully',
             'alert-type' => 'success',

@@ -24,7 +24,10 @@
                             <tbody>
                                 @foreach ($modules as $module)
                                     <tr class="module-{{ $module->id }}">
-                                        <td>{{ $module->id }}</td>
+                                       <td><span class="form-check form-check-primary"><input
+                                                    class="form-check-input mixed_child " value="{{ $module->id }}"
+                                                    type="checkbox"> &nbsp; {{ $module->id }}</span></td>
+
                                         <td>@php
                                             if (!empty($module->image)) {
                                                 $img = explode('.', $module->image);
@@ -63,20 +66,21 @@
                                                     <i data-feather="trash-2"></i>
                                                 </a>
 
-                                               
+
 
                                             </div>
                                         </td>
-
-
-
-
-
-
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                        @if ($modules->count() != 0)
+                            <div class="ms-3">
+                                <button id="deleteall" onClick="deleteAllFunction()" class="btn btn-danger mb-2 me-4">
+                                    <span class="btn-text-inner">Delete Selected</span>
+                                </button>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -88,6 +92,44 @@
     </div>
     @if ($modules->count() != 0)
         <script type="text/javascript">
+            function deleteAllFunction() {
+                // Get all checkboxes with the specified class name
+                var checkboxes = document.querySelectorAll('.mixed_child');
+                // Initialize an array to store checked checkbox values
+                var checkedValues = [];
+                // Iterate through each checkbox
+                checkboxes.forEach(function(checkbox) {
+                    // Check if the checkbox is checked
+                    if (checkbox.checked) {
+                        // Add the value to the array
+                        checkedValues.push(checkbox.value);
+                    }
+                });
+                if (checkedValues.length === 0) {
+                    // Display an alert if none are checked               
+                    toastr.warning("Please check at least one checkbox.");
+                } else {
+                    // Output the array to the console (you can do whatever you want with the array)
+                    checkboxes.forEach(function(checkbox) {
+                        // Check if the checkbox is checked
+                        if (checkbox.checked) {
+                            // Add the value to the array
+                            checkedValues.push(checkbox.value);
+                            var elems = document.querySelector('.social-' + checkbox.value);
+                            elems.remove();
+                        }
+                    });
+                    // console.log("Checked Checkbox Values: ", checkedValues);
+                    var crf = '{{ csrf_token() }}';
+                    $.post("{{ route('modules.delete') }}", {
+                        _token: crf,
+                        id: checkedValues
+                    }, function(data) {
+                        toastr.success("Selected Data Deleted");
+                    });
+                }
+            }
+
             function statusFunction(id) {
                 // event.preventDefault(); // prevent form submit
                 // var form = event.target.form; // storing the form
@@ -119,10 +161,11 @@
                                 var crf = '{{ csrf_token() }}';
                                 $.post("{{ route('modules.status') }}", {
                                     _token: crf,
-                                      id: id
+                                    id: id
                                 }, function(data) {
-                                    var elems = document.querySelector('.warning.changestatus' +id);
-                                    if (data == 'active') {                                        
+                                    var elems = document.querySelector('.warning.changestatus' +
+                                        id);
+                                    if (data == 'active') {
                                         elems.classList.remove("badge-light-danger");
                                         elems.classList.add("badge-light-success");
                                         elems.innerText = 'Active';
@@ -133,7 +176,7 @@
                                         elems.innerText = 'Deactive';
                                         toastr.warning(" Status Deactived");
                                     }
-                                   
+
                                 });
 
                             }, 1000);
@@ -187,7 +230,7 @@
                                 _token: crf,
                                 id: id
                             }, function(data) {
-                              toastr.success("Entry no " + id + " Deleted");
+                                toastr.success("Entry no " + id + " Deleted");
                             });
 
 

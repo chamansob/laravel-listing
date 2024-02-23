@@ -4,7 +4,7 @@
         <a href="{{ route('coach_themes.create') }}">
             <h4 class="">Add Coach Theme</h4>
         </a>
-          &nbsp;
+        &nbsp;
         <a href="{{ route('import.coach_themes') }}" class="">
             <h4 class="bg-success text-white"><i data-feather="share"></i> Import</h4>
         </a>
@@ -32,7 +32,7 @@
                             <tbody>
                                 @foreach ($coach_themes as $theme)
                                     <tr class="social-{{ $theme->id }}">
-
+                                        <td><span class="form-check form-check-primary"><input class="form-check-input mixed_child " value="{{ $theme->id }}" type="checkbox"> &nbsp; {{ $theme->id }}</span></td>
                                         <td>{{ $theme->id }}</td>
                                         <td>{{ !empty($theme->name) ? $theme->name : '-' }}</td>
                                         <td class="text-center">
@@ -63,17 +63,17 @@
 
 
                                             </div>
-                                        </td>
-
-
-
-
-
-
-                                    </tr>
+                                        </td></tr>
                                 @endforeach
                             </tbody>
                         </table>
+                        @if ($coach_themes->count() != 0)
+                            <div class="ms-3">
+                                <button id="deleteall" onClick="deleteAllFunction()" class="btn btn-danger mb-2 me-4">
+                                    <span class="btn-text-inner">Delete Selected</span>
+                                </button>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -85,6 +85,120 @@
     </div>
     @if ($coach_themes->count() != 0)
         <script type="text/javascript">
+            function deleteAllFunction() {
+                // Get all checkboxes with the specified class name
+                var checkboxes = document.querySelectorAll('.mixed_child');
+                // Initialize an array to store checked checkbox values
+                var checkedValues = [];
+                // Iterate through each checkbox
+                checkboxes.forEach(function(checkbox) {
+                    // Check if the checkbox is checked
+                    if (checkbox.checked) {
+                        // Add the value to the array
+                        checkedValues.push(checkbox.value);
+                    }
+                });
+                if (checkedValues.length === 0) {
+                    // Display an alert if none are checked               
+                    toastr.warning("Please check at least one checkbox.");
+                } else {
+                    // Output the array to the console (you can do whatever you want with the array)
+                    checkboxes.forEach(function(checkbox) {
+                        // Check if the checkbox is checked
+                        if (checkbox.checked) {
+                            // Add the value to the array
+                            checkedValues.push(checkbox.value);
+                            var elems = document.querySelector('.social-' + checkbox.value);
+                            elems.remove();
+                        }
+                    });
+                    // console.log("Checked Checkbox Values: ", checkedValues);
+                    var crf = '{{ csrf_token() }}';
+                    $.post("{{ route('coach_themes.delete') }}", {
+                        _token: crf,
+                        id: checkedValues
+                    }, function(data) {
+                        toastr.success("Selected Data Deleted");
+                    });
+                }
+            }
+
+            function deleteAllFunction() {
+                // Get all checkboxes with the specified class name
+                var checkboxes = document.querySelectorAll('.mixed_child');
+                // Initialize an array to store checked checkbox values
+                var checkedValues = [];
+                // Iterate through each checkbox
+                checkboxes.forEach(function(checkbox) {
+                    // Check if the checkbox is checked
+                    if (checkbox.checked) {
+                        // Add the value to the array
+                        checkedValues.push(checkbox.value);
+                    }
+                });
+                if (checkedValues.length === 0) {
+                    // Display an alert if none are checked               
+                    toastr.warning("Please check at least one checkbox.");
+                } else {
+                    // Output the array to the console (you can do whatever you want with the array)
+                    checkboxes.forEach(function(checkbox) {
+                        // Check if the checkbox is checked
+                        if (checkbox.checked) {
+                            // Add the value to the array
+                            checkedValues.push(checkbox.value);
+                            var elems = document.querySelector('.social-' + checkbox.value);
+                            elems.remove();
+                        }
+                    });
+                    // console.log("Checked Checkbox Values: ", checkedValues);
+                    var crf = '{{ csrf_token() }}';
+                    $.post("{{ route('pages.delete') }}", {
+                        _token: crf,
+                        id: checkedValues
+                    }, function(data) {
+                        toastr.success("Selected Data Deleted");
+                    });
+                }
+            }
+
+            function deleteAllFunction() {
+                // Get all checkboxes with the specified class name
+                var checkboxes = document.querySelectorAll('.mixed_child');
+                // Initialize an array to store checked checkbox values
+                var checkedValues = [];
+                // Iterate through each checkbox
+                checkboxes.forEach(function(checkbox) {
+                    // Check if the checkbox is checked
+                    if (checkbox.checked) {
+                        // Add the value to the array
+                        checkedValues.push(checkbox.value);
+                    }
+                });
+                if (checkedValues.length === 0) {
+                    // Display an alert if none are checked               
+                    toastr.warning("Please check at least one checkbox.");
+                } else {
+                    // Output the array to the console (you can do whatever you want with the array)
+                    checkboxes.forEach(function(checkbox) {
+                        // Check if the checkbox is checked
+                        if (checkbox.checked) {
+                            // Add the value to the array
+                            checkedValues.push(checkbox.value);
+                            var elems = document.querySelector('.social-' + checkbox.value);
+                            elems.remove();
+                        }
+                    });
+                    // console.log("Checked Checkbox Values: ", checkedValues);
+                    var crf = '{{ csrf_token() }}';
+                    $.post("{{ route('pages.delete') }}", {
+                        _token: crf,
+                        id: checkedValues
+                    }, function(data) {
+                        toastr.success("Selected Data Deleted");
+                    });
+                }
+            }
+
             function statusFunction(id) {
                 // event.preventDefault(); // prevent form submit
                 // var form = event.target.form; // storing the form
@@ -201,11 +315,7 @@
                             )
                         }
                     })
-                })
-
-
-
-            }
+                })}
         </script>
     @endif
 </x-dashboard-layout>

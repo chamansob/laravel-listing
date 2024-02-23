@@ -4,7 +4,7 @@
         <a href="{{ route('locations.create') }}">
             <h4 class="">Add Location</h4>
         </a>
-          &nbsp;
+        &nbsp;
         <a href="{{ route('import.locations') }}" class="">
             <h4 class="bg-success text-white"><i data-feather="share"></i> Import</h4>
         </a>
@@ -31,30 +31,32 @@
                             </thead>
                             <tbody>
                                 @php
-                                    $country=[
-                                            1 => 'Africa',
-                                            2 => 'Asia',
-                                            3 => 'Asia Pacific',
-                                            4 => 'Caribbean',
-                                            5 => 'Central America',
-                                            6 => 'Europe',
-                                            7 => 'Middle East/ North Africa',
-                                            8 => 'North America',
-                                            9 => 'Other',
-                                            10 => 'South America',
-                            ];
+                                    $country = [
+                                        1 => 'Africa',
+                                        2 => 'Asia',
+                                        3 => 'Asia Pacific',
+                                        4 => 'Caribbean',
+                                        5 => 'Central America',
+                                        6 => 'Europe',
+                                        7 => 'Middle East/ North Africa',
+                                        8 => 'North America',
+                                        9 => 'Other',
+                                        10 => 'South America',
+                                    ];
                                 @endphp
-                                @foreach ($locations as $provide)
-                                    <tr class="social-{{ $provide->id }}">
+                                @foreach ($locations as $location)
+                                    <tr class="social-{{ $location->id }}">
+                                        <td><span class="form-check form-check-primary"><input
+                                                    class="form-check-input mixed_child " value="{{ $location->id }}"
+                                                    type="checkbox"> &nbsp; {{ $location->id }}</span></td>
 
-                                        <td>{{ $provide->id }}</td>
-                                        <td>{{ $country[$provide->location_id] }}</td>
-                                        <td>{{ !empty($provide->name) ? $provide->name : '-' }}</td>
+                                        <td>{{ $country[$location->location_id] }}</td>
+                                        <td>{{ !empty($location->name) ? $location->name : '-' }}</td>
                                         <td class="text-center">
-                                            <button type="button" onClick="statusFunction({{ $provide->id }})"
-                                                class="shadow-none badge badge-light-{{ $provide->status == 1 ? 'danger' : 'success' }} warning changestatus{{ $provide->id }}  bs-tooltip"
+                                            <button type="button" onClick="statusFunction({{ $location->id }})"
+                                                class="shadow-none badge badge-light-{{ $location->status == 1 ? 'danger' : 'success' }} warning changestatus{{ $location->id }}  bs-tooltip"
                                                 data-toggle="tooltip" data-placement="top" title="Status"
-                                                data-original-title="Status">{{ $provide->status == 1 ? 'Deactive' : 'Active' }}</button>
+                                                data-original-title="Status">{{ $location->status == 1 ? 'Deactive' : 'Active' }}</button>
 
                                         </td>
 
@@ -62,33 +64,31 @@
                                             <div class="action-btns">
 
 
-                                                <a href="{{ route('locations.edit', $provide->id) }}"
+                                                <a href="{{ route('locations.edit', $location->id) }}"
                                                     class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip"
                                                     data-placement="top" title="Edit" data-bs-original-title="Edit">
                                                     <i data-feather="edit"></i>
                                                 </a>
 
-                                                <a href="#" onClick="deleteFunction({{ $provide->id }})"
-                                                    class="action-btn btn-edit bs-tooltip me-2 delete{{ $provide->id }}"
+                                                <a href="#" onClick="deleteFunction({{ $location->id }})"
+                                                    class="action-btn btn-edit bs-tooltip me-2 delete{{ $location->id }}"
                                                     data-toggle="tooltip" data-placement="top" title="Delete"
                                                     data-bs-original-title="Delete">
                                                     <i data-feather="trash-2"></i>
                                                 </a>
-
-
-
                                             </div>
                                         </td>
-
-
-
-
-
-
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                        @if ($locations->count() != 0)
+                            <div class="ms-3">
+                                <button id="deleteall" onClick="deleteAllFunction()" class="btn btn-danger mb-2 me-4">
+                                    <span class="btn-text-inner">Delete Selected</span>
+                                </button>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -100,6 +100,46 @@
     </div>
     @if ($locations->count() != 0)
         <script type="text/javascript">
+            function deleteAllFunction() {
+                // Get all checkboxes with the specified class name
+                var checkboxes = document.querySelectorAll('.mixed_child');
+                // Initialize an array to store checked checkbox values
+                var checkedValues = [];
+                // Iterate through each checkbox
+                checkboxes.forEach(function(checkbox) {
+                    // Check if the checkbox is checked
+                    if (checkbox.checked) {
+                        // Add the value to the array
+                        checkedValues.push(checkbox.value);
+                    }
+                });
+                if (checkedValues.length === 0) {
+                    // Display an alert if none are checked               
+                    toastr.warning("Please check at least one checkbox.");
+                } else {
+                    // Output the array to the console (you can do whatever you want with the array)
+                    checkboxes.forEach(function(checkbox) {
+                        // Check if the checkbox is checked
+                        if (checkbox.checked) {
+                            // Add the value to the array
+                            checkedValues.push(checkbox.value);
+                            var elems = document.querySelector('.social-' + checkbox.value);
+                            elems.remove();
+                        }
+                    });
+                    // console.log("Checked Checkbox Values: ", checkedValues);
+                    var crf = '{{ csrf_token() }}';
+                    $.post("{{ route('locations.delete') }}", {
+                        _token: crf,
+                        id: checkedValues
+                    }, function(data) {
+                        toastr.success("Selected Data Deleted");
+                    });
+                }
+            }
+
+            
+
             function statusFunction(id) {
                 // event.preventDefault(); // prevent form submit
                 // var form = event.target.form; // storing the form

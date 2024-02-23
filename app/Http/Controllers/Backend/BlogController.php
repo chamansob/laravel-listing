@@ -26,7 +26,7 @@ class BlogController extends Controller
     }
     public function index()
     {
-        $blog = Blog::latest()->get(['id', 'blogcat_id', 'post_title', 'post_image','status','created_at']);
+        $blog = Blog::latest()->get(['id', 'blogcat_id', 'post_title', 'post_image', 'status', 'created_at']);
         return view('backend.blog.all_blog', compact('blog'));
     }
 
@@ -172,14 +172,27 @@ class BlogController extends Controller
     } // End Method
     public function delete(Request $request)
     {
-        $blog = Blog::find($request->id);
-        if (file_exists($blog->image)) {
-            $img = explode('.', $blog->image);
-            $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
-            unlink($small_img);
-            unlink($blog->image);
+        if (is_array($request->id)) {
+            $blogs = Blog::whereIn('id', $request->id);
+            foreach ($blogs as $blog) {
+                if (file_exists($blog->image)) {
+                    $img = explode('.', $blog->image);
+                    $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
+                    unlink($small_img);
+                    unlink($blog->image);
+                }
+            }
+        } else {
+            $blogs = Blog::find($request->id);
+            if (file_exists($blogs->image)) {
+                $img = explode('.', $blogs->image);
+                $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
+                unlink($small_img);
+                unlink($blogs->image);
+            }
         }
-        $blog->delete();
+
+        $blogs->delete();
         $notification = array(
             'message' => 'Blog Deleted successfully',
             'alert-type' => 'success',
