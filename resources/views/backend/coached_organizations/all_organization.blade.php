@@ -23,6 +23,7 @@
                         <table id="html5-extension" class="table dt-table-hover">
                             <thead>
                                 <tr>
+                                    <th>-</th>
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th class="text-center">Status</th>
@@ -32,9 +33,10 @@
                             <tbody>
                                 @foreach ($coached_organizations as $org)
                                     <tr class="social-{{ $org->id }}">
-                                        <td><span class="form-check form-check-primary"><input
+                                        <td style="width:1%"><span class="form-check form-check-primary"><input
                                                     class="form-check-input mixed_child " value="{{ $org->id }}"
-                                                    type="checkbox"> &nbsp; {{ $org->id }}</span></td>
+                                                    type="checkbox"></span></td>
+                                        <td>{{ $org->id }}</td>
                                         <td>{{ !empty($org->name) ? $org->name : '-' }}</td>
                                         <td class="text-center">
                                             <button type="button" onClick="statusFunction({{ $org->id }})"

@@ -1,5 +1,5 @@
 <x-dashboard-layout>
-    
+
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('languages.create') }}">
             <h4 class="">Add Language</h4>
@@ -22,7 +22,7 @@
                         <table id="html5-extension" class="table dt-table-hover">
                             <thead>
                                 <tr>
-                                    
+                                    <th>-</th>
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th class="text-center">Status</th>
@@ -32,8 +32,9 @@
                             <tbody>
                                 @foreach ($languages as $language)
                                     <tr class="social-{{ $language->id }}">
-                                        
-                                        <td><span class="form-check form-check-primary"><input class="form-check-input mixed_child " value="{{ $language->id }}" type="checkbox"> &nbsp; {{ $language->id }}</span></td>
+
+                                        <td style="width:1%"><span class="form-check form-check-primary"><input class="form-check-input mixed_child " value="{{ $language->id }}" type="checkbox"></span></td>
+                                        <td>{{ $language->id }}</td>
                                         <td>{{ !empty($language->name) ? $language->name : '-' }}</td>
                                         <td class="text-center">
                                             <button type="button" onClick="statusFunction({{ $language->id }})"
@@ -61,12 +62,12 @@
                                 @endforeach
                             </tbody>
                         </table>
-                         @if ($languages->count() != 0)
-                        <div class="ms-3"> 
-                            <button id="deleteall" onClick="deleteAllFunction()" class="btn btn-danger mb-2 me-4">
-                               <span class="btn-text-inner">Delete Selected</span>
-                            </button>
-                        </div>
+                        @if ($languages->count() != 0)
+                            <div class="ms-3">
+                                <button id="deleteall" onClick="deleteAllFunction()" class="btn btn-danger mb-2 me-4">
+                                    <span class="btn-text-inner">Delete Selected</span>
+                                </button>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -79,44 +80,45 @@
     </div>
     @if ($languages->count() != 0)
         <script type="text/javascript">
-        function deleteAllFunction() {
-            // Get all checkboxes with the specified class name
-            var checkboxes = document.querySelectorAll('.mixed_child');
-            // Initialize an array to store checked checkbox values
-            var checkedValues = [];
-            // Iterate through each checkbox
-            checkboxes.forEach(function(checkbox) {
-                // Check if the checkbox is checked
-                if (checkbox.checked) {
-                    // Add the value to the array
-                    checkedValues.push(checkbox.value);
-                }
-            });
-             if (checkedValues.length === 0) {
-                // Display an alert if none are checked               
-                 toastr.warning("Please check at least one checkbox.");
-            } else {
-                // Output the array to the console (you can do whatever you want with the array)
+            function deleteAllFunction() {
+                // Get all checkboxes with the specified class name
+                var checkboxes = document.querySelectorAll('.mixed_child');
+                // Initialize an array to store checked checkbox values
+                var checkedValues = [];
+                // Iterate through each checkbox
                 checkboxes.forEach(function(checkbox) {
-                // Check if the checkbox is checked
-                if (checkbox.checked) {
-                    // Add the value to the array
-                    checkedValues.push(checkbox.value);
-                    var elems = document.querySelector('.social-' + checkbox.value);
-                            elems.remove();                           
+                    // Check if the checkbox is checked
+                    if (checkbox.checked) {
+                        // Add the value to the array
+                        checkedValues.push(checkbox.value);
+                    }
+                });
+                if (checkedValues.length === 0) {
+                    // Display an alert if none are checked               
+                    toastr.warning("Please check at least one checkbox.");
+                } else {
+                    // Output the array to the console (you can do whatever you want with the array)
+                    checkboxes.forEach(function(checkbox) {
+                        // Check if the checkbox is checked
+                        if (checkbox.checked) {
+                            // Add the value to the array
+                            checkedValues.push(checkbox.value);
+                            var elems = document.querySelector('.social-' + checkbox.value);
+                            elems.remove();
+                        }
+                    });
+                    // console.log("Checked Checkbox Values: ", checkedValues);
+                    var crf = '{{ csrf_token() }}';
+                    $.post("{{ route('languages.delete') }}", {
+                        _token: crf,
+                        id: checkedValues
+                    }, function(data) {
+                        toastr.success("Selected Data Deleted");
+                    });
                 }
-            });
-                // console.log("Checked Checkbox Values: ", checkedValues);
-                 var crf = '{{ csrf_token() }}';
-                            $.post("{{ route('languages.delete') }}", {
-                                _token: crf,
-                                id: checkedValues
-                            }, function(data) {
-                                toastr.success("Selected Data Deleted");
-                            });
             }
-        }
-                     function statusFunction(id) {
+
+            function statusFunction(id) {
                 // event.preventDefault(); // prevent form submit
                 // var form = event.target.form; // storing the form
                 const swalWithBootstrapButtons = Swal.mixin({

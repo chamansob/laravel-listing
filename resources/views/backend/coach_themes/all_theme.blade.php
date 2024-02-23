@@ -23,6 +23,7 @@
                         <table id="html5-extension" class="table dt-table-hover">
                             <thead>
                                 <tr>
+                                    <th>-</th>
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th class="text-center">Status</th>
@@ -32,7 +33,7 @@
                             <tbody>
                                 @foreach ($coach_themes as $theme)
                                     <tr class="social-{{ $theme->id }}">
-                                        <td><span class="form-check form-check-primary"><input class="form-check-input mixed_child " value="{{ $theme->id }}" type="checkbox"> &nbsp; {{ $theme->id }}</span></td>
+                                        <td style="width:1%"><span class="form-check form-check-primary"><input class="form-check-input mixed_child " value="{{ $theme->id }}" type="checkbox"></span></td>
                                         <td>{{ $theme->id }}</td>
                                         <td>{{ !empty($theme->name) ? $theme->name : '-' }}</td>
                                         <td class="text-center">

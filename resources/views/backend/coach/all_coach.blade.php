@@ -15,6 +15,7 @@
                         <table id="html5-extension" class="table dt-table-hover">
                             <thead>
                                 <tr>
+                                    <th>-</th>
                                     <th>ID</th>
                                     <th>Image</th>
                                     <th>Name</th>
@@ -25,8 +26,10 @@
                             <tbody>
                                 @foreach ($coachs as $coach)
                                     <tr class="coach-{{ $coach->id }}">
-                                        
-                                        <td><span class="form-check form-check-primary"><input class="form-check-input mixed_child " value="{{ $coach->id }}" type="checkbox"> &nbsp; {{ $coach->id }}</span></td>
+                                         <td style="width:1%"><span class="form-check form-check-primary"><input
+                                                    class="form-check-input mixed_child " value="{{ $coach->id }}"
+                                                    type="checkbox"></span></td>
+                                        <td>{{ $coach->id }}</td>   
                                         <td>@php
                                             if (!empty($coach->image)) {
                                                 $img = explode('.', $coach->image);

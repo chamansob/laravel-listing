@@ -22,6 +22,7 @@
                         <table id="html5-extension" class="table dt-table-hover">
                             <thead>
                                 <tr>
+                                    <th>-</th>
                                     <th>ID</th>
                                     <th>Type</th>
                                     <th>Name</th>
@@ -33,7 +34,10 @@
                             <tbody>
                                 @foreach ($categories as $category)
                                     <tr class="social-{{ $category->id }}">
-                                        <td><span class="form-check form-check-primary"><input class="form-check-input mixed_child " value="{{ $category->id }}" type="checkbox"> &nbsp; {{ $category->id }}</span></td>
+                                        <td style="width:1%"><span class="form-check form-check-primary"><input
+                                                    class="form-check-input mixed_child " value="{{ $category->id }}"
+                                                    type="checkbox"></span></td>
+                                        <td>{{ $category->id }}</td>                                        
                                         <td>{{ $category->type == 1 ? 'Category' : 'Services' }}</td>
                                         <td>{{ !empty($category->name) ? $category->name : '-' }}</td>
                                         <td>@php

@@ -22,6 +22,7 @@
                         <table id="html5-extension" class="table dt-table-hover">
                             <thead>
                                 <tr>
+                                    <th>-</th>
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th class="text-center">Status</th>
@@ -31,9 +32,9 @@
                             <tbody>
                                 @foreach ($coachingmethod as $method)
                                     <tr class="social-{{ $method->id }}">
-                                        <td><span class="form-check form-check-primary"><input
+                                        <td style="width:1%"><span class="form-check form-check-primary"><input
                                                     class="form-check-input mixed_child " value="{{ $method->id }}"
-                                                    type="checkbox"> &nbsp; {{ $method->id }}</span></td>
+                                                    type="checkbox"></span></td>
 
                                         <td>{{ $method->id }}</td>
                                         <td>{{ !empty($method->name) ? $method->name : '-' }}</td>
@@ -117,7 +118,7 @@
                     });
                     // console.log("Checked Checkbox Values: ", checkedValues);
                     var crf = '{{ csrf_token() }}';
-                    $.post("{{ route('coachingmethod.delete') }}", {
+                    $.post("{{ route('coaching_methods.delete') }}", {
                         _token: crf,
                         id: checkedValues
                     }, function(data) {

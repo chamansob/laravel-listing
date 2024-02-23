@@ -14,6 +14,7 @@
                         <table id="html5-extension" class="table dt-table-hover">
                             <thead>
                                 <tr>
+                                    <th>-</th>
                                     <th>ID</th>
                                     <th>Title</th>
                                     <th>-</th>
@@ -25,9 +26,10 @@
                                 @foreach ($menugroup as $menugroup)
                                     <tr class="menu-{{ $menugroup->id }}">
 
-                                        <td><span class="form-check form-check-primary"><input
+                                        <td style="width:1%"><span class="form-check form-check-primary"><input
                                                     class="form-check-input mixed_child " value="{{ $menugroup->id }}"
-                                                    type="checkbox"> &nbsp; {{ $menugroup->id }}</span></td>
+                                                    type="checkbox"></span></td>
+                                        <td>{{ $menugroup->id }}</td>
                                         <td>{{ !empty($menugroup->title) ? $menugroup->title : '-' }}</td>
                                         <td></td>
                                         <td></td>

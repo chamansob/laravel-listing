@@ -18,6 +18,7 @@
                             <table id="html5-extension" class="table dt-table-hover">
                                 <thead>
                                     <tr>
+                                        <th>-</th>
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Width</th>
@@ -30,9 +31,10 @@
                                     @foreach ($image_preset as $img)
                                         <tr class="imageset-{{ $img->id }}">
                                           
-                                              <td><span class="form-check form-check-primary"><input
+                                              <td style="width:1%"><span class="form-check form-check-primary"><input
                                                     class="form-check-input mixed_child " value="{{ $img->id }}"
-                                                    type="checkbox"> &nbsp; {{ $img->id }}</span></td>
+                                                    type="checkbox"></span></td>
+                                                    <td>{{ $img->id }}</td>
                                             <td>{{ ucfirst($img->name) }}</td>
                                             <td>{{ $img->width }}</td>
                                             <td>{{ $img->height }}</td>

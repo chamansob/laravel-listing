@@ -14,6 +14,7 @@
                         <table id="html5-extension" class="table dt-table-hover">
                             <thead>
                                 <tr>
+                                    <th>-</th>
                                     <th>ID</th>
                                     <th>Group Name</th>
                                     <th>Position</th>
@@ -26,10 +27,11 @@
                             <tbody>
                                 @foreach ($menus as $menu)
                                     <tr class="menu-{{ $menu->id }}">
-                                       
-                                          <td><span class="form-check form-check-primary"><input
+
+                                        <td style="width:1%"><span class="form-check form-check-primary"><input
                                                     class="form-check-input mixed_child " value="{{ $menu->id }}"
-                                                    type="checkbox"> &nbsp; {{ $menu->id }}</span></td>
+                                                    type="checkbox"></span></td>
+                                        <td>{{ $menu->id }}</td>
                                         <td>{{ $menu->group->title }}</td>
                                         <td>{{ $menu->position }}</td>
                                         <td>{{ !empty($menu->title) ? $menu->title : '-' }}</td>
@@ -62,7 +64,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                         @if ($menus->count() != 0)
+                        @if ($menus->count() != 0)
                             <div class="ms-3">
                                 <button id="deleteall" onClick="deleteAllFunction()" class="btn btn-danger mb-2 me-4">
                                     <span class="btn-text-inner">Delete Selected</span>
@@ -80,7 +82,7 @@
     </div>
     @if ($menus->count() != 0)
         <script type="text/javascript">
-        function deleteAllFunction() {
+            function deleteAllFunction() {
                 // Get all checkboxes with the specified class name
                 var checkboxes = document.querySelectorAll('.mixed_child');
                 // Initialize an array to store checked checkbox values

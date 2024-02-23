@@ -22,6 +22,7 @@
                         <table id="html5-extension" class="table dt-table-hover">
                             <thead>
                                 <tr>
+                                    <th>-</th>
                                     <th>ID</th>
                                     <th>Country</th>
                                     <th>Name</th>
@@ -46,10 +47,10 @@
                                 @endphp
                                 @foreach ($locations as $location)
                                     <tr class="social-{{ $location->id }}">
-                                        <td><span class="form-check form-check-primary"><input
+                                        <td style="width:1%"><span class="form-check form-check-primary"><input
                                                     class="form-check-input mixed_child " value="{{ $location->id }}"
-                                                    type="checkbox"> &nbsp; {{ $location->id }}</span></td>
-
+                                                    type="checkbox"></span></td>
+                                        <td>{{ $location->id }}</td>
                                         <td>{{ $country[$location->location_id] }}</td>
                                         <td>{{ !empty($location->name) ? $location->name : '-' }}</td>
                                         <td class="text-center">
@@ -138,7 +139,7 @@
                 }
             }
 
-            
+
 
             function statusFunction(id) {
                 // event.preventDefault(); // prevent form submit

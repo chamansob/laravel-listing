@@ -193,8 +193,8 @@ $(document).ready(function() {
 
 
     $('#html5-extension').DataTable({
-        "order": [
-            [0, "desc"]
+        "aaSorting": [
+            [1, "desc"]
         ],        
        "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'l  B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
        "<'table-responsive'tr>" +

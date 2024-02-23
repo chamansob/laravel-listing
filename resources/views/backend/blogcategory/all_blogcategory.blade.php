@@ -19,6 +19,7 @@
                             <table id="html5-extension" class="table dt-table-hover">
                                 <thead>
                                     <tr>
+                                        <th>-</th>
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Slug</th>
@@ -28,8 +29,10 @@
                                 <tbody>
                                     @foreach ($category as $cat)
                                         <tr class="cat-{{ $cat->id }}">                                            
-                                            <td><span class="form-check form-check-primary"><input class="form-check-input mixed_child " value="{{ $cat->id }}" type="checkbox"> &nbsp; {{ $cat->id }}</span></td>
-                                         
+                                           <td style="width:1%"><span class="form-check form-check-primary"><input
+                                                        class="form-check-input mixed_child "
+                                                        value="{{ $cat->id }}" type="checkbox"></span></td>
+                                            <td>{{ $cat->id }}</td>
                                             <td>{{ $cat->category_name }}</td>
                                             <td>{{ $cat->category_slug }}</td>
                                             <td class="text-center">

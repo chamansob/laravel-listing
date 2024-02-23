@@ -22,6 +22,7 @@
                         <table id="html5-extension" class="table dt-table-hover">
                             <thead>
                                 <tr>
+                                    <th>-</th>
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th class="text-center">Status</th>
@@ -31,7 +32,9 @@
                             <tbody>
                                 @foreach ($held_positions as $provide)
                                     <tr class="social-{{ $provide->id }}">
-
+                                        <td style="width:1%"><span class="form-check form-check-primary"><input
+                                                    class="form-check-input mixed_child " value="{{ $provide->id }}"
+                                                    type="checkbox"> </span></td>
                                         <td>{{ $provide->id }}</td>
                                         <td>{{ !empty($provide->name) ? $provide->name : '-' }}</td>
                                         <td class="text-center">
@@ -39,7 +42,6 @@
                                                 class="shadow-none badge badge-light-{{ $provide->status == 1 ? 'danger' : 'success' }} warning changestatus{{ $provide->id }}  bs-tooltip"
                                                 data-toggle="tooltip" data-placement="top" title="Status"
                                                 data-original-title="Status">{{ $provide->status == 1 ? 'Deactive' : 'Active' }}</button>
-
                                         </td>
 
                                         <td class="text-center">
