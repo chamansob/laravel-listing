@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Testimonial;
 use App\Models\ImagePresets;
+use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 use App\Traits\ImageGenTrait;
 
@@ -15,8 +16,10 @@ class TestimonialController extends Controller
     public $image_preset;
     public $image_preset_main;
     use ImageGenTrait;
+    use CommonTrait;
     public function __construct()
     {
+       
         $this->image_preset = ImagePresets::whereIn('id', [4])->get();
         $this->image_preset_main = ImagePresets::find(10);
     }
@@ -117,44 +120,7 @@ class TestimonialController extends Controller
         );
         return redirect()->back()->with($notification);
     }
-    public function delete(Request $request)
-    {
-        if (is_array($request->id)) {
-            $testimonials = Testimonial::whereIn('id', $request->id);
-            foreach ($testimonials as $testimonial) {
-                if (file_exists($testimonial->image)) {
-                    $img = explode('.', $testimonial->image);
-                    $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
-                    unlink($small_img);
-                    unlink($testimonial->image);
-                }
-            }
-        } else {
-            $testimonials = Testimonial::find($request->id);
-            if (file_exists($testimonials->image)) {
-                $img = explode('.', $testimonials->image);
-                $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
-                unlink($small_img);
-                unlink($testimonials->image);
-            }
-        }
-
-        $testimonials->delete();
-        $notification = array(
-            'message' => 'Testimonial Deleted successfully',
-            'alert-type' => 'success',
-        );
-        return redirect()->back()->with($notification);
-    }
-    public function StatusUpdate(Request $request)
-    {
-        $testimonial = Testimonial::find($request->id);
-        $testimonial->update([
-            'status' => ($testimonial->status == 1) ? 0 : 1,
-        ]);
-
-        return ($testimonial->status == 0) ? 'active' : 'deactive';
-    }
+   
     /**
      * Remove the specified resource from storage.
      */

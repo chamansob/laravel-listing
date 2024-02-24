@@ -6,10 +6,12 @@ use App\Exports\CoachedOrganizationExport;
 use App\Http\Controllers\Controller;
 use App\Imports\CoachedOrganizationImport;
 use App\Models\CoachedOrganization;
+use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 class CoachedOrganizationController extends Controller
 {
+    use CommonTrait;
     /**
      * Display a listing of the resource.
      */
@@ -85,34 +87,7 @@ class CoachedOrganizationController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    public function delete(Request $request)
-    {
-        if (is_array($request->id)) {
-            $coached_organizations = CoachedOrganization::whereIn('id', $request->id);
-        } else {
-            $coached_organizations = CoachedOrganization::find($request->id);
-        }
-       
-
-        $coached_organizations->delete();
-        $notification = array(
-            'message' => 'Coached Organization Deleted successfully',
-            'alert-type' => 'success',
-        );
-        return redirect()->back()->with($notification);
-    }
-    /**
-     * Update the status resource in storage..
-     */
-    public function StatusUpdate(Request $request)
-    {
-        $coached_organizations = CoachedOrganization::find($request->id);
-        $coached_organizations->update([
-            'status' => ($coached_organizations->status == 1) ? 0 : 1,
-        ]);
-
-        return ($coached_organizations->status == 0) ? 'active' : 'deactive';
-    }
+    
     /**
      * Import data from a CSV file into the database
      */

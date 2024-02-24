@@ -6,11 +6,13 @@ use App\Exports\LanguagesExport;
 use App\Http\Controllers\Controller;
 use App\Imports\LanguagesImport;
 use App\Models\Languages;
+use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class LanguagesController extends Controller
 {
+    use CommonTrait;
     /**
      * Display a listing of the resource.
      */
@@ -86,38 +88,7 @@ class LanguagesController extends Controller
         );
         return redirect()->back()->with($notification);
     }
-    /**
-     * Delete  the resource in storage..
-     */
-    public function delete(Request $request)
-    {
-        if (is_array($request->id)) {
-            $languages = Languages::whereIn('id', $request->id);
-        } else {
-            $languages = Languages::find($request->id);
-        }
-
-
-        $languages->delete();
-        $notification = array(
-            'message' => 'Language Deleted successfully',
-            'alert-type' => 'success',
-        );
-        return redirect()->back()->with($notification);
-    }
-
-    /**
-     * Update the status resource in storage..
-     */
-    public function StatusUpdate(Request $request)
-    {
-        $languages = Languages::find($request->id);
-        $languages->update([
-            'status' => ($languages->status == 1) ? 0 : 1,
-        ]);
-
-        return ($languages->status == 0) ? 'active' : 'deactive';
-    }
+    
     /**
      * Import data from a CSV file into the database
      */

@@ -38,7 +38,7 @@
                                                     class="form-check-input mixed_child " value="{{ $category->id }}"
                                                     type="checkbox"></span></td>
                                         <td>{{ $category->id }}</td>                                        
-                                        <td>{{ $category->type == 1 ? 'Category' : 'Services' }}</td>
+                                        <td>{{ CATEGORY[$category->type] }}</td>
                                         <td>{{ !empty($category->name) ? $category->name : '-' }}</td>
                                         <td>@php
                                             if (!empty($category->image)) {
@@ -55,7 +55,7 @@
 
 
                                         <td class="text-center">
-                                            <button type="button" onClick="statusFunction({{ $category->id }})"
+                                            <button type="button" onClick="statusFunction({{ $category->id }},'')"
                                                 class="shadow-none badge badge-light-{{ $category->status == 1 ? 'danger' : 'success' }} warning changestatus{{ $category->id }}  bs-tooltip"
                                                 data-toggle="tooltip" data-placement="top" title="Status"
                                                 data-original-title="Status">{{ $category->status == 1 ? 'Deactive' : 'Active' }}</button>
@@ -72,7 +72,7 @@
                                                     <i data-feather="edit"></i>
                                                 </a>
 
-                                                <a href="#" onClick="deleteFunction({{ $category->id }})"
+                                                <a href="#" onClick="deleteFunction({{ $category->id }},'Categories')"
                                                     class="action-btn btn-edit bs-tooltip me-2 delete{{ $category->id }}"
                                                     data-toggle="tooltip" data-placement="top" title="Delete"
                                                     data-bs-original-title="Delete">
@@ -86,7 +86,7 @@
                         </table>
                         @if ($categories->count() != 0)
                             <div class="ms-3">
-                                <button id="deleteall" onClick="deleteAllFunction()" class="btn btn-danger mb-2 me-4">
+                                <button id="deleteall" onClick="deleteAllFunction('Categories')" class="btn btn-danger mb-2 me-4">
                                     <span class="btn-text-inner">Delete Selected</span>
                                 </button>
                             </div>
@@ -102,7 +102,7 @@
     </div>
     @if ($categories->count() != 0)
         <script type="text/javascript">
-            function deleteAllFunction() {
+            function deleteAllFunction(table) {
                 // Get all checkboxes with the specified class name
                 var checkboxes = document.querySelectorAll('.mixed_child');
                 // Initialize an array to store checked checkbox values
@@ -133,14 +133,15 @@
                     var crf = '{{ csrf_token() }}';
                     $.post("{{ route('categories.delete') }}", {
                         _token: crf,
-                        id: checkedValues
+                        id: checkedValues,table:table,
+                        table:table
                     }, function(data) {
                         toastr.success("Selected Data Deleted");
                     });
                 }
             }
 
-            function statusFunction(id) {
+             function statusFunction(id,table) {
                 // event.preventDefault(); // prevent form submit
                 // var form = event.target.form; // storing the form
                 const swalWithBootstrapButtons = Swal.mixin({
@@ -171,7 +172,8 @@
                                 var crf = '{{ csrf_token() }}';
                                 $.post("{{ route('categories.status') }}", {
                                     _token: crf,
-                                    id: id
+                                    id: id,table:table,
+                                    table: table
                                 }, function(data) {
 
                                     var elems = document.querySelector('.warning.changestatus' +
@@ -206,7 +208,7 @@
 
             }
 
-            function deleteFunction(id) {
+            function deleteFunction(id,table) {
 
                 // event.preventDefault(); // prevent form submit
                 // var form = event.target.form; // storing the form
@@ -239,7 +241,8 @@
                             var crf = '{{ csrf_token() }}';
                             $.post("{{ route('categories.delete') }}", {
                                 _token: crf,
-                                id: id
+                                id: id,table:table,
+                                table:table
                             }, function(data) {
                                 toastr.success("Entry no " + id + " Deleted");
                             });

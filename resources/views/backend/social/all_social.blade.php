@@ -31,7 +31,7 @@
                                         <td>{{ !empty($social->url) ? $social->url : '-' }}</td>
                                         <td>{{ !empty($social->class) ? $social->class : '-' }}</td>
                                         <td class="text-center">
-                                            <button type="button" onClick="statusFunction({{ $social->id }})"
+                                            <button type="button" onClick="statusFunction({{ $social->id }},'Social')"
                                                 class="shadow-none badge badge-light-{{ $social->status == 1 ? 'danger' : 'success' }} warning changestatus{{ $social->id }}  bs-tooltip"
                                                 data-toggle="tooltip" data-placement="top" title="Status"
                                                 data-original-title="Status">{{ $social->status == 1 ? 'Deactive' : 'Active' }}</button>
@@ -48,7 +48,7 @@
                                                     <i data-feather="edit"></i>
                                                 </a>
 
-                                                <a href="#" onClick="deleteFunction({{ $social->id }})"
+                                                <a href="#" onClick="deleteFunction({{ $social->id }},'Social')"
                                                     class="action-btn btn-edit bs-tooltip me-2 delete{{ $social->id }}"
                                                     data-toggle="tooltip" data-placement="top" title="Delete"
                                                     data-bs-original-title="Delete">
@@ -59,12 +59,6 @@
 
                                             </div>
                                         </td>
-
-
-
-
-
-
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -80,7 +74,8 @@
     </div>
     @if ($socials->count() != 0)
         <script type="text/javascript">
-            function statusFunction(id) {
+            function statusFunction(id,table) {
+               
                 // event.preventDefault(); // prevent form submit
                 // var form = event.target.form; // storing the form
                 const swalWithBootstrapButtons = Swal.mixin({
@@ -109,9 +104,10 @@
                             )
                             setTimeout(function() {
                                 var crf = '{{ csrf_token() }}';
-                                $.post("{{ route('social.status') }}", {
+                                $.post("{{ route('social.statusobj') }}", {
                                     _token: crf,
-                                    id: id
+                                    id: id,table:table,
+                                    table: table
                                 }, function(data) {
                                    
                                     var elems = document.querySelector('.warning.changestatus' +
@@ -179,7 +175,7 @@
                             var crf = '{{ csrf_token() }}';
                             $.post("{{ route('social.delete') }}", {
                                 _token: crf,
-                                id: id
+                                id: id,table:table
                             }, function(data) {
                                 toastr.success("Entry no " + id + " Deleted");
                             });

@@ -6,11 +6,13 @@ use App\Exports\CoachThemeExport;
 use App\Http\Controllers\Controller;
 use App\Imports\CoachThemeImport;
 use App\Models\CoachTheme;
+use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CoachThemeController extends Controller
 {
+    use CommonTrait;
     /**
      * Display a listing of the resource.
      */
@@ -86,34 +88,7 @@ class CoachThemeController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    public function delete(Request $request)
-    {
-       
-        if (is_array($request->id)) {
-            $coach_themes = CoachTheme::whereIn('id', $request->id);
-        } else {
-            $coach_themes = CoachTheme::find($request->id);
-        }
-        
-        $coach_themes->delete();
-        $notification = array(
-            'message' => 'Coach Theme Deleted successfully',
-            'alert-type' => 'success',
-        );
-        return redirect()->back()->with($notification);
-    }
-    /**
-     * Update the status resource in storage..
-     */
-    public function StatusUpdate(Request $request)
-    {
-        $coach_themes = CoachTheme::find($request->id);
-        $coach_themes->update([
-            'status' => ($coach_themes->status == 1) ? 0 : 1,
-        ]);
-
-        return ($coach_themes->status == 0) ? 'active' : 'deactive';
-    }
+   
     /**
      * Import data from a CSV file into the database
      */

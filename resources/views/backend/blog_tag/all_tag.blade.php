@@ -39,7 +39,7 @@
                                                         data-bs-original-title="Edit">
                                                         <i data-feather="edit"></i>
                                                     </a>
-                                                    <a href="#" onClick="deleteFunction({{ $tag->id }})"
+                                                    <a href="#" onClick="deleteFunction({{ $tag->id }},'Tag')"
                                                         class="action-btn btn-edit bs-tooltip me-2 delete{{ $tag->id }}"
                                                         data-toggle="tooltip" data-placement="top" title="Delete"
                                                         data-bs-original-title="Delete">
@@ -54,7 +54,7 @@
                             </table>
                             @if ($tags->count() != 0)
                                 <div class="ms-3">
-                                    <button id="deleteall" onClick="deleteAllFunction()"
+                                    <button id="deleteall" onClick="deleteAllFunction('Tag')"
                                         class="btn btn-danger mb-2 me-4">
                                         <span class="btn-text-inner">Delete Selected</span>
                                     </button>
@@ -69,7 +69,7 @@
     </div>
     @if ($tags->count() != 0)
         <script type="text/javascript">
-            function deleteAllFunction() {
+           function deleteAllFunction(table)  {
                 // Get all checkboxes with the specified class name
                 var checkboxes = document.querySelectorAll('.mixed_child');
                 // Initialize an array to store checked checkbox values
@@ -100,7 +100,7 @@
                     var crf = '{{ csrf_token() }}';
                     $.post("{{ route('tag.delete') }}", {
                         _token: crf,
-                        id: checkedValues
+                        id: checkedValues,table:table
                     }, function(data) {
                         toastr.success("Selected Data Deleted");
                     });
@@ -141,7 +141,7 @@
                                 var crf = '{{ csrf_token() }}';
                                 $.post("{{ route('tag.delete') }}", {
                                     _token: crf,
-                                    id: id,
+                                    id: id,table:table,
                                 }, function(data) {
                                     toastr.success("Entry no " + id + " Deleted");
                                 });

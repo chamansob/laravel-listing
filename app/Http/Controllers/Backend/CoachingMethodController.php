@@ -6,11 +6,13 @@ use App\Exports\CoachingMethodExport;
 use App\Http\Controllers\Controller;
 use App\Imports\CoachingMethodImport;
 use App\Models\CoachingMethod;
+use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CoachingMethodController extends Controller
 {
+    use CommonTrait;
     /**
      * Display a listing of the resource.
      */
@@ -86,37 +88,7 @@ class CoachingMethodController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function delete(Request $request)
-    {
-        if (is_array($request->id)) {
-            $coaching_method = CoachingMethod::whereIn('id', $request->id);
-        } else {
-            $coaching_method = CoachingMethod::find($request->id);
-        }
-        
-       
-        $coaching_method->delete();
-        $notification = array(
-            'message' => 'Coaching Method Deleted successfully',
-            'alert-type' => 'success',
-        );
-        return redirect()->back()->with($notification);
-    }
-    /**
-     * Update the status resource in storage..
-     */
-    public function StatusUpdate(Request $request)
-    {
-        $coaching_method = CoachingMethod::find($request->id);
-        $coaching_method->update([
-            'status' => ($coaching_method->status == 1) ? 0 : 1,
-        ]);
-
-        return ($coaching_method->status == 0) ? 'active' : 'deactive';
-    }
+    
     /**
      * Import data from a CSV file into the database
      */

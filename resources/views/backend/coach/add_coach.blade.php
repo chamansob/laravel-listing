@@ -1,7 +1,8 @@
-<x-dashboard-layout>
+<x-main-layout>
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/super-build/ckeditor.js"></script>
     <div class="seperator-header layout-top-spacing">
-        <a href="{{ route('modules.index') }}">
-            <h4 class="">Show Module</h4>
+        <a href="{{ route('coaches.index') }}">
+            <h4 class="">Show Coach</h4>
         </a>
     </div>
     <div class="page-content">
@@ -10,54 +11,95 @@
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title fw-bold">Add Module</h6>
+                        <h6 class="card-title fw-bold">Add Coach</h6>
 
                         {{ Form::open([
-                            'route' => 'modules.store',
+                            'route' => 'coaches.store',
                             'class' => 'forms-sample needs-validation',
                             'novalidate' => 'novalidate',
                             'method' => 'post',
                             'files' => true,
                         ]) }}
 
-                        <div class="mb-3">
 
-                            {!! Form::label('name', 'Name', ['class' => 'form-label']) !!}
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
 
-                            {!! Form::text('name', $value = null, ['class' => 'form-control','required' => 'required', 'placeholder' => 'Name']) !!}
-                            @error('name')
-                                <span class="text-danger pt-3">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
+                                    {!! Form::label('name', 'Name', ['class' => 'form-label']) !!}
 
-                            {!! Form::label('heading', 'Heading', ['class' => 'form-label']) !!}
+                                    {!! Form::text('name', $value = null, [
+                                        'class' => 'form-control',
+                                        'required' => 'required',
+                                        'placeholder' => 'Name',
+                                    ]) !!}
+                                    @error('name')
+                                        <span class="text-danger pt-3">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="mb-3">
 
-                            {!! Form::text('heading', $value = null, ['class' => 'form-control','required' => 'required', 'placeholder' => 'Heading']) !!}
+                                    {!! Form::label('gender', 'Gender', ['class' => 'form-label']) !!}
 
-                        </div>
-                        <div class="mb-3">
-
-                            {!! Form::label('link', 'Link', ['class' => 'form-label']) !!}
-
-                            {!! Form::text('link', $value = null, ['class' => 'form-control', 'placeholder' => 'Link']) !!}
-
-                        </div>
-                        <div class="mb-3">
-
-                            {!! Form::label('small_text', 'Small text', ['class' => 'form-label']) !!}
-
-                            {!! Form::textarea('small_text', $value = null, [
-                                'class' => 'form-control',
-                                'rows' => 3,
-                                'placeholder' => 'Small Text',
-                            ]) !!}
+                                    {!! Form::select('type', GENDER, 1, [
+                                        'class' => 'form-control',
+                                        'required' => 'required',
+                                        'placeholder' => 'Select Gender',
+                                    ]) !!}
+                                    @error('gender')
+                                        <span class="text-danger pt-3">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
 
                         </div>
                         <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
 
+                                    {!! Form::label('email', 'Email', ['class' => 'form-label']) !!}
+
+                                    {!! Form::text('email', $value = null, ['class' => 'form-control', 'required' => 'required']) !!}
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+
+                                    {!! Form::label('phone', 'Phone', ['class' => 'form-label']) !!}
+
+                                    {!! Form::text('phone', $value = null, ['class' => 'form-control', 'required' => 'required']) !!}
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+
+                                    {!! Form::label('website', 'Website', ['class' => 'form-label']) !!}
+
+                                    {!! Form::text('website', $value = null, ['class' => 'form-control', 'required' => 'required']) !!}
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+
+                                    {!! Form::label('address', 'Address', ['class' => 'form-label']) !!}
+
+                                    {!! Form::text('address', $value = null, ['class' => 'form-control', 'required' => 'required']) !!}
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
                             <div class="mb-3">
-                                {!! Form::label('image', 'Image', ['class' => 'form-label']) !!}
+                                {!! Form::label('image', 'Banner Image', ['class' => 'form-label']) !!}
 
                                 {!! Form::file('image', [
                                     'class' => 'form-control',
@@ -68,15 +110,17 @@
                                     <span class="text-danger pt-3">{{ $message }}</span>
                                 @enderror
                                 <img src="" id="mainThmb">
-
                             </div>
-
                         </div>
                         <div class="mb-3">
 
                             {!! Form::label('text', 'Text', ['class' => 'form-label']) !!}
 
-                            {!! Form::textarea('text', $value = null, ['class' => 'form-control', 'placeholder' => 'Text',,'id'=>'editor']) !!}
+                            {!! Form::textarea('text', $value = null, [
+                                'class' => 'form-control',
+                                'placeholder' => 'Text',
+                                'id' => 'editor',
+                            ]) !!}
 
                         </div>
                         {!! Form::submit('Submit', ['class' => 'btn btn-outline-primary btn-icon-text mb-2 mb-md-0']) !!}
@@ -88,7 +132,7 @@
         </div>
 
     </div>
-     <script type="text/javascript">
+    <script type="text/javascript">
         function mainThamUrl(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -99,4 +143,4 @@
             }
         }
     </script>
-</x-dashboard-layout>
+</x-main-layout>

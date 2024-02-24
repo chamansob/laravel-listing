@@ -6,11 +6,13 @@ use App\Exports\HeldPositionExport;
 use App\Http\Controllers\Controller;
 use App\Imports\HeldPositionImport;
 use App\Models\HeldPosition;
+use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class HeldPositionController extends Controller
 {
+    use CommonTrait;
     /**
      * Display a listing of the resource.
      */
@@ -87,34 +89,7 @@ class HeldPositionController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    public function delete(Request $request)
-    {
-        
-        if (is_array($request->id)) {
-            $heldposition = HeldPosition::whereIn('id', $request->id);
-        } else {
-            $heldposition = HeldPosition::find($request->id);
-        }
-        
-        $heldposition->delete();
-        $notification = array(
-            'message' => 'Held Position Deleted successfully',
-            'alert-type' => 'success',
-        );
-        return redirect()->back()->with($notification);
-    }
-    /**
-     * Update the status resource in storage..
-     */
-    public function StatusUpdate(Request $request)
-    {
-        $heldposition = HeldPosition::find($request->id);
-        $heldposition->update([
-            'status' => ($heldposition->status == 1) ? 0 : 1,
-        ]);
-
-        return ($heldposition->status == 0) ? 'active' : 'deactive';
-    }
+    
     /**
      * Import data from a CSV file into the database
      */

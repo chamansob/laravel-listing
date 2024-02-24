@@ -31,30 +31,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $country = [
-                                        1 => 'Africa',
-                                        2 => 'Asia',
-                                        3 => 'Asia Pacific',
-                                        4 => 'Caribbean',
-                                        5 => 'Central America',
-                                        6 => 'Europe',
-                                        7 => 'Middle East/ North Africa',
-                                        8 => 'North America',
-                                        9 => 'Other',
-                                        10 => 'South America',
-                                    ];
-                                @endphp
+                               
                                 @foreach ($locations as $location)
                                     <tr class="social-{{ $location->id }}">
                                         <td style="width:1%"><span class="form-check form-check-primary"><input
                                                     class="form-check-input mixed_child " value="{{ $location->id }}"
                                                     type="checkbox"></span></td>
                                         <td>{{ $location->id }}</td>
-                                        <td>{{ $country[$location->location_id] }}</td>
+                                        <td>{{ LOCATION[$location->location_id] }}</td>
                                         <td>{{ !empty($location->name) ? $location->name : '-' }}</td>
                                         <td class="text-center">
-                                            <button type="button" onClick="statusFunction({{ $location->id }})"
+                                            <button type="button" onClick="statusFunction({{ $location->id }},'Location')"
                                                 class="shadow-none badge badge-light-{{ $location->status == 1 ? 'danger' : 'success' }} warning changestatus{{ $location->id }}  bs-tooltip"
                                                 data-toggle="tooltip" data-placement="top" title="Status"
                                                 data-original-title="Status">{{ $location->status == 1 ? 'Deactive' : 'Active' }}</button>
@@ -71,7 +58,7 @@
                                                     <i data-feather="edit"></i>
                                                 </a>
 
-                                                <a href="#" onClick="deleteFunction({{ $location->id }})"
+                                                <a href="#" onClick="deleteFunction({{ $location->id }},'Location')"
                                                     class="action-btn btn-edit bs-tooltip me-2 delete{{ $location->id }}"
                                                     data-toggle="tooltip" data-placement="top" title="Delete"
                                                     data-bs-original-title="Delete">
@@ -85,7 +72,7 @@
                         </table>
                         @if ($locations->count() != 0)
                             <div class="ms-3">
-                                <button id="deleteall" onClick="deleteAllFunction()" class="btn btn-danger mb-2 me-4">
+                                <button id="deleteall" onClick="deleteAllFunction('Location')" class="btn btn-danger mb-2 me-4">
                                     <span class="btn-text-inner">Delete Selected</span>
                                 </button>
                             </div>
@@ -101,7 +88,7 @@
     </div>
     @if ($locations->count() != 0)
         <script type="text/javascript">
-            function deleteAllFunction() {
+           function deleteAllFunction(table)  {
                 // Get all checkboxes with the specified class name
                 var checkboxes = document.querySelectorAll('.mixed_child');
                 // Initialize an array to store checked checkbox values
@@ -132,7 +119,7 @@
                     var crf = '{{ csrf_token() }}';
                     $.post("{{ route('locations.delete') }}", {
                         _token: crf,
-                        id: checkedValues
+                        id: checkedValues,table:table
                     }, function(data) {
                         toastr.success("Selected Data Deleted");
                     });
@@ -141,7 +128,7 @@
 
 
 
-            function statusFunction(id) {
+            function statusFunction(id,table) {
                 // event.preventDefault(); // prevent form submit
                 // var form = event.target.form; // storing the form
                 const swalWithBootstrapButtons = Swal.mixin({
@@ -172,7 +159,7 @@
                                 var crf = '{{ csrf_token() }}';
                                 $.post("{{ route('locations.status') }}", {
                                     _token: crf,
-                                    id: id
+                                    id: id,table:table
                                 }, function(data) {
 
                                     var elems = document.querySelector('.warning.changestatus' +
@@ -240,7 +227,7 @@
                             var crf = '{{ csrf_token() }}';
                             $.post("{{ route('locations.delete') }}", {
                                 _token: crf,
-                                id: id
+                                id: id,table:table
                             }, function(data) {
                                 toastr.success("Entry no " + id + " Deleted");
                             });

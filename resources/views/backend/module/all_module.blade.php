@@ -43,7 +43,7 @@
                                         <td>{{ !empty($module->name) ? $module->name : '-' }}</td>
 
                                         <td class="text-center">
-                                            <button type="button" onClick="statusFunction({{ $module->id }})"
+                                            <button type="button" onClick="statusFunction({{ $module->id }},'Module')"
                                                 class="shadow-none badge badge-light-{{ $module->status == 1 ? 'danger' : 'success' }} warning changestatus{{ $module->id }}  bs-tooltip"
                                                 data-toggle="tooltip" data-placement="top" title="Status"
                                                 data-original-title="Status">{{ $module->status == 1 ? 'Deactive' : 'Active' }}</button>
@@ -60,7 +60,7 @@
                                                     <i data-feather="edit"></i>
                                                 </a>
 
-                                                <a href="#" onClick="deleteFunction({{ $module->id }})"
+                                                <a href="#" onClick="deleteFunction({{ $module->id }},'Module')"
                                                     class="action-btn btn-edit bs-tooltip me-2 delete{{ $module->id }}"
                                                     data-toggle="tooltip" data-placement="top" title="Delete"
                                                     data-bs-original-title="Delete">
@@ -77,7 +77,7 @@
                         </table>
                         @if ($modules->count() != 0)
                             <div class="ms-3">
-                                <button id="deleteall" onClick="deleteAllFunction()" class="btn btn-danger mb-2 me-4">
+                                <button id="deleteall" onClick="deleteAllFunction('Module')" class="btn btn-danger mb-2 me-4">
                                     <span class="btn-text-inner">Delete Selected</span>
                                 </button>
                             </div>
@@ -93,7 +93,7 @@
     </div>
     @if ($modules->count() != 0)
         <script type="text/javascript">
-            function deleteAllFunction() {
+           function deleteAllFunction(table)  {
                 // Get all checkboxes with the specified class name
                 var checkboxes = document.querySelectorAll('.mixed_child');
                 // Initialize an array to store checked checkbox values
@@ -124,14 +124,14 @@
                     var crf = '{{ csrf_token() }}';
                     $.post("{{ route('modules.delete') }}", {
                         _token: crf,
-                        id: checkedValues
+                        id: checkedValues,table:table
                     }, function(data) {
                         toastr.success("Selected Data Deleted");
                     });
                 }
             }
 
-            function statusFunction(id) {
+            function statusFunction(id,table) {
                 // event.preventDefault(); // prevent form submit
                 // var form = event.target.form; // storing the form
                 const swalWithBootstrapButtons = Swal.mixin({
@@ -162,7 +162,7 @@
                                 var crf = '{{ csrf_token() }}';
                                 $.post("{{ route('modules.status') }}", {
                                     _token: crf,
-                                    id: id
+                                    id: id,table:table
                                 }, function(data) {
                                     var elems = document.querySelector('.warning.changestatus' +
                                         id);
@@ -229,7 +229,7 @@
                             var crf = '{{ csrf_token() }}';
                             $.post("{{ route('modules.delete') }}", {
                                 _token: crf,
-                                id: id
+                                id: id,table:table
                             }, function(data) {
                                 toastr.success("Entry no " + id + " Deleted");
                             });

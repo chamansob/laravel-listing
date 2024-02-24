@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Slider;
 use App\Models\ImagePresets;
+use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 use App\Traits\ImageGenTrait;
 
@@ -15,6 +16,7 @@ class SliderController extends Controller
     public $image_preset;
     public $image_preset_main;
     use ImageGenTrait;
+    use CommonTrait;
     public function __construct()
     {
         $this->image_preset = ImagePresets::whereIn('id', [4])->get();
@@ -115,45 +117,5 @@ class SliderController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function delete(Request $request)
-    {
-        if (is_array($request->id)) {
-            $sliders = Slider::whereIn('id', $request->id);
-            foreach ($sliders as $slider) {
-                if (file_exists($slider->image)) {
-                    $img = explode('.', $slider->image);
-                    $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
-                    unlink($small_img);
-                    unlink($slider->image);
-                }
-            }
-        } else {
-            $sliders = Slider::find($request->id);
-            if (file_exists($sliders->image)) {
-                $img = explode('.', $sliders->image);
-                $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
-                unlink($small_img);
-                unlink($sliders->image);
-            }
-        }
-
-        $sliders->delete();
-        $notification = array(
-            'message' => 'Slider Deleted successfully',
-            'alert-type' => 'success',
-        );
-        return redirect()->back()->with($notification);
-    }
-    public function StatusUpdate(Request $request)
-    {
-        $slider = slider::find($request->id);
-        $slider->update([
-            'status' => ($slider->status == 1) ? 0 : 1,
-        ]);
-
-        return ($slider->status == 0) ? 'active' : 'deactive';
-    }
+   
 }

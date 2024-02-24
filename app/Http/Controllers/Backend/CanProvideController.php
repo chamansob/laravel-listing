@@ -7,11 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Imports\CanProvideImport;
 use Illuminate\Http\Request;
 use App\Models\CanProvide;
+use App\Traits\CommonTrait;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CanProvideController extends Controller
 {
-
+ use CommonTrait;
     /**
      * Display a listing of the resource.
      */
@@ -88,37 +89,7 @@ class CanProvideController extends Controller
     }
 
 
-    public function delete(Request $request)
-    {
-        if (is_array($request->id)) {
-            $can_provides = canProvide::whereIn('id', $request->id);
-        } else {
-            $can_provides = canProvide::find($request->id);
-        }
-        $can_provides->delete();
-        $notification = array(
-            'message' => 'Can Provide Deleted successfully',
-            'alert-type' => 'success',
-        );
-        return redirect()->back()->with($notification);
-    }
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function StatusUpdate(Request $request)
-    {
-        if (is_array($request->id)) {
-            $can_provides = canProvide::whereIn('id', $request->id);
-        } else {
-            $can_provides = canProvide::find($request->id);
-        }
-        
-        $can_provides->update([
-            'status' => ($can_provides->status == 1) ? 0 : 1,
-        ]);
-
-        return ($can_provides->status == 0) ? 'active' : 'deactive';
-    }
+    
     /**
      * Import data from a CSV file into the database
      */

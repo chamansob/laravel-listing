@@ -25,18 +25,7 @@
 
                                     {!! Form::select(
                                         'location_id',
-                                        [
-                                            1 => 'Africa',
-                                            2 => 'Asia',
-                                            3 => 'Asia Pacific',
-                                            4 => 'Caribbean',
-                                            5 => 'Central America',
-                                            6 => 'Europe',
-                                            7 => 'Middle East/ North Africa',
-                                            8 => 'North America',
-                                            9 => 'Other',
-                                            10 => 'South America',
-                                        ],
+                                       LOCATION,
                                         $location->location_id,
                                         [
                                             'class' => 'form-control',

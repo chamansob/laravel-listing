@@ -1,5 +1,5 @@
 <x-main-layout>
-   
+
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('categories.index') }}">
             <h4 class="">Show Category</h4>
@@ -26,7 +26,7 @@
 
                                     {!! Form::label('type', 'Type', ['class' => 'form-label']) !!}
 
-                                    {!! Form::select('type', [1=>'Category',2=>'Service'],1, [
+                                    {!! Form::select('type', CATEGORY, 1, [  
                                         'class' => 'form-control',
                                         'required' => 'required',
                                         'placeholder' => 'Select Type',
@@ -36,7 +36,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            
+
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
@@ -54,10 +54,10 @@
                                     @enderror
                                 </div>
                             </div>
-                            
+
                         </div>
 
-                          <div class="row">
+                        <div class="row">
 
                             <div class="mb-3">
                                 {!! Form::label('image', 'Image', ['class' => 'form-label']) !!}
@@ -79,7 +79,13 @@
 
                             {!! Form::label('text', 'Text', ['class' => 'form-label']) !!}
 
-                            {!! Form::textarea('text', $value = null, ['class' => 'form-control',"rows"=>"4" ,"cols"=>"50", 'placeholder' => 'Text','id'=>'editor']) !!}
+                            {!! Form::textarea('text', $value = null, [
+                                'class' => 'form-control',
+                                'rows' => '4',
+                                'cols' => '50',
+                                'placeholder' => 'Text',
+                                'id' => 'editor',
+                            ]) !!}
 
                         </div>
 
@@ -93,7 +99,7 @@
         </div>
 
     </div>
-   <script type="text/javascript">
+    <script type="text/javascript">
         function mainThamUrl(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -103,5 +109,5 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
-    </script>  
+    </script>
 </x-main-layout>

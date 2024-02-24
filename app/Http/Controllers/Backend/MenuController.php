@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
 use App\Models\Menugroup;
+use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class MenuController extends Controller
 {
+    use CommonTrait;
     /**
      * Display a listing of the resource.
      */
@@ -110,25 +112,5 @@ class MenuController extends Controller
     {
         //
     }
-    public function delete(Request $request)
-    {
-
-        $menu = Menu::find($request->id);
-        $menu->delete();
-        $notification = array(
-            'message' => 'Menu Deleted successfully',
-            'alert-type' => 'success',
-        );
-        return redirect()->back()->with($notification);
-    }
-    public function StatusUpdate(Request $request)
-    {
-        $menu = Menu::find($request->id);
-
-        $menu->update([
-            'status' => ($menu->status == 1) ? 0 : 1,
-        ]);
-
-        return ($menu->status == 1) ? 'active' : 'deactive';
-    }
+    
 }

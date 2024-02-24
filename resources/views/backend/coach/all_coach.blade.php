@@ -1,10 +1,17 @@
 <x-dashboard-layout>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <div class="seperator-header layout-top-spacing">
-        <a href="{{ route('coachs.create') }}">
+        <a href="{{ route('coaches.create') }}">
             <h4 class="">Add Coach</h4>
         </a>
-
+        &nbsp;
+        <a href="{{ route('import.coaches') }}" class="">
+            <h4 class="bg-success text-white"><i data-feather="share"></i> Import</h4>
+        </a>
+        &nbsp;
+        <a href="{{ route('export.coach') }}" class="">
+            <h4 class="bg-primary text-white"> <i data-feather="download"></i> Export</h4>
+        </a>
     </div>
     <div class="page-content">
         <div class="row">
@@ -24,12 +31,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($coachs as $coach)
+                                @foreach ($coaches as $coach)
                                     <tr class="coach-{{ $coach->id }}">
-                                         <td style="width:1%"><span class="form-check form-check-primary"><input
+                                        <td style="width:1%"><span class="form-check form-check-primary"><input
                                                     class="form-check-input mixed_child " value="{{ $coach->id }}"
                                                     type="checkbox"></span></td>
-                                        <td>{{ $coach->id }}</td>   
+                                        <td>{{ $coach->id }}</td>
                                         <td>@php
                                             if (!empty($coach->image)) {
                                                 $img = explode('.', $coach->image);
@@ -44,7 +51,7 @@
                                         <td>{{ !empty($coach->name) ? $coach->name : '-' }}</td>
 
                                         <td class="text-center">
-                                            <button type="button" onClick="statusFunction({{ $coach->id }})"
+                                            <button type="button" onClick="statusFunction({{ $coach->id }},'Coach')"
                                                 class="shadow-none badge badge-light-{{ $coach->status == 1 ? 'danger' : 'success' }} warning changestatus{{ $coach->id }}  bs-tooltip"
                                                 data-toggle="tooltip" data-placement="top" title="Status"
                                                 data-original-title="Status">{{ $coach->status == 1 ? 'Deactive' : 'Active' }}</button>
@@ -55,13 +62,13 @@
                                             <div class="action-btns">
 
 
-                                                <a href="{{ route('coachs.edit', $coach->id) }}"
+                                                <a href="{{ route('coaches.edit', $coach->id) }}"
                                                     class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip"
                                                     data-placement="top" title="Edit" data-bs-original-title="Edit">
                                                     <i data-feather="edit"></i>
                                                 </a>
 
-                                                <a href="#" onClick="deleteFunction({{ $coach->id }})"
+                                                <a href="#" onClick="deleteFunction({{ $coach->id }},'Coach')"
                                                     class="action-btn btn-edit bs-tooltip me-2 delete{{ $coach->id }}"
                                                     data-toggle="tooltip" data-placement="top" title="Delete"
                                                     data-bs-original-title="Delete">
@@ -73,9 +80,9 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        @if ($coachs->count() != 0)
+                        @if ($coaches->count() != 0)
                             <div class="ms-3">
-                                <button id="deleteall" onClick="deleteAllFunction()" class="btn btn-danger mb-2 me-4">
+                                <button id="deleteall" onClick="deleteAllFunction('Coach')" class="btn btn-danger mb-2 me-4">
                                     <span class="btn-text-inner">Delete Selected</span>
                                 </button>
                             </div>
@@ -89,9 +96,9 @@
 
 
     </div>
-    @if ($coachs->count() != 0)
+    @if ($coaches->count() != 0)
         <script type="text/javascript">
-            function deleteAllFunction() {
+           function deleteAllFunction(table)  {
                 // Get all checkboxes with the specified class name
                 var checkboxes = document.querySelectorAll('.mixed_child');
                 // Initialize an array to store checked checkbox values
@@ -120,16 +127,16 @@
                     });
                     // console.log("Checked Checkbox Values: ", checkedValues);
                     var crf = '{{ csrf_token() }}';
-                    $.post("{{ route('coachs.delete') }}", {
+                    $.post("{{ route('coaches.delete') }}", {
                         _token: crf,
-                        id: checkedValues
+                        id: checkedValues,table:table
                     }, function(data) {
                         toastr.success("Selected Data Deleted");
                     });
                 }
             }
 
-            function statusFunction(id) {
+            function statusFunction(id,table) {
                 // event.preventDefault(); // prevent form submit
                 // var form = event.target.form; // storing the form
                 const swalWithBootstrapButtons = Swal.mixin({
@@ -158,9 +165,9 @@
                             )
                             setTimeout(function() {
                                 var crf = '{{ csrf_token() }}';
-                                $.post("{{ route('coachs.status') }}", {
+                                $.post("{{ route('coaches.status') }}", {
                                     _token: crf,
-                                    id: id
+                                    id: id,table:table
                                 }, function(data) {
                                     var elems = document.querySelector('.warning.changestatus' +
                                         id);
@@ -225,9 +232,9 @@
                             var elems = document.querySelector('.coach-' + id);
                             elems.remove();
                             var crf = '{{ csrf_token() }}';
-                            $.post("{{ route('coachs.delete') }}", {
+                            $.post("{{ route('coaches.delete') }}", {
                                 _token: crf,
-                                id: id
+                                id: id,table:table
                             }, function(data) {
                                 toastr.success("Entry no " + id + " Deleted");
                             });

@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-main-layout>
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('pages.index') }}">
             <h4 class="">Show Page</h4>
@@ -89,4 +89,4 @@
     </div>
 
     </div>
-</x-dashboard-layout>
+</x-ma-layout>

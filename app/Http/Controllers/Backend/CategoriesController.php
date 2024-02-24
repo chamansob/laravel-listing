@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Imports\CategoriesImport;
 use App\Models\Categories;
 use App\Models\ImagePresets;
+use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 use App\Traits\ImageGenTrait;
 use Maatwebsite\Excel\Facades\Excel;
@@ -17,6 +18,7 @@ class CategoriesController extends Controller
     public $image_preset;
     public $image_preset_main;
     use ImageGenTrait;
+    use CommonTrait;
 
     public function __construct()
     {
@@ -123,55 +125,8 @@ class CategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function delete(Request $request)
-    {
-        if (is_array($request->id)) {
-            $categories = Categories::whereIn('id', $request->id);
-            foreach ($categories as $categorie) {
-                if (file_exists($categorie->image)) {
-                    $img = explode('.', $categorie->image);
-                    $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
-                    unlink($small_img);
-                    unlink($categorie->image);
-                }
-            }
-        } else {
-            $categories = Categories::find($request->id);
-            if (file_exists($categories->image)) {
-                $img = explode('.', $categories->image);
-                $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
-                unlink($small_img);
-                unlink($categories->image);
-            }
-        }
-        
-       
-        if (file_exists($categories->image)) {
-            $img = explode('.', $categories->image);
-            $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
-            unlink($small_img);
-            unlink($categories->image);
-        }
-        $categories->delete();
-        $cat = ($categories->type == 1) ? 'Category' : 'Service';
-        $notification = array(
-            'message' => '' . $cat . ' Deleted successfully',
-            'alert-type' => 'success',
-        );
-        return redirect()->back()->with($notification);
-    }
-    /**
-     * Update the status resource in storage..
-     */
-    public function StatusUpdate(Request $request)
-    {
-        $categories = Categories::find($request->id);
-        $categories->update([
-            'status' => ($categories->status == 1) ? 0 : 1,
-        ]);
-
-        return ($categories->status == 0) ? 'active' : 'deactive';
-    }
+    
+    
     /**
      * Import data from a CSV file into the database
      */

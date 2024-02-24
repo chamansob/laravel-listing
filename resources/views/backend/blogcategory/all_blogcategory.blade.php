@@ -80,7 +80,7 @@
 </x-dashboard-layout>
 @if ($category->count() != 0)
     <script type="text/javascript">
-        function deleteAllFunction() {
+       function deleteAllFunction(table)  {
             // Get all checkboxes with the specified class name
             var checkboxes = document.querySelectorAll('.mixed_child');
             // Initialize an array to store checked checkbox values
@@ -111,7 +111,7 @@
                 var crf = '{{ csrf_token() }}';
                 $.post("{{ route('category.delete') }}", {
                     _token: crf,
-                    id: checkedValues
+                    id: checkedValues,table:table
                 }, function(data) {
                     toastr.success("Selected Data Deleted");
                 });
@@ -152,7 +152,7 @@
                             var crf = '{{ csrf_token() }}';
                             $.post("{{ route('category.delete') }}", {
                                 _token: crf,
-                                id: id,
+                                id: id,table:table,
                             }, function(data) {
                                 toastr.success("Entry no " + id + " Deleted");
                             });

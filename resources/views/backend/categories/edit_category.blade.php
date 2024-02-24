@@ -23,7 +23,7 @@
 
                                     {!! Form::label('type', 'Type', ['class' => 'form-label']) !!}
 
-                                    {!! Form::select('type', [1=>'Category',2=>'Service'],$category->type, [
+                                    {!! Form::select('type', CATEGORY,$category->type, [
                                         'class' => 'form-control',
                                         'required' => 'required',
                                         'placeholder' => 'Select Type',

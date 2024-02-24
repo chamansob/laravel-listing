@@ -6,10 +6,12 @@ use App\Exports\LocationExport;
 use App\Http\Controllers\Controller;
 use App\Imports\LocationImport;
 use App\Models\Location;
+use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 class LocationController extends Controller
 {
+    use CommonTrait;
     /**
      * Display a listing of the resource.
      */
@@ -88,34 +90,6 @@ class LocationController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    public function delete(Request $request)
-    {
-       
-        if (is_array($request->id)) {
-            $locations = Location::whereIn('id', $request->id);
-        } else {
-            $locations = Location::find($request->id);
-        }
-        
-        $locations->delete();
-        $notification = array(
-            'message' => 'Locations Deleted successfully',
-            'alert-type' => 'success',
-        );
-        return redirect()->back()->with($notification);
-    }
-    /**
-     * Update the status resource in storage..
-     */
-    public function StatusUpdate(Request $request)
-    {
-        $locations = Location::find($request->id);
-        $locations->update([
-            'status' => ($locations->status == 1) ? 0 : 1,
-        ]);
-
-        return ($locations->status == 0) ? 'active' : 'deactive';
-    }
     /**
      * Import data from a CSV file into the database
      */

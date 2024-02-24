@@ -111,7 +111,7 @@
                             var crf = '{{ csrf_token() }}';
                             $.post("{{ route('delete.admin') }}", {
                                 _token: crf,
-                                id: id
+                                id: id,table:table
                             }, function(data) {
                               toastr.success("Entry no " + id + " Deleted");
                             });

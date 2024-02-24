@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
 use App\Models\Social;
+use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 
 class SocialController extends Controller
 {
+    use CommonTrait;
     /**
      * Display a listing of the resource.
      */
@@ -88,30 +90,5 @@ class SocialController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Social $social)
-    {
-        //
-    }
-    public function delete(Request $request)
-    {
-        $social = Social::find($request->id);        
-        $social->delete();
-        $notification = array(
-            'message' => 'Social Deleted successfully',
-            'alert-type' => 'success',
-        );
-        return redirect()->back()->with($notification);
-    }
-    public function StatusUpdate(Request $request)
-    {
-        $social = social::find($request->id);
-        $social->update([
-            'status' => ($social->status == 1) ? 0 : 1,
-        ]);
-
-        return ($social->status == 0) ? 'active' : 'deactive';
-    }
+   
 }

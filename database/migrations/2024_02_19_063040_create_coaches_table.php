@@ -15,8 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('name', 100);
             $table->string('coach_slug', 100);
-            $table->string('image')->nullable();
-            $table->string('avatar')->nullable();
+            $table->string('image')->nullable();           
             $table->morphs('filterable');
             $table->string('coach_type')->nullable();                  
             $table->boolean('gender')->default(0);

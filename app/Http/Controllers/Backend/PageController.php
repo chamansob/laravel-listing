@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Page;
 use App\Models\Menu;
 use App\Models\ImagePresets;
+use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 use App\Traits\ImageGenTrait;
 
@@ -16,6 +17,7 @@ class PageController extends Controller
     public $image_preset;
     public $image_preset_main;
     use ImageGenTrait;
+    use CommonTrait;
     public function __construct()
     {
         $this->image_preset = ImagePresets::whereIn('id', [4])->get();
@@ -121,48 +123,5 @@ class PageController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function delete(Request $request)
-    {
-        
-        if (is_array($request->id)) {
-            $pages = Page::whereIn('id', $request->id);
-            foreach($pages as $page)
-            {
-                if (file_exists($page->image)) {
-                    $img = explode('.', $page->image);
-                    $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
-                    unlink($small_img);
-                    unlink($page->image);
-                } 
-            }
-        } else {
-            $pages = Page::find($request->id);
-            if (file_exists($pages->image)) {
-                $img = explode('.', $pages->image);
-                $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
-                unlink($small_img);
-                unlink($pages->image);
-            } 
-        }
-               
-        $pages->delete();
-        $notification = array(
-            'message' => 'Page Deleted successfully',
-            'alert-type' => 'success',
-        );
-        return redirect()->back()->with($notification);
-    }
-    public function StatusUpdate(Request $request)
-    {
-        $page = Page::find($request->id);
-
-        $page->update([
-            'status' => ($page->status == 1) ? 0 : 1,
-        ]);
-
-        return ($page->status == 1) ? 'active' : 'deactive';
-    }
+    
 }

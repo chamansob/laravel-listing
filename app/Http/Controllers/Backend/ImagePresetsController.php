@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
 use App\Models\ImagePresets;
+use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 
 class ImagePresetsController extends Controller
 {
+    use CommonTrait;
     /**
      * Display a listing of the resource.
      */
@@ -92,29 +94,5 @@ class ImagePresetsController extends Controller
         );
         return redirect()->back()->with($notification);
     }
-    public function delete(Request $request)
-    {
-
-        $imagePreset = ImagePresets::find($request->id);
-        $imagePreset->delete();
-        $notification = array(
-            'message' => 'Image Preset Deleted successfully',
-            'alert-type' => 'success',
-        );
-        return redirect()->back()->with($notification);
-    }
-    public function StatusUpdate(Request $request)
-    {
-
-        $imagePreset = ImagePresets::find($request->id);
-        $imagePreset->update([
-            'status' => ($imagePreset->status == 1) ? 0 : 1,
-        ]);
-        $notification = array(
-            'message' => 'Image Preset Status changed successfully',
-            'alert-type' => 'success',
-        );
-
-        return ($imagePreset->status == 0) ? 'active' : 'deactive';
-    }
+   
 }
