@@ -20,24 +20,7 @@
                             'method' => 'post',
                             'files' => true,
                         ]) }}
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="mb-3">
-
-                                    {!! Form::label('type', 'Type', ['class' => 'form-label']) !!}
-
-                                    {!! Form::select('type', CATEGORY, 1, [  
-                                        'class' => 'form-control',
-                                        'required' => 'required',
-                                        'placeholder' => 'Select Type',
-                                    ]) !!}
-                                    @error('type')
-                                        <span class="text-danger pt-3">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                        </div>
+                        
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="mb-3">

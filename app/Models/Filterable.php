@@ -5,12 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CoachedOrganization extends Model
+class Filterable extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    public function filterables()
-    {
-        return $this->morphToMany(Coach::class, 'filterable');
-    }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Categories;
+use App\Models\Coach;
 use App\Models\Languages;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +18,25 @@ use Illuminate\Support\Facades\Route;
 */
 Route::view('/', 'home');
 Route::get('/test', function () {
-     $p1 = Languages::whereIn('id',['22','24'])->get();
+     $coach =Coach::find(1);
+     $cats=Categories::whereIn('id', [1])->get();
+    // // dd($cat);
+    // foreach($cats as $cat)
+    // {
+    //     $cat->filterables()->attach($coach);
+    // $cat->filterables()->detach($coach);
+    // }
+    // foreach ($coach->categories as $cat) {
+    //     echo $cat->name;
+    // }
+    //  foreach($cats as $cat)
+    // {
+    //     $cat->filterables()->syncWithoutDetaching($coach);
+    // }
+    $coach->categories()->sync($cats);
+   //  $p1 = Languages::whereIn('id',['22','24'])->get();
     
-    return view('test',compact('p1'));
+  //  return view('test',compact('p1'));
 });
 require __DIR__ . '/user.php';
 

@@ -23,8 +23,7 @@
                             <thead>
                                 <tr>
                                     <th>-</th>
-                                    <th>ID</th>
-                                    <th>Type</th>
+                                    <th>ID</th>                                   
                                     <th>Name</th>
                                     <th>Image</th>
                                     <th class="text-center">Status</th>
@@ -38,7 +37,7 @@
                                                     class="form-check-input mixed_child " value="{{ $category->id }}"
                                                     type="checkbox"></span></td>
                                         <td>{{ $category->id }}</td>                                        
-                                        <td>{{ CATEGORY[$category->type] }}</td>
+                                        
                                         <td>{{ !empty($category->name) ? $category->name : '-' }}</td>
                                         <td>@php
                                             if (!empty($category->image)) {

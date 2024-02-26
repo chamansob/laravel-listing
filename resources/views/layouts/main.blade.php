@@ -159,6 +159,14 @@
     <script src="{{ asset('backend/assets/src/plugins/src/table/datatable/button-ext/buttons.html5.min.js')}}"></script>
     <script src="{{ asset('backend/assets/src/plugins/src/table/datatable/button-ext/buttons.print.min.js')}}"></script>
     <script src="{{ asset('backend/assets/src/plugins/src/table/datatable/custom_miscellaneous.js')}}"></script>
+
+    <script src="{{ asset('backend/assets/src/plugins/src/select2/select2.min.js')}}"></script>
+   
+   <script>$(".tagging").select2({
+	tags: true
+});</script>
+   
+    <!-- END PAGE LEVEL SCRIPTS --> 
     <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/super-build/ckeditor.js"></script>
      <script>
             // This sample still does not showcase all CKEditor&nbsp;5 features (!)

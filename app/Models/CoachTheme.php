@@ -9,4 +9,8 @@ class CoachTheme extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    public function filterables()
+    {
+        return $this->morphToMany(Coach::class, 'filterable');
+    }
 }

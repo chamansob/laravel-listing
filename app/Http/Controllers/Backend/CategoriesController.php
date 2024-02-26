@@ -56,16 +56,16 @@ class CategoriesController extends Controller
         }
 
         Categories::insert([
-            'type' => $request->type,
+           
             'name' => $request->name,
             'slug' => strtolower(str_replace(' ', '-', $request->name)),
             'image' =>  $save_url,
             'text' => $request->text,
             'status' => 0,
         ]);
-        $cat = ($request->type == 1) ? 'Category' : 'Service';
+        
         $notification = array(
-            'message' => '' . $cat . ' Added Successfully',
+            'message' => 'Category Added Successfully',
             'alert-type' => 'success',
         );
         return redirect()->back()->with($notification);
@@ -107,16 +107,16 @@ class CategoriesController extends Controller
                 $save_url = '';
             }
         }
-        $cat = ($request->type == 1) ? 'Category' : 'Service';
+       
         $category->update([
-            'type' => $request->type,
+          
             'name' => $request->name,
             'slug' => strtolower(str_replace(' ', '-', $request->name)),
             'image' =>  $save_url,
             'text' => $request->text,
         ]);
         $notification = array(
-            'message' => '' . $cat . ' Updated Successfully',
+            'message' => 'Category Updated Successfully',
             'alert-type' => 'success',
         );
         return redirect()->back()->with($notification);

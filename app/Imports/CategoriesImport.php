@@ -14,10 +14,9 @@ class CategoriesImport implements ToModel
     */
     public function model(array $row)
     {
-        return new Categories([
-            'type'     => $row[0],
-            'name'   => $row[1],
-            'slug'   => strtolower(str_replace(' ', '-', $row[1])),
+        return new Categories([          
+            'name'   => $row[0],
+            'slug'   => strtolower(str_replace(' ', '-', $row[0])),
         ]);
     }
 }

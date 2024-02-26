@@ -100,7 +100,7 @@ class ModuleController extends Controller
             $image = $request->file('image');
             $save_url = $this->imageGenrator($image, $this->image_preset_main, $this->image_preset, $this->path);
         } else {
-            if ($module->state_image != '') {
+            if ($module->image != '') {
                 $save_url = $module->image;
             } else {
                 $save_url = '';
