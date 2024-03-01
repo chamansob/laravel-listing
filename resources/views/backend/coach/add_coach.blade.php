@@ -225,9 +225,8 @@
                                 <div class="mb-3">
                                     {!! Form::label('location', 'Location', ['class' => 'form-label']) !!}
 
-                                    {!! Form::select('location[]', $location, 0, [
-                                         'class' => 'form-control tagging',
-                                        'multiple' =>'multiple',
+                                    {!! Form::select('location', $location, 0, [
+                                         'class' => 'form-control tagging',                                        
                                         'placeholder' => 'Select Location',
                                     ]) !!}
                                 </div>
@@ -238,11 +237,25 @@
 
                                     {!! Form::select('language[]', $language, 0, [
                                          'class' => 'form-control tagging nested',
-                                        'multiple' =>'multiple',
-                                    
+                                        'multiple' =>'multiple',                                    
                                         'placeholder' => 'Select Language',
                                     ]) !!}
                                 </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="mb-3">
+                                {!! Form::label('user_id', 'Upload By', ['class' => 'form-label']) !!}
+
+                                {!! Form::select('user_id', $value = $users, null, [
+                                    'class' => 'form-control',
+                                    'required' => 'required',
+                                    'placeholder' => 'Select Upload By',
+                                ]) !!}
+                                @error('roles')
+                                    <span class="text-danger pt-3">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="mb-3">

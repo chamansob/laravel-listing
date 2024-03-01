@@ -1,7 +1,7 @@
 <x-main-layout>
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('coaches.index') }}">
-            <h4 class="">Show Module</h4>
+            <h4 class="">Show Coach</h4>
         </a>
     </div>
     <div class="page-content">
@@ -238,9 +238,8 @@
                                 <div class="mb-3">
                                     {!! Form::label('location', 'Location', ['class' => 'form-label']) !!}
 
-                                    {!! Form::select('location[]', $location, $coach->locations, [
-                                        'class' => 'form-control tagging',
-                                        'multiple' => 'multiple',
+                                    {!! Form::select('location', $location, $coach->locations, [
+                                        'class' => 'form-control tagging',                                        
                                         'placeholder' => 'Select Location',
                                     ]) !!}
                                 </div>
@@ -256,6 +255,20 @@
                                         'placeholder' => 'Select Language',
                                     ]) !!}
                                 </div>
+                            </div>
+                        </div>
+                         <div class="row">
+                            <div class="mb-3">
+                                {!! Form::label('user_id', 'Upload By', ['class' => 'form-label']) !!}
+
+                                {!! Form::select('user_id', $value = $users, $coach->user_id, [
+                                    'class' => 'form-control',
+                                    'required' => 'required',
+                                    'placeholder' => 'Select Upload By',
+                                ]) !!}
+                                @error('roles')
+                                    <span class="text-danger pt-3">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="mb-3">

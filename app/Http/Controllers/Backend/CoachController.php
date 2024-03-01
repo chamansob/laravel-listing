@@ -16,9 +16,12 @@ use Illuminate\Http\Request;
 use App\Models\ImagePresets;
 use App\Models\Languages;
 use App\Models\Location;
+use App\Models\User;
 use App\Traits\CommonTrait;
 use App\Traits\ImageGenTrait;
 use Maatwebsite\Excel\Facades\Excel;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+use DataTables;
 
 class CoachController extends Controller
 {
@@ -46,13 +49,13 @@ class CoachController extends Controller
      */
     public function create()
     {
-        $categories = Categories::pluck('name','id');
+        $categories = Categories::pluck('name', 'id');
         $canprovide = CanProvide::pluck('name', 'id');
         $coachorg = CoachedOrganization::pluck('name', 'id');
         $coachmethod = CoachingMethod::pluck('name', 'id');
         $coachtheme = CoachTheme::pluck('name', 'id');
-        $heldposition = HeldPosition::pluck('name', 'id');      
-        
+        $heldposition = HeldPosition::pluck('name', 'id');
+
         $locations = Location::all();
 
         // Group the locations by 'location_id'
@@ -61,14 +64,15 @@ class CoachController extends Controller
         // Pluck 'name' values for each 'location_id'
         $locationOptions = $groupedLocations->map(function ($locationGroup, $locationId) {
             return [
-                'location_id' => LOCATION[$locationId],
+                'location_id' => "Country - (" . LOCATION[$locationId] . ")",
                 'name' => $locationGroup->pluck('name', 'id')->toArray(),
             ];
         });
-        $location= $locationOptions->pluck('name', 'location_id')->toArray();
+        $location = $locationOptions->pluck('name', 'location_id')->toArray();
+        $users = User::where('role', 'user')->pluck('email', 'id');
         //dd($locationOptions->toArray());
-        $language = Languages::pluck('name', 'id'); 
-        return view('backend.coach.add_coach',compact('categories', 'canprovide', 'coachorg', 'coachmethod', 'coachtheme', 'heldposition','language','location'));
+        $language = Languages::pluck('name', 'id');
+        return view('backend.coach.add_coach', compact('categories', 'canprovide', 'coachorg', 'coachmethod', 'coachtheme', 'heldposition', 'language', 'location', 'users'));
     }
 
     /**
@@ -85,9 +89,11 @@ class CoachController extends Controller
         } else {
             $save_url = '';
         }
+        $pcode = IdGenerator::generate(['table' => 'coaches', 'field' => 'coach_code', 'length' => 5, 'prefix' => 'CO']);
 
-       $coach= Coach::insert([            
-            'name' => $request->name,            
+        $coach = Coach::insert([
+            'coach_code' => $pcode,
+            'name' => $request->name,
             'coach_slug' => strtolower(str_replace(' ', '-', $request->name)),
             'image' =>  $save_url,
             'email' => $request->email,
@@ -98,41 +104,42 @@ class CoachController extends Controller
             'degree' => $request->degree,
             'price' => $request->price,
             'text' => $request->text,
+            'user_id' => $request->user_id,
+            'uploadby' => ($request->user_id == NULL) ? 0 : 1,
             'status' => 0,
         ]);
-        $cats = Categories::whereIn('id', $request->category)->get();
-        foreach( $cats as $cat){
-            $cat->filterables()->attach($coach);
-        }
-        $cats = CoachTheme::whereIn('id', $request->coachorg)->get();
+        $cats = Categories::whereIntegerInRaw('id', $request->category)->get();
         foreach ($cats as $cat) {
             $cat->filterables()->attach($coach);
         }
-        $cats = CoachedOrganization::whereIn('id', $request->category)->get();
+        $cats = CoachTheme::whereIntegerInRaw('id', $request->coachtheme)->get();
         foreach ($cats as $cat) {
             $cat->filterables()->attach($coach);
         }
-        $cats = CanProvide::whereIn('id', $request->canprovide)->get();
+        $cats = CoachedOrganization::whereIntegerInRaw('id', $request->coachorg)->get();
         foreach ($cats as $cat) {
             $cat->filterables()->attach($coach);
         }
-        $cats = CoachingMethod::whereIn('id', $request->coachmethod)->get();
+        $cats = CanProvide::whereIntegerInRaw('id', $request->canprovide)->get();
         foreach ($cats as $cat) {
             $cat->filterables()->attach($coach);
         }
-        $cats = HeldPosition::whereIn('id', $request->heldposition)->get();
+        $cats = CoachingMethod::whereIntegerInRaw('id', $request->coachmethod)->get();
         foreach ($cats as $cat) {
             $cat->filterables()->attach($coach);
         }
-        $cats = Location::whereIn('id', $request->location)->get();
+        $cats = HeldPosition::whereIntegerInRaw('id', $request->heldposition)->get();
         foreach ($cats as $cat) {
             $cat->filterables()->attach($coach);
         }
-        $cats = Languages::whereIn('id', $request->language)->get();
+        $cats = Location::where('id', $request->location)->get();
+        $cat->filterables()->attach($coach);
+
+        $cats = Languages::whereIntegerInRaw('id', $request->language)->get();
         foreach ($cats as $cat) {
             $cat->filterables()->attach($coach);
         }
-      
+
         $notification = array(
             'message' => 'Coach Added Successfully',
             'alert-type' => 'success',
@@ -168,14 +175,15 @@ class CoachController extends Controller
         // Pluck 'name' values for each 'location_id'
         $locationOptions = $groupedLocations->map(function ($locationGroup, $locationId) {
             return [
-                'location_id' => LOCATION[$locationId],
+                'location_id' => "Country - (" . LOCATION[$locationId] . ")",
                 'name' => $locationGroup->pluck('name', 'id')->toArray(),
             ];
         });
         $location = $locationOptions->pluck('name', 'location_id')->toArray();
         //dd($locationOptions->toArray());
-        $language = Languages::pluck('name', 'id'); 
-        return view('backend.coach.edit_coach',        compact('coach','categories', 'canprovide', 'coachorg', 'coachmethod', 'coachtheme', 'heldposition', 'language', 'location'));
+        $language = Languages::pluck('name', 'id');
+        $users = User::where('role', 'user')->pluck('email', 'id');
+        return view('backend.coach.edit_coach',        compact('coach', 'categories', 'canprovide', 'coachorg', 'coachmethod', 'coachtheme', 'heldposition', 'language', 'location', 'users'));
     }
 
     /**
@@ -196,6 +204,7 @@ class CoachController extends Controller
                 $save_url = '';
             }
         }
+
         $coach->update([
             'name' => $request->name,
             'coach_slug' => strtolower(str_replace(' ', '-', $request->name)),
@@ -208,35 +217,44 @@ class CoachController extends Controller
             'degree' => $request->degree,
             'price' => $request->price,
             'text' => $request->text,
+            'user_id' => $request->user_id,
+            'uploadby' => ($request->user_id == NULL) ? 0 : 1,
             'status' => 0,
         ]);
         // dd($request->category);
-       
-        $cats = Categories::whereIn('id', $request->category)->get();
-        $coach->categories()->sync($cats);
-       
-        $cats = CoachTheme::whereIn('id', $request->coachorg)->get();
-        $coach->coachthemes()->sync($cats);
+        if ($request->category != null) {
+            $cats = Categories::whereIntegerInRaw('id', $request->category)->get();
+            $coach->categories()->sync($cats);
+        }
+        if ($request->coachtheme != null) {
+            $cats = CoachTheme::whereIntegerInRaw('id', $request->coachtheme)->get();
+            $coach->coachthemes()->sync($cats);
+        }
+        if ($request->coachorg != null) {
+            $cats = CoachedOrganization::whereIntegerInRaw('id', $request->coachorg)->get();
+            $coach->coachorgs()->sync($cats);
+        }
+        if ($request->canprovide != null) {
+            $cats = CanProvide::whereIntegerInRaw('id', $request->canprovide)->get();
+            $coach->canprovides()->sync($cats);
+        }
+        if ($request->coachmethod != null) {
+            $cats = CoachingMethod::whereIntegerInRaw('id', $request->coachmethod)->get();
+            $coach->coachmethods()->sync($cats);
+        }
+        if ($request->heldposition != null) {
+            $cats = HeldPosition::whereIntegerInRaw('id', $request->heldposition)->get();
+            $coach->heldpositions()->sync($cats);
+        }
+        if ($request->location != null) {
+            $cats = Location::where('id', $request->location)->get();
+            $coach->locations()->sync($cats);
+        }
+        if ($request->language != null) {
+            $cats = Languages::whereIntegerInRaw('id', $request->language)->get();
+            $coach->languages()->sync($cats);
+        }
 
-        $cats = CoachedOrganization::whereIn('id', $request->category)->get();
-        $coach->coachorgs()->sync($cats);
-
-        $cats = CanProvide::whereIn('id', $request->canprovide)->get();
-        $coach->canprovides()->sync($cats);
-
-        $cats = CoachingMethod::whereIn('id', $request->coachmethod)->get();
-        $coach->coachmethods()->sync($cats);
-
-        $cats = HeldPosition::whereIn('id', $request->heldposition)->get();
-        $coach->heldpositions()->sync($cats);
-        
-        $cats = Location::whereIn('id', $request->location)->get();
-        $coach->locations()->sync($cats);
-        
-        $cats = Languages::whereIn('id', $request->language)->get();
-        $coach->languages()->sync($cats);
-        
-        
         $notification = array(
             'message' => 'Coach Updated Successfully',
             'alert-type' => 'success',
@@ -254,7 +272,7 @@ class CoachController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    
+
     /**
      * Import data from a CSV file into the database
      */
@@ -286,6 +304,75 @@ class CoachController extends Controller
         );
 
         return redirect()->back()->with($notification);
-    } 
+    }
     // End Method 
+    public function Mycode(Request $request)
+    {
+        return "hello";
+    }
+    public function Ajax_Load(Request $request, Coach $coach)
+    {
+
+        $query = Coach::select('id', 'coach_code', 'name', 'image', 'gender', 'user_id', 'uploadby', 'created_at', 'updated_at')->get();
+
+        return DataTables::of($query)
+            ->addColumn('image', function (Coach $coach) {
+                $img = explode('.', $coach->image);
+                $table_img = $img[0] . '_small.' . $img[1];
+                return  '<img src="' . asset($coach->image) . '">';
+            })
+            ->addColumn('uploadby', function (Coach $coach) {
+                $uploaby = ($coach->user?->name) ? $coach->user->name : "Admin";
+                $btn = ($coach->user?->name) ? 'inverse-primary' : 'inverse-warning';
+                //  $link = ($coach->user?->name) ? route("agent.details", $coach->user->id) : '#';
+                return  '<a href="#"  target="_blank" class="btn btn-sm btn-' . $btn . ' "> ' . $uploaby . '</a>';
+            })
+            ->addColumn('info', function (Coach $coach) {
+                $pname = ucfirst($coach->name);
+                $code  = $coach->coach_code;
+                $gender = GENDER[$coach->gender];
+
+                $languages = $coach->languages()->pluck('name')->toArray();
+                $languages_list = implode(",", $languages);
+                $locations = $coach->locations()->pluck('name')->toArray();
+                $locations_list = implode(",", $locations);
+                $created_at = $coach->created_at->format('d-m-Y g:i A ');
+                $updated_at = $coach->updated_at->format('d-m-Y g:i A ');
+                return  '<strong class="text-primary">Name:</strong>' . $pname . '<br>
+                    <strong class="text-info">Code:</strong>' . $code . '<br>                   
+                    <strong class="text-danger">Gender:</strong>' . $gender . '<br>   
+                    <strong class="text-danger">Language:</strong>' . $languages_list . '<br>     
+                    <strong class="text-danger">Location:</strong>' . $locations_list . '<br>              
+                    <strong class="text-secondary">Created:</strong>' . $created_at . '<br>
+                    <strong class="text-secondary">Updated:</strong>' . $updated_at . '';
+            })
+            ->addColumn('status', function (Coach $coach) {
+                $btn = $coach->status == 0 ? 'danger' : 'success';
+                $status = $coach->status == 0 ? 'Active' : 'Deactive';
+                return  '<a href="#" id="currentStatus' . $coach->id . '"><span
+                                                        class="badge rounded-pill bg-' . $btn . '">' . $status . '</span></a>';
+            })
+
+            ->addColumn('action', function (Coach $coach) {
+
+                $show = route('coaches.show', $coach->id);
+                $x = '<a href="' . route('coaches.edit', $coach->id) . '"
+    class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip"
+    data-placement="top" title="Edit" data-bs-original-title="Edit">
+    <i data-feather="edit"></i>
+</a>';
+
+                $x .= '<a href="#" onClick="deleteFunction(' . $coach->id . ', \'Coach\')"
+    class="action-btn btn-edit bs-tooltip me-2 delete' . $coach->id . '"
+    data-toggle="tooltip" data-placement="top" title="Delete"
+    data-bs-original-title="Delete">
+    <i data-feather="trash-2"></i>
+</a>';
+
+                return $x;
+            })
+
+            ->rawColumns(['image', 'uploadby', 'info', 'status', 'change', 'action'])
+            ->make(true);
+    }
 }

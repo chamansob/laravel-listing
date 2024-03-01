@@ -19,70 +19,24 @@
             <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                 <div class="statbox widget box box-shadow">
                     <div class="widget-content widget-content-area">
-                        <table id="html5-extension" class="table dt-table-hover">
+                        <table id="coach_ajax" class="table dt-table-hover">
                             <thead>
                                 <tr>
-                                    <th>-</th>
+
                                     <th>ID</th>
-                                    <th>Image</th>
-                                    <th>Name</th>
+                                    <th>Image</th>                                   
+                                    <th>Uploaded By</th>
+                                    <th>Info</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach ($coaches as $coach)
-                                    <tr class="coach-{{ $coach->id }}">
-                                        <td style="width:1%"><span class="form-check form-check-primary"><input
-                                                    class="form-check-input mixed_child " value="{{ $coach->id }}"
-                                                    type="checkbox"></span></td>
-                                        <td>{{ $coach->id }}</td>
-                                        <td>@php
-                                            if (!empty($coach->image)) {
-                                                $img = explode('.', $coach->image);
-                                                $small_img = $img[0] . '_thumb.' . $img[1];
-                                            } else {
-                                                $small_img = '/upload/no_image.jpg'; # code...
-                                            }
-                                        @endphp
-                                            <img src="{{ asset($small_img) }}"
-                                                class="rounded-circle profile-img border border-dark w-25">
-                                        </td>
-                                        <td>{{ !empty($coach->name) ? $coach->name : '-' }}</td>
 
-                                        <td class="text-center">
-                                            <button type="button" onClick="statusFunction({{ $coach->id }},'Coach')"
-                                                class="shadow-none badge badge-light-{{ $coach->status == 1 ? 'danger' : 'success' }} warning changestatus{{ $coach->id }}  bs-tooltip"
-                                                data-toggle="tooltip" data-placement="top" title="Status"
-                                                data-original-title="Status">{{ $coach->status == 1 ? 'Deactive' : 'Active' }}</button>
-
-                                        </td>
-
-                                        <td class="text-center">
-                                            <div class="action-btns">
-
-
-                                                <a href="{{ route('coaches.edit', $coach->id) }}"
-                                                    class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip"
-                                                    data-placement="top" title="Edit" data-bs-original-title="Edit">
-                                                    <i data-feather="edit"></i>
-                                                </a>
-
-                                                <a href="#" onClick="deleteFunction({{ $coach->id }},'Coach')"
-                                                    class="action-btn btn-edit bs-tooltip me-2 delete{{ $coach->id }}"
-                                                    data-toggle="tooltip" data-placement="top" title="Delete"
-                                                    data-bs-original-title="Delete">
-                                                    <i data-feather="trash-2"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
                         </table>
                         @if ($coaches->count() != 0)
                             <div class="ms-3">
-                                <button id="deleteall" onClick="deleteAllFunction('Coach')" class="btn btn-danger mb-2 me-4">
+                                <button id="deleteall" onClick="deleteAllFunction('Coach')"
+                                    class="btn btn-danger mb-2 me-4">
                                     <span class="btn-text-inner">Delete Selected</span>
                                 </button>
                             </div>
@@ -98,7 +52,79 @@
     </div>
     @if ($coaches->count() != 0)
         <script type="text/javascript">
-           function deleteAllFunction(table)  {
+            $(document).ready(function() {
+                $('#coach_ajax').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "ajax": "{{ route('coaches.ajax_load') }}",
+                    "aaSorting": [
+                        [1, "desc"]
+                    ],
+                    "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'l  B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
+                        "<'table-responsive'tr>" +
+                        "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+                    buttons: {
+                        buttons: [{
+                                extend: 'copy',
+                                className: 'btn btn-sm'
+                            },
+                            {
+                                extend: 'csv',
+                                className: 'btn btn-sm'
+                            },
+                            {
+                                extend: 'excel',
+                                className: 'btn btn-sm'
+                            },
+                            {
+                                extend: 'print',
+                                className: 'btn btn-sm'
+                            }
+                        ]
+                    },
+                    "oLanguage": {
+                        "oPaginate": {
+                            "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+                            "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+                        },
+                        "sInfo": "Showing page _PAGE_ of _PAGES_",
+                        "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                        "sSearchPlaceholder": "Search...",
+                        "sLengthMenu": "Results :  _MENU_",
+                    },
+                    "columns": [{
+                            "data": "id"
+                        },
+                        {
+                            "data": "image"
+                        },
+                        {
+                            "data": "uploadby"
+                        },
+                        {
+                            "data": "info"
+                        },
+                        {
+                            "data": "status"
+                        },
+                        {
+                            "data": "action"
+                        },
+                    ],
+                    "drawCallback": function( settings ) {
+        feather.replace();
+        
+    },
+                    "lengthMenu": [
+                        [10, 25, 50, 100, 1000, 2000, 3000, 10000, -1],
+                        [10, 25, 50, 100, 1000, 2000, 3000, 10000]
+                    ],
+                    "pageLength": 10,
+                });
+            })
+        </script>
+        <script type="text/javascript">
+            function deleteAllFunction(table) {
                 // Get all checkboxes with the specified class name
                 var checkboxes = document.querySelectorAll('.mixed_child');
                 // Initialize an array to store checked checkbox values
@@ -129,14 +155,15 @@
                     var crf = '{{ csrf_token() }}';
                     $.post("{{ route('coaches.delete') }}", {
                         _token: crf,
-                        id: checkedValues,table:table
+                        id: checkedValues,
+                        table: table
                     }, function(data) {
                         toastr.success("Selected Data Deleted");
                     });
                 }
             }
 
-            function statusFunction(id,table) {
+            function statusFunction(id, table) {
                 // event.preventDefault(); // prevent form submit
                 // var form = event.target.form; // storing the form
                 const swalWithBootstrapButtons = Swal.mixin({
@@ -167,7 +194,8 @@
                                 var crf = '{{ csrf_token() }}';
                                 $.post("{{ route('coaches.status') }}", {
                                     _token: crf,
-                                    id: id,table:table
+                                    id: id,
+                                    table: table
                                 }, function(data) {
                                     var elems = document.querySelector('.warning.changestatus' +
                                         id);
@@ -234,7 +262,8 @@
                             var crf = '{{ csrf_token() }}';
                             $.post("{{ route('coaches.delete') }}", {
                                 _token: crf,
-                                id: id,table:table
+                                id: id,
+                                table: table
                             }, function(data) {
                                 toastr.success("Entry no " + id + " Deleted");
                             });

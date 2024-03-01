@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('coaches', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('coach_code');
+            $table->string('name', 100);
             $table->string('name', 100);
             $table->string('coach_slug', 100);
             $table->string('image')->nullable();           

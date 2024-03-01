@@ -608,7 +608,7 @@
                          aria-expanded="{{ is_active_route('admin/add/admin') }}" aria-controls="admin"
                          class="dropdown-toggle">
                          <div class="">
-                             <i data-feather="menu"></i> <span>{{ __('Manage Staff') }}</span>
+                             <i data-feather="menu"></i> <span>{{ __('Manage Users') }}</span>
                          </div>
                          <div>
                              <i data-feather="chevron-right"></i>
@@ -616,14 +616,19 @@
                      </a>
                      <ul class="collapse submenu list-unstyled {{ show_class('admin/add/admin') }}" id="admin"
                          data-bs-parent="#accordionExample">
-                         @if (Auth::user()->can('all.admin'))
+                         @if (Auth::user()->can('add.admin'))
                              <li class="{{ active_class('admin/add/admin') }}">
-                                 <a href="{{ route('add.admin') }}"> {{ __('Add Staff') }} </a>
+                                 <a href="{{ route('add.admin') }}"> {{ __('Add User') }} </a>
                              </li>
                          @endif
-                         @if (Auth::user()->can('add.admin'))
+                         @if (Auth::user()->can('all.admin'))
                              <li class="{{ active_class('admin/all/admin') }}">
-                                 <a href="{{ route('all.admin') }}"> {{ __('Show Staff') }} </a>
+                                 <a href="{{ route('all.admin') }}"> {{ __('Show Admin Users') }} </a>
+                             </li>
+                         @endif
+                          @if (Auth::user()->can('all.users'))
+                             <li class="{{ active_class('admin/users') }}">
+                                 <a href="{{ route('all.users') }}"> {{ __('Show Users') }} </a>
                              </li>
                          @endif
                      </ul>

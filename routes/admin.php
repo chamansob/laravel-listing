@@ -35,6 +35,8 @@ Route::middleware(['auth', 'roles:admin'])->prefix('admin')->group(function () {
         Route::get('/dashboard', 'AdminDashboard')->name('admin.dashboard');
         // Admin User All Route 
         Route::get('/all/admin', 'AllAdmin')->name('all.admin');
+        Route::get('/user/ajax_load',  'Ajax_Load')->name('users.ajax_load');
+        Route::get('/all/users', 'AllUsers')->name('all.users');
         Route::get('/add/admin', 'AddAdmin')->name('add.admin');
         Route::post('/store/admin', 'StoreAdmin')->name('store.admin');
         Route::get('/edit/admin/{id}', 'EditAdmin')->name('edit.admin');
@@ -153,11 +155,15 @@ Route::middleware(['auth', 'roles:admin'])->prefix('admin')->group(function () {
 
     // Coaches All Routes
     Route::resource('coaches', CoachController::class)->middleware('can:coaches.index, coaches.create, coaches.update');
-    Route::post('/coaches/status', [CoachController::class, 'StatusUpdate'])->middleware('can:coaches.status')->name('coaches.status');
-    Route::post('/coaches/delete', [CoachController::class, 'DeletewithImage'])->middleware('can:coaches.delete')->name('coaches.delete');
-    Route::get('/import/coaches', [CoachController::class, 'ImportCoaches'])->name('import.coaches');
-    Route::get('/exportcoach', [CoachController::class, 'Export'])->name('export.coach');
-    Route::post('/importcoach', [CoachController::class, 'Import'])->name('import.coach');
+        Route::controller(CoachController::class)->group(function () {
+        Route::post('/coaches/status',  'StatusUpdate')->middleware('can:coaches.status')->name('coaches.status');
+        Route::post('/coaches/delete',  'DeletewithImage')->middleware('can:coaches.delete')->name('coaches.delete');
+        Route::get('/ajax_load', [CoachController::class, 'Ajax_Load'])->name('coaches.ajax_load');
+        Route::get('/import/coaches',  'ImportCoaches')->name('import.coaches');
+        Route::get('/exportcoach',  'Export')->name('export.coach');
+        Route::post('/importcoach',  'Import')->name('import.coach');
+    });
+    
 
     // SMTP and Site Setting  All Route 
     Route::controller(SettingController::class)->group(function () {
