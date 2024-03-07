@@ -20,7 +20,7 @@ class ModuleController extends Controller
     public function __construct()
     {
         $this->image_preset = ImagePresets::whereIn('id', [4])->get();
-        $this->image_preset_main = ImagePresets::find(10);
+        $this->image_preset_main = ImagePresets::find(14);
     }
     /**
      * Display a listing of the resource.
@@ -97,10 +97,16 @@ class ModuleController extends Controller
             'name' => 'required|max:200',
         ]);
         if ($request->file('image') != null) {
+            if (file_exists($module->image)) {
+                $img = explode('.', $module->image);
+                $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
+                unlink($small_img);
+                unlink($module->image);
+            }
             $image = $request->file('image');
             $save_url = $this->imageGenrator($image, $this->image_preset_main, $this->image_preset, $this->path);
         } else {
-            if ($module->image != '') {
+            if ($module->image != '') {                
                 $save_url = $module->image;
             } else {
                 $save_url = '';

@@ -19,7 +19,7 @@ class SettingController extends Controller
     public function __construct()
     {
         $this->image_preset = ImagePresets::whereIn('id', [1])->get();
-        $this->image_preset_main = ImagePresets::find(13);
+        $this->image_preset_main = ImagePresets::find(14);
     }
     public function SmtpSetting()
     {
@@ -86,6 +86,7 @@ class SettingController extends Controller
                 'site_title' => $request->site_title,
                 'meta_description' => $request->meta_description,
                 'meta_keywords' => $request->meta_keywords,
+                'about' => $request->about,
                 'support_phone' => $request->support_phone,
                 'company_address' => $request->company_address,
                 'app_name' => $request->app_name,
@@ -93,8 +94,8 @@ class SettingController extends Controller
                 'facebook' => $request->facebook,
                 'twitter' => $request->twitter,
                 'pinterest' => $request->pinterest,
-                'google' => $request->google,
-                'vimeo' => $request->vimeo,
+                'instagram' => $request->instagram,
+                'youtube' => $request->youtube,
                 'style' => $request->style,                 
                 'logo' => $save_url,
                 'favicon' => $save_url2,

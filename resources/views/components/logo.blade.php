@@ -1,0 +1,1 @@
+<img src="{{ $path }}" {{ $attributes }}  alt="{{ $name }}">

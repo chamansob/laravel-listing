@@ -1,29 +1,34 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
+<x-front-layout>
+    <!-- ================ Start Page Title ======================= -->
+    <section class="title-transparent page-title"
+        style="background:url({{ asset('frontend/assets/img/title-bg.jpg') }});">
+        <div class="container">
+            <div class="title-content">
+                <h1>Profile</h1>
+                <div class="breadcrumbs">
+                    <a href="{{ url('/') }}">Home</a>
+                    <span class="gt3_breadcrumb_divider"></span>
+                    <span class="current">Profile</span>
                 </div>
             </div>
         </div>
-    </div>
-</x-app-layout>
+    </section>
+    <div class="clearfix"></div>
+    <!-- ================ End Page Title ======================= -->
+
+    <!-- ================ Edit Section Start ======================= -->
+    <section class="padd-40">
+        <div class="container">
+            <div class="col-md-4 col-sm-12">
+                @include('frontend.body.sidebar')
+            </div>
+            <div class="col-md-8 col-sm-12">
+                @include('profile.partials.update-profile-information-form')
+                @include('profile.partials.update-password-form')
+                @include('profile.partials.delete-user-form')
+            </div>
+
+        </div>
+    </section>
+    <!-- ================ End Edit Section Start ======================= -->
+</x-front-layout>

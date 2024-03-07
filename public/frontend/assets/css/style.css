@@ -6271,3 +6271,13 @@ a.cl-box {
 .coquelicot {
     background: #ff3800
 }
+
+/* Extra Style */
+.invalid-feedback {
+    color: #e7515a;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+.error-list  ul li {
+    list-style: none;
+}

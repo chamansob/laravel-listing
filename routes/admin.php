@@ -14,13 +14,13 @@ use App\Http\Controllers\Backend\ModuleController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\SliderController;
-use App\Http\Controllers\backend\SocialController;
 use App\Http\Controllers\backend\TestimonialController;
 use App\Http\Controllers\Backend\UserRoleController;
 use App\Http\Controllers\Backend\CanProvideController;
 use App\Http\Controllers\Backend\CoachController;
 use App\Http\Controllers\Backend\CoachedOrganizationController;
 use App\Http\Controllers\Backend\CoachThemeController;
+use App\Http\Controllers\Backend\CounterController;
 use App\Http\Controllers\Backend\HeldPositionController;
 use App\Http\Controllers\Backend\LanguagesController;
 use App\Http\Controllers\Backend\LocationController;
@@ -60,6 +60,11 @@ Route::middleware(['auth', 'roles:admin'])->prefix('admin')->group(function () {
     Route::post('/modules/status', [ModuleController::class, 'StatusUpdate'])->middleware('can:module.status')->name('modules.status');
     Route::post('/modules/delete', [ModuleController::class, 'DeletewithImage'])->middleware('can:module.delete')->name('modules.delete');
 
+    // Counter All Routes
+    Route::resource('counters', CounterController::class)->middleware('can:counters.index, counters.create, counters.update');    
+    Route::post('/counters/delete', [CounterController::class, 'Delete'])->middleware('can:counters.delete')->name('counters.delete');
+    
+
     // Slider All Routes
     Route::resource('sliders', SliderController::class)->middleware('can:sliders.index, sliders.create, sliders.update');
     Route::post('/sliders/status', [SliderController::class, 'StatusUpdate'])->middleware('can:sliders.status')->name('sliders.status');
@@ -70,20 +75,18 @@ Route::middleware(['auth', 'roles:admin'])->prefix('admin')->group(function () {
     Route::post('/testimonials/status', [TestimonialController::class, 'StatusUpdate'])->middleware('can:testimonials.status')->name('testimonials.status');
     Route::post('/testimonials/delete', [TestimonialController::class, 'DeletewithImage'])->middleware('can:testimonials.delete')->name('testimonials.delete');
 
-    // Social All Routes
-    Route::resource('social', SocialController::class)->middleware('can:social.index, social.create, social.update');
-    Route::post('/social/status', [SocialController::class, 'StatusUpdate'])->middleware('can:social.status')->name('social.status');    
-    Route::post('/social/delete', [SocialController::class, 'Delete'])->middleware('can:social.delete')->name('social.delete');
-
+   
     // Blog All Routes
     Route::resource('blog', BlogController::class)->middleware('can:blog.index, blog.create, blog.update');
     Route::post('/blog/status', [BlogController::class, 'StatusUpdate'])->middleware('can:blog.status')->name('blog.status');
     Route::post('/blog/delete', [BlogController::class, 'Delete'])->middleware('can:blog.delete')->name('blog.delete');
-
+    
+    // Blog Categories All Routes
     Route::resource('post/category', BlogcategoryController::class)->middleware('can:category.index, category.create, category.update');
     Route::post('post/category/delete', [BlogcategoryController::class, 'Delete'])->middleware('can:category.delete')->name('category.delete');
     Route::resource('post/tag', BlogtagController::class)->middleware('can:tag.index, tag.create, tag.update');
     Route::post('post/tag/delete', [BlogtagController::class, 'Delete'])->middleware('can:tag.delete')->name('tag.delete');
+   
     // Image Preset All Routes
     Route::resource('image_preset', ImagePresetsController::class)->middleware('can:image_preset.index, image_preset.create, image_preset.update');
     Route::post('/image_preset/status', [ImagePresetsController::class, 'StatusUpdate'])->middleware('can:image_preset.status')->name('image_preset.status');

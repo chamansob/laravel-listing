@@ -180,6 +180,33 @@
                      </ul>
                  </li>
              @endif
+              @if (Auth::user()->can('counters.menu'))
+                 <li class="menu">
+                     <a href="#counters" data-bs-toggle="collapse"
+                         aria-expanded="{{ is_active_route('admin/counters') }}" aria-controls="counters"
+                         class="dropdown-toggle">
+                         <div class="">
+                             <i data-feather="menu"></i> <span>{{ __('Counter') }}</span>
+                         </div>
+                         <div>
+                             <i data-feather="chevron-right"></i>
+                         </div>
+                     </a>
+                     <ul class="collapse submenu list-unstyled {{ show_class('admin/counters') }}" id="counters"
+                         data-bs-parent="#accordionExample">
+                         @if (Auth::user()->can('counters.create'))
+                             <li class="{{ active_class('admin/counters/create') }}">
+                                 <a href="{{ route('counters.create') }}"> {{ __('Add Counter') }} </a>
+                             </li>
+                         @endif
+                         @if (Auth::user()->can('counters.index'))
+                             <li class="{{ active_class('admin/counters') }}">
+                                 <a href="{{ route('counters.index') }}"> {{ __('Show Counter') }} </a>
+                             </li>
+                         @endif
+                     </ul>
+                 </li>
+             @endif
              @if (Auth::user()->can('sliders.menu'))
                  <li class="menu">
                      <a href="#sliders" data-bs-toggle="collapse"
@@ -207,33 +234,7 @@
                      </ul>
                  </li>
              @endif
-             @if (Auth::user()->can('social.menu'))
-                 <li class="menu">
-                     <a href="#social" data-bs-toggle="collapse"
-                         aria-expanded="{{ is_active_route('admin/social') }}" aria-controls="social"
-                         class="dropdown-toggle">
-                         <div class="">
-                             <i data-feather="menu"></i> <span>{{ __('Social') }}</span>
-                         </div>
-                         <div>
-                             <i data-feather="chevron-right"></i>
-                         </div>
-                     </a>
-                     <ul class="collapse submenu list-unstyled {{ show_class('admin/social') }}" id="social"
-                         data-bs-parent="#accordionExample">
-                         @if (Auth::user()->can('social.create'))
-                             <li class="{{ active_class('admin/social/create') }}">
-                                 <a href="{{ route('social.create') }}"> {{ __('Add Social') }} </a>
-                             </li>
-                         @endif
-                         @if (Auth::user()->can('social.index'))
-                             <li class="{{ active_class('admin/social') }}">
-                                 <a href="{{ route('social.index') }}"> {{ __('Show Social') }} </a>
-                             </li>
-                         @endif
-                     </ul>
-                 </li>
-             @endif
+            
               @if (Auth::user()->can('testimonials.menu'))
                  <li class="menu">
                      <a href="#testimonials" data-bs-toggle="collapse"

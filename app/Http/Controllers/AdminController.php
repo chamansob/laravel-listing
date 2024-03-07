@@ -96,14 +96,19 @@ class AdminController extends Controller
 
     public function UpdateAdmin(Request $request, $id)
     {
-
+        $role = 'user';
+        if ($request->roles == 4) {
+            $role = 'user';
+        } else {
+            $role = 'admin';
+        }
         $user = User::findOrFail($id);
         $user->username = $request->username;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->about = $request->about;
-        $user->role = 'admin';
+        $user->role = $role;
         $user->status = 0;
         $user->save();
       

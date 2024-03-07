@@ -214,7 +214,7 @@
                     ]
                 },
                 // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
-                placeholder: 'Welcome to CKEditor 5!',
+                placeholder: '',
                 // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
                 fontFamily: {
                     options: [
@@ -232,7 +232,7 @@
                 },
                 // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-size-feature
                 fontSize: {
-                    options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+                    options: [ 10, 12, 14, 'default', 18, 20, 22,24 ],
                     supportAllValues: true
                 },
                 // Be careful with the setting below. It instructs CKEditor to accept ALL HTML markup.
@@ -244,7 +244,7 @@
                             attributes: true,
                             classes: true,
                             styles: true
-                        }
+                        },{ name: "span", attributes: true, classes: true, styles: true }
                     ]
                 },
                 // Be careful with enabling previews

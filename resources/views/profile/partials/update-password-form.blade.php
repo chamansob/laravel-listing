@@ -1,4 +1,5 @@
-<section>
+<div class="add-listing-box add-location mrg-bot-25 padd-bot-30 padd-top-25">
+    <div class="row mrg-r-10 mrg-l-10 preview-info">
     <header>
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
             {{ __('Update Password') }}
@@ -32,7 +33,7 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <x-primary-button class="btn btn-midium theme-btn btn-radius width-200">{{ __('Save') }}</x-primary-button>
 
             @if (session('status') === 'password-updated')
                 <p
@@ -45,4 +46,5 @@
             @endif
         </div>
     </form>
-</section>
+</div>
+</div>

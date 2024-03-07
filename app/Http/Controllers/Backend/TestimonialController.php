@@ -21,7 +21,7 @@ class TestimonialController extends Controller
     {
        
         $this->image_preset = ImagePresets::whereIn('id', [4])->get();
-        $this->image_preset_main = ImagePresets::find(10);
+        $this->image_preset_main = ImagePresets::find(14);
     }
     /**
      * Display a listing of the resource.

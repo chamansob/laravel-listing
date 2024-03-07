@@ -1,4 +1,5 @@
-<section class="space-y-6">
+<div class="add-listing-box add-location mrg-bot-25 padd-bot-30 padd-top-25">
+    <div class="row mrg-r-10 mrg-l-10 preview-info">
     <header>
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
             {{ __('Delete Account') }}
@@ -46,10 +47,11 @@
                     {{ __('Cancel') }}
                 </x-secondary-button>
 
-                <x-danger-button class="ms-3">
+                <x-danger-button >
                     {{ __('Delete Account') }}
                 </x-danger-button>
             </div>
         </form>
     </x-modal>
-</section>
+</div>
+</div>

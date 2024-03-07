@@ -46,7 +46,7 @@
                                         <td>{{ !empty($testimonial->designation) ? $testimonial->designation : '-' }}
                                         </td>
                                         <td class="text-center">
-                                            <button type="button" onClick="statusFunction({{ $testimonial->id }},'Testimonials')"
+                                            <button type="button" onClick="statusFunction({{ $testimonial->id }},'testimonial')"
                                                 class="shadow-none badge badge-light-{{ $testimonial->status == 1 ? 'danger' : 'success' }} warning changestatus{{ $testimonial->id }}  bs-tooltip"
                                                 data-toggle="tooltip" data-placement="top" title="Status"
                                                 data-original-title="Status">{{ $testimonial->status == 1 ? 'Deactive' : 'Active' }}</button>
@@ -56,14 +56,13 @@
                                         <td class="text-center">
                                             <div class="action-btns">
 
-
                                                 <a href="{{ route('testimonials.edit', $testimonial->id) }}"
                                                     class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip"
                                                     data-placement="top" title="Edit" data-bs-original-title="Edit">
                                                     <i data-feather="edit"></i>
                                                 </a>
 
-                                                <a href="#" onClick="deleteFunction({{ $testimonial->id }},'Testimonials')"
+                                                <a href="#" onClick="deleteFunction({{ $testimonial->id }},'testimonial')"
                                                     class="action-btn btn-edit bs-tooltip me-2 delete{{ $testimonial->id }}"
                                                     data-toggle="tooltip" data-placement="top" title="Delete"
                                                     data-bs-original-title="Delete">
@@ -166,7 +165,8 @@
                                 var crf = '{{ csrf_token() }}';
                                 $.post("{{ route('testimonials.status') }}", {
                                     _token: crf,
-                                    id: id,table:table
+                                    id: id,
+                                    table:table
                                 }, function(data) {
                                     var elems = document.querySelector('.warning.changestatus' +
                                         id);

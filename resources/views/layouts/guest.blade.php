@@ -1,30 +1,85 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html class="no-js" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-        <title>{{ config('app.name', 'Admin') }}</title>
+<head>
+    @php
+        $template = App\Models\SiteSetting::find(1);
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        $style = STYLES[$template->style] . '.css';
+    @endphp
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
-            <div>
-                <a href="/" wire:navigate>
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>
-            </div>
+    <title>@yield('title') </title>
+    <meta name="description" content="@yield('meta_description')" />
+    <meta name="keywords" content="@yield('meta_keywords')" />
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
-                {{ $slot }}
-            </div>
-        </div>
-    </body>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ asset($template->favicon) }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- All plugins -->
+    <link href="{{ asset('frontend/assets/plugins/css/plugins.css') }}" rel="stylesheet">
+
+    <!-- Custom style -->
+    <link href="{{ asset('frontend/assets/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/assets/css/responsiveness.css') }}" rel="stylesheet">
+
+        <link type="text/css" rel="stylesheet" id="jssDefault"
+            href="{{ asset('frontend/assets/css/colors/' . $style . '') }}">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="{{ asset('frontend/js/html5shiv.min.js') }}"></script>
+      <script src="{{ asset('frontend/js/respond.min.js') }}"></script>
+    <![endif]-->
+
+</head>
+
+<body class="home-2">
+    <div class="wrapper">
+        <!-- Start Navigation -->
+        @include('layouts.front_nav')
+        <!-- End Navigation -->
+        <div class="clearfix"></div>
+        {{ $slot }}
+
+
+       @include('frontend.body.footer')
+
+     
+       
+    </div>
+    <!-- /Switcher -->
+    <a id="back2Top" class="theme-bg" title="Back to top" href="#"><i class="ti-arrow-up"></i></a>
+
+
+    <!-- START JAVASCRIPT -->
+    <script src="{{ asset('frontend/assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/plugins/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/plugins/js/bootsnav.js') }}"></script>
+    <script src="{{ asset('frontend/assets/plugins/js/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/plugins/js/bootstrap-touch-slider-min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/plugins/js/jquery.touchSwipe.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/plugins/js/chosen.jquery.js') }}"></script>
+    <script src="{{ asset('frontend/assets/plugins/js/datedropper.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/plugins/js/dropzone.js') }}"></script>
+    <script src="{{ asset('frontend/assets/plugins/js/jquery.counterup.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/plugins/js/jquery.fancybox.js') }}"></script>
+    <script src="{{ asset('frontend/assets/plugins/js/jquery.nice-select.js') }}"></script>
+    <script src="{{ asset('frontend/assets/plugins/js/jqueryadd-count.js') }}"></script>
+    <script src="{{ asset('frontend/assets/plugins/js/jquery-rating.js') }}"></script>
+    <script src="{{ asset('frontend/assets/plugins/js/slick.js') }}"></script>
+    <script src="{{ asset('frontend/assets/plugins/js/timedropper.js') }}"></script>
+    <script src="{{ asset('frontend/assets/plugins/js/waypoints.min.js') }}"></script>
+
+   
+
+    <!-- Custom Js -->
+    <script src="{{ asset('frontend/assets/js/custom.js') }}"></script>
+
+  
+    </div>
+</body>
+
 </html>

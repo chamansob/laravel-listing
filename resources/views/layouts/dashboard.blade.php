@@ -41,7 +41,9 @@
     <link href="{{ asset('backend/assets/src/plugins/css/dark/table/datatable/dt-global_style.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ asset('backend/assets/src/plugins/css/dark/table/datatable/custom_dt_miscellaneous.css')}}" rel="stylesheet" type="text/css">
  
-    
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <link href="{{ asset('backend/assets/src/plugins/src/font-icons/fontawesome/css/regular.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('backend/assets/src/plugins/src/font-icons/fontawesome/css/fontawesome.css')}}" rel="stylesheet" type="text/css">
    <!-- Scripts -->
      @vite(['resources/js/app.js'])
 </head>

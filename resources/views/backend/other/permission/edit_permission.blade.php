@@ -52,8 +52,8 @@
                                         Module </option>
                                     <option value="slider" {{ $permission->group_name == 'slider' ? 'selected' : '' }}>
                                         Slider </option>
-                                    <option value="social" {{ $permission->group_name == 'social' ? 'selected' : '' }}>
-                                        Social </option>
+                                    <option value="counters" {{ $permission->group_name == 'counters' ? 'selected' : '' }}>
+                                        Counter </option>
                                     <option value="testimonial"
                                         {{ $permission->group_name == 'testimonial' ? 'selected' : '' }}>
                                         Testimonials </option>
