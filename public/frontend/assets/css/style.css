@@ -4615,7 +4615,8 @@ button.btn.remove-field.light-gray-btn {
 /*------------------ preview Listing -------------------*/
 .preview-info label {
     font-weight: 400;
-	margin-bottom:20px;
+	margin-top:5px;
+    margin-bottom:5px;
 }
 i.preview-icon {
     width: 35px;

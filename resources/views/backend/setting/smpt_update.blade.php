@@ -1,4 +1,6 @@
-<x-dashboard-layout>
+<x-main-layout>
+    @section('title', breadcrumb())
+    @section('title', breadcrumb())
 
     
             <div class="col-md-12 grid-margin stretch-card">

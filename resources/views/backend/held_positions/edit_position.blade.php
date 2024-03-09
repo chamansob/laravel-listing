@@ -1,4 +1,5 @@
 <x-main-layout>
+     @section('title', breadcrumb())
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('held_positions.index') }}">
             <h4 class="">Show Held Position</h4>

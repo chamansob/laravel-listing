@@ -1,4 +1,5 @@
 <x-main-layout>
+     @section('title', breadcrumb())
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('can_provides.index') }}">
             <h4 class="">Show Can Provides</h4>

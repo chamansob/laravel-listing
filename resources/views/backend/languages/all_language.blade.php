@@ -1,4 +1,5 @@
 <x-dashboard-layout>
+    @section('title', breadcrumb())
 
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('languages.create') }}">

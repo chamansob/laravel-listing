@@ -1,4 +1,5 @@
-<x-dashboard-layout>
+<x-main-layout>
+    @section('title', breadcrumb())
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('tag.index') }}">
             <h4 class="">Show Blog Tag</h4>
@@ -35,4 +36,4 @@
         </div>
 
     </div>
-</x-dashboard-layout>
+</x-main-layout>

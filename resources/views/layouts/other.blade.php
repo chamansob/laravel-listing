@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Admin') }} </title>
+      <title>{{ config('app.name', 'Admin') }} - @yield('title') </title>
     <link rel="icon" type="image/x-icon" href="{{ asset('backend/assets/layouts/src/assets/img/favicon.ico')}}"/>
     <link href="{{ asset('backend/assets/layouts/vertical-light-menu/css/light/loader.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend/assets/layouts/vertical-light-menu/css/dark/loader.css')}}" rel="stylesheet" type="text/css" />

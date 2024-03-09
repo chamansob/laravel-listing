@@ -6,8 +6,12 @@
                         <div class="widget-boxed-body padd-top-10 padd-bot-0">
                             <div class="side-list">
                                 <ul class="category-list">
-                                    <li><a href="{{ route('profile.edit') }}">Edit Profile</li>
-                                    <li><a href="#">Coach Info</li>
+                                    <li><a href="{{ route('profile.edit') }}">Update Profile </a></li>
+                                    @if(Auth::user()->coach!=null)
+                                     <li><a href="{{ route('user.coach.edit') }}">Edit Coach </a></li>
+                                    @else
+                                     <li><a href="{{ route('user.coach.add') }}">Add Coach </a></li>
+                                    @endif                                   
                                     
                                 </ul>
                             </div>

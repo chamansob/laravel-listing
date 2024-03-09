@@ -35,22 +35,21 @@
                             @csrf
                             <div class="row mrg-r-10 mrg-l-10">
                                 <div>
-                                    <x-primary-button>
+                                    <x-primary-button class="btn btn-midium theme-btn btn-radius ">
                                         {{ __('Resend Verification Email') }}
                                     </x-primary-button>
                                 </div>
                             </div>
                         </form>
 
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
+                        
                             <div class="row mrg-r-10 mrg-l-10">
-                                <button type="submit"
-                                    class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+                                <a href="{{ route('logout') }}"
+                                    class="btn btn-midium btn-radius">
                                     {{ __('Log Out') }}
-                                </button>
+                                </a>
                             </div>
-                        </form>
+                       
                     </div>
                 </div>
                 <!-- End General Information -->

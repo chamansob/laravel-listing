@@ -1,4 +1,5 @@
 <x-dashboard-layout>
+    @section('title', breadcrumb())
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('testimonials.index') }}">
             <h4 class="">Show Testimonial</h4>
@@ -17,7 +18,7 @@
                             'novalidate' => 'novalidate',
                             'files' => true,
                         ]) !!}
-   <div class="row">
+                        <div class="row">
                             <div class="col-sm-6">
                                 <div class="mb-3">
 
@@ -50,7 +51,7 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="row">
                             <div class="col-sm-10">
                                 <div class="mb-3">

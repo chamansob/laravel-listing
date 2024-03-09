@@ -1,12 +1,11 @@
-<x-dashboard-layout>
+<x-main-layout>
+    @section('title', breadcrumb())
 <div class="seperator-header layout-top-spacing">
         <a href="{{ route('category.index') }}">
             <h4 class="">Show All Blog Category</h4>
         </a>
     </div>
-    <div class="page-content">
-
-       
+    <div class="page-content">      
 
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
@@ -41,4 +40,4 @@
         </div>
 
     </div>
-</x-dashboard-layout>
+</x-main-layout>

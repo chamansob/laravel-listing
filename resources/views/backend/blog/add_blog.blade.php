@@ -1,4 +1,5 @@
-<x-dashboard-layout>
+<x-main-layout>
+    @section('title', breadcrumb())
 
  
  <div class="seperator-header layout-top-spacing">
@@ -124,4 +125,4 @@
     
     
     
-</x-dashboard-layout>
+</x-main-layout>

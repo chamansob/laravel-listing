@@ -1,4 +1,5 @@
 <x-main-layout>
+    @section('title', breadcrumb())
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('locations.index') }}">
             <h4 class="">Show Location</h4>

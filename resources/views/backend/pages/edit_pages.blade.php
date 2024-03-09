@@ -1,4 +1,5 @@
-<x-dashboard-layout>
+<x-main-layout>
+    @section('title', breadcrumb())
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('pages.index') }}">
             <h4 class="">Show page</h4>

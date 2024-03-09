@@ -1,1 +1,1 @@
-<img src="{{ $path }}" {{ $attributes }}  alt="{{ $name }}">
+<img src="{{ asset($path) }}" {{ $attributes }}  alt="{{ $name }}">

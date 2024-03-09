@@ -1,4 +1,5 @@
 <x-main-layout>
+     @section('title', breadcrumb())
     <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/super-build/ckeditor.js"></script>
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('coaches.index') }}">

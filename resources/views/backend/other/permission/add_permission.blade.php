@@ -1,4 +1,5 @@
-<x-dashboard-layout>
+<x-main-layout>
+    @section('title', breadcrumb())
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('permission.index') }}">
             <h4 class="">All Permission</h4>
@@ -106,4 +107,4 @@
             });
         });
     </script>
-</x-dashboard-layout>
+</x-main-layout>

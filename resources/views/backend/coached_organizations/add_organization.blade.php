@@ -1,5 +1,5 @@
 <x-main-layout>
-   
+    @section('title', breadcrumb())
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('coached_organizations.index') }}">
             <h4 class="">Show Coached Organization</h4>

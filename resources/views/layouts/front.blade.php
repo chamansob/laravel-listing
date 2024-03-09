@@ -27,14 +27,14 @@
 
     <link type="text/css" rel="stylesheet" id="jssDefault"
         href="{{ asset('frontend/assets/css/colors/' . $style . '') }}">
-
+    <link href="{{ asset('backend/assets/src/plugins/src/select2/select2.min.css') }}" rel="stylesheet" type="text/css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="{{ asset('frontend/js/html5shiv.min.js') }}"></script>
       <script src="{{ asset('frontend/js/respond.min.js') }}"></script>
     <![endif]-->
     <!-- Scripts -->
- <!-- Toastr styles -->
+    <!-- Toastr styles -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet">
 </head>
 
@@ -105,13 +105,16 @@
     <script src="{{ asset('frontend/assets/plugins/js/slick.js') }}"></script>
     <script src="{{ asset('frontend/assets/plugins/js/timedropper.js') }}"></script>
     <script src="{{ asset('frontend/assets/plugins/js/waypoints.min.js') }}"></script>
-
+    <script src="{{ asset('backend/assets/src/plugins/src/select2/select2.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/jQuery.style.switcher.js') }}"></script>
-
+    <script>
+        $(".tagging").select2({
+            tags: true
+        });
+    </script>
     <!-- Toastr js for this page -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
-      
         @if (Session::has('message'))
             var type = "{{ Session::get('alert-type', 'info') }}"
             switch (type) {

@@ -9,9 +9,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens,
         HasFactory,
@@ -85,4 +87,9 @@ class User extends Authenticatable
             return $hasPermission;
         }
     } // End Method
+
+    public function coach(): HasOne
+    {
+        return  $this->hasOne(Coach::class ,'user_id');
+    }
 }

@@ -1,4 +1,5 @@
-<x-dashboard-layout>
+<x-main-layout>
+    @section('title', breadcrumb())
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <div class="seperator-header layout-top-spacing">
         <a href="{{ route('all.admin') }}">
@@ -147,4 +148,4 @@
         </div>
 
     </div>
-</x-dashboard-layout>
+</x-main-layout>
