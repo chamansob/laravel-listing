@@ -160,7 +160,7 @@ Route::middleware(['auth', 'roles:admin'])->prefix('admin')->group(function () {
     Route::resource('coaches', CoachController::class)->middleware('can:coaches.index, coaches.create, coaches.update');
         Route::controller(CoachController::class)->group(function () {
         Route::post('/coaches/status',  'StatusUpdate')->middleware('can:coaches.status')->name('coaches.status');
-        Route::post('/coaches/delete',  'DeletewithImage')->middleware('can:coaches.delete')->name('coaches.delete');
+        Route::post('/coaches/delete',  'DeleteCoach')->middleware('can:coaches.delete')->name('coaches.delete');
         Route::get('/ajax_load', [CoachController::class, 'Ajax_Load'])->name('coaches.ajax_load');
         Route::get('/import/coaches',  'ImportCoaches')->name('import.coaches');
         Route::get('/exportcoach',  'Export')->name('export.coach');

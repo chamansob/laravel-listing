@@ -29,6 +29,7 @@ class CoachFactory extends Factory
             'age' =>  fake()->numberBetween($min = 18, $max = 79),
             'degree' => Str::random(10),
             'price'=>fake()->randomDigit,
+            'user_id' => \App\Models\User::where('role','user')->random(),
             'status' => 0,
         ];
     }

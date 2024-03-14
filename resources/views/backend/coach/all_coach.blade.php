@@ -51,7 +51,7 @@
 
 
     </div>
-    @if ($coaches->count() != 0)
+   
         <script type="text/javascript">
             $(document).ready(function() {
                 $('#coach_ajax').DataTable({
@@ -263,8 +263,7 @@
                             var crf = '{{ csrf_token() }}';
                             $.post("{{ route('coaches.delete') }}", {
                                 _token: crf,
-                                id: id,
-                                table: table
+                                id: id                               
                             }, function(data) {
                                 toastr.success("Entry no " + id + " Deleted");
                             });
@@ -287,5 +286,5 @@
 
             }
         </script>
-    @endif
+  
 </x-dashboard-layout>

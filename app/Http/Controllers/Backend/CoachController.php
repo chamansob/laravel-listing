@@ -265,9 +265,30 @@ class CoachController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Coach $coach)
+    public function DeleteCoach(Request $request)
     {
-        //
+       
+        $coach = Coach::find($request->id);
+        if (file_exists($coach->image)) {
+            $img = explode('.', $coach->image);
+            $small_img = $img[0] . "_" . $this->image_preset[0]->name . "." . $img[1];
+            unlink($small_img);
+            unlink($coach->image);
+        }
+        $coach->categories()->detach();
+        $coach->coachthemes()->detach();
+        $coach->coachmethods()->detach();
+        $coach->coachorgs()->detach();
+        $coach->canprovides()->detach();
+        $coach->heldpositions()->detach();
+        $coach->languages()->detach();
+        $coach->locations()->detach();
+        $coach->delete();
+        $notification = array(
+            'message' => 'Coach Record Deleted successfully',
+            'alert-type' => 'success',
+        );
+        return redirect()->back()->with($notification);
     }
     /**
      * Remove the specified resource from storage.
@@ -312,6 +333,9 @@ class CoachController extends Controller
         $query = Coach::select('id', 'coach_code', 'name', 'image', 'gender', 'user_id', 'uploadby', 'created_at', 'updated_at')->get();
 
         return DataTables::of($query)
+            ->setRowClass(function (Coach $coach) {
+                return 'coach-' . $coach->id;
+            })
             ->addColumn('image', function (Coach $coach) {
                 $img = explode('.', $coach->image);
                 $table_img = $img[0] . '_small.' . $img[1];
@@ -343,10 +367,14 @@ class CoachController extends Controller
                     <strong class="text-secondary">Updated:</strong>' . $updated_at . '';
             })
             ->addColumn('status', function (Coach $coach) {
-                $btn = $coach->status == 0 ? 'danger' : 'success';
+                $btn = $coach->status == 0 ? 'success' : 'danger';
                 $status = $coach->status == 0 ? 'Active' : 'Deactive';
-                return  '<a href="#" id="currentStatus' . $coach->id . '"><span
-                                                        class="badge rounded-pill bg-' . $btn . '">' . $status . '</span></a>';
+               
+            return'<button type="button" onClick="statusFunction('. $coach->id. ', \'Coach\')"
+                                                class="shadow-none badge badge-light-' . $btn . ' warning changestatus' . $coach->id . '  bs-tooltip"
+                                                data-toggle="tooltip" data-placement="top" title="Status"
+                                                data-original-title="Status">' . $status . '</button>';
+                
             })
 
             ->addColumn('action', function (Coach $coach) {
@@ -358,7 +386,7 @@ class CoachController extends Controller
     <i data-feather="edit"></i>
 </a>';
 
-                $x .= '<a href="#" onClick="deleteFunction(' . $coach->id . ', \'Coach\')"
+                $x .= '<a href="javascript:void(0)" onClick="deleteFunction(' . $coach->id . ', \'Coach\')"
     class="action-btn btn-edit bs-tooltip me-2 delete' . $coach->id . '"
     data-toggle="tooltip" data-placement="top" title="Delete"
     data-bs-original-title="Delete">

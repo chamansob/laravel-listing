@@ -55,7 +55,7 @@
 
 
                                         <td class="text-center">
-                                            <button type="button" onClick="statusFunction({{ $category->id }},'')"
+                                            <button type="button" onClick="statusFunction({{ $category->id }},'Categories')"
                                                 class="shadow-none badge badge-light-{{ $category->status == 1 ? 'danger' : 'success' }} warning changestatus{{ $category->id }}  bs-tooltip"
                                                 data-toggle="tooltip" data-placement="top" title="Status"
                                                 data-original-title="Status">{{ $category->status == 1 ? 'Deactive' : 'Active' }}</button>
@@ -133,7 +133,7 @@
                     var crf = '{{ csrf_token() }}';
                     $.post("{{ route('categories.delete') }}", {
                         _token: crf,
-                        id: checkedValues,table:table,
+                        id: checkedValues,
                         table:table
                     }, function(data) {
                         toastr.success("Selected Data Deleted");

@@ -154,7 +154,7 @@ class AdminController extends Controller
         $query = User::select('id', 'photo', 'name', 'email', 'phone', 'role')->where('role', 'user')->get();
 
         return DataTables::of($query)
-            ->setRowClass(function ($user) {
+            ->setRowClass(function (User $user) {
                 return 'admin-' . $user->id;
             })
             ->addColumn('image', function (User $user) {
