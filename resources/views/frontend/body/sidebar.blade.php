@@ -9,6 +9,7 @@
                                     <li><a href="{{ route('profile.edit') }}">Update Profile </a></li>
                                     @if(Auth::user()->coach!=null)
                                      <li><a href="{{ route('user.coach.edit') }}">Edit Coach </a></li>
+                                     <li><a href="{{ route('user.coach.view',Auth::user()->coach->coach_slug) }}">View Coach  </a></li>
                                     @else
                                      <li><a href="{{ route('user.coach.add') }}">Add Coach </a></li>
                                     @endif                                   

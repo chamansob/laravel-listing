@@ -305,11 +305,7 @@ class CoachController extends Controller
 
         return redirect()->back()->with($notification);
     }
-    // End Method 
-    public function Mycode(Request $request)
-    {
-        return "hello";
-    }
+   
     public function Ajax_Load(Request $request, Coach $coach)
     {
 

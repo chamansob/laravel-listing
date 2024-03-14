@@ -35,7 +35,7 @@ class Coach extends Model
     }
     public function heldpositions(): MorphToMany
     {
-        return $this->morphedByMany(heldposition::class, 'filterable');
+        return $this->morphedByMany(HeldPosition::class, 'filterable');
     }
     public function languages(): MorphToMany
     {

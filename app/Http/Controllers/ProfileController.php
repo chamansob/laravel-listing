@@ -286,4 +286,9 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+    public function ShowCoach(Request $request,string $coach_slug)
+    {
+       $coach= Coach::where('coach_slug', $coach_slug)->first();
+        return view('frontend.coach-details', compact('coach'));
+    }
 }

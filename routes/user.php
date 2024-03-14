@@ -9,6 +9,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/coach', [ProfileController::class, 'Coachstore'])->name('user.coach.store');
     Route::get('/coach/edit', [ProfileController::class, 'CoachEdit'])->name('user.coach.edit');
     Route::put('/coach/edit/{id}', [ProfileController::class, 'UpdateCoach'])->name('user.coach.update');
+    Route::get('/coach/{coach_slug}', [ProfileController::class, 'ShowCoach'])->name('user.coach.view');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

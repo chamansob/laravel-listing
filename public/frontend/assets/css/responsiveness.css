@@ -273,7 +273,7 @@
 }
 @media screen and (max-width: 992px) {
 	body.home-2 nav.navbar.bootsnav.navbar-transparent {
-		background-color: #ffffff;
+		background-color: #000;
 		border-bottom: 1px solid rgba(255,255,255,0.10);
 	}
 	nav.navbar.bootsnav .navbar-nav > li > a {
@@ -282,7 +282,7 @@
 		border-bottom: solid 1px #dde6ef;
 		padding: 18px 0;
 		margin-bottom: -1px;
-		color: #445461 !important;
+		color: #fff !important;
 	}
 	nav.navbar.bootsnav .navbar-toggle {
 		font-size: 20px;
