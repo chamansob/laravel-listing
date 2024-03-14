@@ -57,7 +57,8 @@
                                                     <i data-feather="edit"></i>
                                                 </a>
 
-                                                <a href="#" onClick="deleteFunction({{ $org->id }},'CoachedOrganization')"
+                                                <a href="javascript:void(0)"
+ onClick="deleteFunction({{ $org->id }},'CoachedOrganization')"
                                                     class="action-btn btn-edit bs-tooltip me-2 delete{{ $org->id }}"
                                                     data-toggle="tooltip" data-placement="top" title="Delete"
                                                     data-bs-original-title="Delete">

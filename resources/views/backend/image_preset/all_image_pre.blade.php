@@ -58,7 +58,8 @@
                                                         <i data-feather="edit"></i>
                                                     </a>
 
-                                                    <a href="#" onClick="deleteFunction({{ $img->id }},'Image_preset')"
+                                                    <a href="javascript:void(0)"
+ onClick="deleteFunction({{ $img->id }},'Image_preset')"
                                                         class="action-btn btn-edit bs-tooltip me-2 delete{{ $img->id }}"
                                                         data-toggle="tooltip" data-placement="top" title="Delete"
                                                         data-bs-original-title="Delete">

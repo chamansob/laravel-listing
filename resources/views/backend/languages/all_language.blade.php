@@ -51,7 +51,8 @@
                                                     data-placement="top" title="Edit" data-bs-original-title="Edit">
                                                     <i data-feather="edit"></i>
                                                 </a>
-                                                <a href="#" onClick="deleteFunction({{ $language->id }},'Language')"
+                                                <a href="javascript:void(0)"
+ onClick="deleteFunction({{ $language->id }},'Language')"
                                                     class="action-btn btn-edit bs-tooltip me-2 delete{{ $language->id }}"
                                                     data-toggle="tooltip" data-placement="top" title="Delete"
                                                     data-bs-original-title="Delete">

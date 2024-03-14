@@ -42,7 +42,8 @@
                                                         data-bs-original-title="Edit">
                                                         <i data-feather="edit"></i>
                                                     </a>
-                                                    <a href="#" onClick="deleteFunction({{ $item->id }})"
+                                                    <a href="javascript:void(0)"
+ onClick="deleteFunction({{ $item->id }})"
                                                         class="action-btn btn-edit bs-tooltip me-2 delete{{ $item->id }}"
                                                         data-toggle="tooltip" data-placement="top" title="Delete"
                                                         data-bs-original-title="Delete">
