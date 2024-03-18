@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('coaches', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('coach_code');
+            $table->string('coach_code',40)->unique();
             $table->string('name', 100);
             $table->string('name', 100);
             $table->string('coach_slug', 100);
@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('age')->nullable();
             $table->string('degree')->nullable();            
             $table->mediumText('text')->nullable();
-            $table->bigInteger('user_id')->nullable();
+            $table->bigInteger('user_id')->unique();
             $table->boolean('uploadby')->default(0);
             $table->boolean('status')->default(0);
             $table->timestamp('created_at')->useCurrent();

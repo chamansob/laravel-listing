@@ -337,9 +337,15 @@ class CoachController extends Controller
                 return 'coach-' . $coach->id;
             })
             ->addColumn('image', function (Coach $coach) {
-                $img = explode('.', $coach->image);
-                $table_img = $img[0] . '_small.' . $img[1];
-                return  '<img src="' . asset($coach->image) . '">';
+                 $img='backend/assets/images/sample.jpg';
+                if($coach->image!='')
+                {
+                //$img = explode('.', $coach->image);
+               // $table_img = $img[0] . '_small.' . $img[1];
+                $img = $coach->image;
+                }
+              
+                return  '<img src="' . asset($img) . '" class="w-75" >';
             })
             ->addColumn('uploadby', function (Coach $coach) {
                 $uploaby = ($coach->user?->name) ? $coach->user->name : "Admin";

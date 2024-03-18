@@ -115,18 +115,14 @@
 
                                     {!! Form::label('age', 'Age', ['class' => 'form-label']) !!}
                                     <div class="row">
-                                        <div class="col-sm-3">
-                                            <h5 class="m-2">Between 18 To </h5>
-                                        </div>
-                                        <div class="col-sm-7">{!! Form::number('age', $value = 25, [
+                                        
+                                        <div class="col-sm-12">{!! Form::number('age', $value = 25, [
                                             'class' => 'form-control',
                                             'min' => 18,
                                             'max' => 89,
                                             'required' => 'required',
                                         ]) !!}</div>
-                                        <div class="col-sm-2">
-                                            <h5 class="m-2">Years Old</h5>
-                                        </div>
+                                       
                                     </div>
 
 
@@ -134,11 +130,11 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="mb-3">
-                                    {!! Form::label('price', 'Price', ['class' => 'form-label']) !!}
+                                    {!! Form::label('price', 'Price($)', ['class' => 'form-label']) !!}
                                     {!! Form::number('price', $value = 10, [
                                         'class' => 'form-control',
                                         'min' => 10,
-                                        'max' => 100,
+                                        'max' => 2000,
                                         'required' => 'required',
                                     ]) !!}</div>
                             </div>
@@ -290,4 +286,9 @@
             }
         }
     </script>
+     @section('script')
+    <script>$(".tagging").select2({
+	tags: true
+});</script>
+@stop
 </x-main-layout>
